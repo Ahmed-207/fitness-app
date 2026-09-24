@@ -1,45 +1,60 @@
-<div
-  class="min-h-screen flex font-['Baloo_Thambi_2',_system-ui,_sans-serif]"
->
-  <aside
-    class="hidden lg:flex lg:w-[49%] relative items-center justify-center overflow-hidden"
-    aria-label="Super Fitness branding"
-  >
-    <img
-      src="/assets/main-background.png"
-      alt=""
-      class="absolute inset-0 w-full h-full object-cover"
-      aria-hidden="true"
-    />
-    <div
-      class="absolute inset-0 bg-[#242424]/20"
-      aria-hidden="true"
-    ></div>
+<div class="relative min-h-screen font-['Baloo_Thambi_2',_system-ui,_sans-serif]">
+  <!-- Full-screen background -->
+  <img
+    src="/assets/main-background.png"
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+    aria-hidden="true"
+  />
 
-    <div class="relative z-10 flex flex-col items-center gap-20">
+  <!-- Dark blurred overlay -->
+  <div
+    class="absolute inset-0 bg-[#242424]/60 backdrop-blur-[86px]"
+    aria-hidden="true"
+    data-testid="auth-overlay"
+  ></div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex min-h-screen">
+    <!-- Left visual panel -->
+    <aside
+      class="auth-layout__visual hidden lg:flex lg:w-1/2 flex-col items-center justify-center overflow-hidden border-r border-[#FF4100]/20 shadow-[0_4px_80px_47px_rgba(0,0,0,0.25)]"
+      aria-label="Super Fitness branding"
+    >
+      <div class="relative z-10 flex w-full max-w-2xl flex-col items-center gap-12 px-8">
+        <img
+          src="/assets/logo-image.png"
+          alt="Super Fitness"
+          class="w-[38%] max-w-[15rem] object-contain"
+        />
+        <img
+          src="/assets/auth-image.png"
+          alt=""
+          class="auth-layout__hero w-[98%] max-w-[28rem] object-contain"
+          aria-hidden="true"
+          data-testid="auth-hero"
+        />
+      </div>
+    </aside>
+
+    <!-- Right area -->
+    <main
+      class="flex w-full lg:w-1/2 min-h-screen flex-col items-center justify-center px-6 py-12"
+    >
+      <!-- Mobile logo -->
       <img
         src="/assets/logo-image.png"
         alt="Super Fitness"
-        class="w-60"
+        class="lg:hidden w-40 mb-8"
       />
-      <img
-        src="/assets/auth-image.png"
-        alt=""
-        class="w-80"
-        aria-hidden="true"
-        data-testid="auth-hero"
-      />
-    </div>
-  </aside>
 
-  <main
-    class="w-full lg:w-[51%] min-h-screen flex flex-col items-center justify-center bg-[#242424] px-6"
-  >
-    <img
-      src="/assets/logo-image.png"
-      alt="Super Fitness"
-      class="lg:hidden w-40 mb-8"
-    />
-    <router-outlet />
-  </main>
+      <!-- Glassmorphism card -->
+      <div
+        class="w-full max-w-[519px] rounded-[50px] border border-[#D3D3D3] bg-[#242424]/10 p-10 backdrop-blur-[86px]"
+        data-testid="auth-card"
+      >
+        <router-outlet />
+      </div>
+    </main>
+  </div>
 </div>

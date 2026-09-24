@@ -28,6 +28,16 @@ describe('AuthLayoutComponent', () => {
     expect(outlet).toBeTruthy();
   });
 
+  it('should render the full-screen background image', () => {
+    const background = compiled.querySelector('img[alt=""]');
+    expect(background).toBeTruthy();
+  });
+
+  it('should render the dark overlay', () => {
+    const overlay = compiled.querySelector('[data-testid="auth-overlay"]');
+    expect(overlay).toBeTruthy();
+  });
+
   it('should render the visual panel with responsive visibility classes', () => {
     const visualPanel = compiled.querySelector('aside');
     expect(visualPanel).toBeTruthy();
@@ -44,6 +54,11 @@ describe('AuthLayoutComponent', () => {
   it('should render the hero image inside the visual panel', () => {
     const hero = compiled.querySelector('[data-testid="auth-hero"]');
     expect(hero).toBeTruthy();
+  });
+
+  it('should render the glassmorphism card', () => {
+    const card = compiled.querySelector('[data-testid="auth-card"]');
+    expect(card).toBeTruthy();
   });
 
   it('should render the mobile logo hidden on large screens', () => {

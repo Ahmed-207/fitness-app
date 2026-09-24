@@ -4,9 +4,10 @@ import { RouterOutlet } from '@angular/router';
 /**
  * Shell layout for auth-related routes.
  *
- * Renders a branded visual panel on large screens and projects child routes
- * into the right-hand area. On small screens the visual panel is hidden and
- * only the logo is shown above the routed content.
+ * Renders a full-screen background with a blurred dark overlay, a branded
+ * visual panel on the left, and a glassmorphism card on the right that hosts
+ * child routes. On small screens the visual panel is hidden and only the logo
+ * plus the card are shown.
  */
 @Component({
   selector: 'app-auth-layout',
