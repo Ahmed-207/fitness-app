@@ -1,0 +1,45 @@
+<div
+  class="min-h-screen flex font-['Baloo_Thambi_2',_system-ui,_sans-serif]"
+>
+  <aside
+    class="hidden lg:flex lg:w-[49%] relative items-center justify-center overflow-hidden"
+    aria-label="Super Fitness branding"
+  >
+    <img
+      src="/assets/main-background.png"
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover"
+      aria-hidden="true"
+    />
+    <div
+      class="absolute inset-0 bg-[#242424]/20"
+      aria-hidden="true"
+    ></div>
+
+    <div class="relative z-10 flex flex-col items-center gap-20">
+      <img
+        src="/assets/logo-image.png"
+        alt="Super Fitness"
+        class="w-60"
+      />
+      <img
+        src="/assets/auth-image.png"
+        alt=""
+        class="w-80"
+        aria-hidden="true"
+        data-testid="auth-hero"
+      />
+    </div>
+  </aside>
+
+  <main
+    class="w-full lg:w-[51%] min-h-screen flex flex-col items-center justify-center bg-[#242424] px-6"
+  >
+    <img
+      src="/assets/logo-image.png"
+      alt="Super Fitness"
+      class="lg:hidden w-40 mb-8"
+    />
+    <router-outlet />
+  </main>
+</div>
