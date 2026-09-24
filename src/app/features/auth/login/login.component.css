@@ -1,0 +1,18 @@
+.login-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #d3d3d3;
+}
+
+.login-placeholder__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.login-placeholder__text {
+  font-size: 1rem;
+}
