@@ -42,3 +42,9 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Agent-generated files and folders (local-only)
+.agents/
+AGENTS.md
+docs/
+skills-lock.json

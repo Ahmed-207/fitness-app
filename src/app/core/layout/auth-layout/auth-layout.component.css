@@ -3,7 +3,3 @@
 .auth-layout__visual {
   background-color: rgba(36, 36, 36, 0.2);
 }
-
-.auth-layout__hero {
-  filter: contrast(0.051) brightness(1.13) saturate(0.129);
-}
