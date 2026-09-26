@@ -1,4 +1,94 @@
-<div class="login-placeholder">
-  <h1 class="login-placeholder__title">Welcome back</h1>
-  <p class="login-placeholder__text">Login form coming soon</p>
+
+
+
+<div class="flex flex-col items-center justify-center w-full text-white">
+  
+  <span class="text-gray-300 text-sm mb-1 tracking-wide">{{ 'AUTHLOGIN.HEY_THERE' | translate }}</span>
+  <h1 class="text-3xl font-extrabold tracking-wider mb-6 text-white text-center">{{ 'AUTHLOGIN.WELCOME_BACK' | translate }}</h1>
+
+  <div class="w-full max-w-105 rounded-[35px] border border-gray-500/40 bg-[#1E1E1E]/40 p-8 backdrop-blur-xl shadow-2xl flex flex-col items-center">
+    
+    <h2 class="text-2xl font-bold text-white mb-6">{{ 'AUTHLOGIN.LOGIN_TITLE' | translate }}</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col gap-4">
+      
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="{{'AUTHLOGIN.EMAIL_PLACEHOLDER' | translate}}"
+          class="w-full rounded-full bg-transparent border border-gray-500/60 pl-11 pr-4 py-3 text-sm text-white placeholder-gray-400 focus:border-[#FF5722] focus:outline-none transition"
+        />
+      </div>
+
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="{{'AUTHLOGIN.PASSWORD_PLACEHOLDER' | translate}}"
+          class="w-full rounded-full bg-transparent border border-gray-500/60 pl-11 pr-11 py-3 text-sm text-white placeholder-gray-400 focus:border-[#FF5722] focus:outline-none transition"
+        />
+
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex justify-end w-full mt-1">
+        <a routerLink="/auth/forget-password" class="text-xs text-[#FF5722] hover:underline font-medium">
+         {{ 'AUTHLOGIN.FORGOT_PASSWORD' | translate }}
+        </a>
+      </div>
+
+      <div class="relative flex items-center justify-center my-2 w-full">
+        <div class="border-t border-gray-500/40 w-3/4"></div>
+        <span class="absolute bg-transparent px-3 text-xs text-gray-400">{{ 'AUTHLOGIN.OR' | translate }}</span>
+      </div>
+
+      <div class="flex items-center justify-center gap-6 my-1 text-white">
+        <button type="button" class="hover:text-[#FF5722] transition font-bold text-lg">f</button>
+        <button type="button" class="hover:text-[#FF5722] transition font-bold text-lg">G</button>
+        <button type="button" class="hover:text-[#FF5722] transition">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.66-.8 1.11-1.92.99-3.04-.96.04-2.13.64-2.81 1.44-.61.71-1.14 1.86-1 2.97 1.08.08 2.17-.57 2.82-1.37z"/>
+          </svg>
+        </button>
+       
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="w-full rounded-full bg-[#FF5722] hover:bg-[#E64A19] py-3 mt-3 text-white font-bold text-sm shadow-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {{ 'AUTHLOGIN.LOGIN_BTN' | translate }}
+      </button>
+
+      <div class="text-center mt-2 text-xs text-gray-300">
+        {{ 'AUTHLOGIN.NO_ACCOUNT' | translate }}
+        <a routerLink="/auth/register" class="text-[#FF5722] hover:underline font-semibold ml-1">
+          {{ 'AUTHLOGIN.REGISTER_LINK' | translate }}
+        </a>
+      </div>
+
+    </form>
+  </div>
 </div>

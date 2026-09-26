@@ -1,0 +1,35 @@
+{
+  "AUTHLOGIN": {
+    "HEY_THERE": "أهلاً بك",
+    "WELCOME_BACK": "مرحباً بعودتك",
+    "LOGIN_TITLE": "تسجيل الدخول",
+    "EMAIL_PLACEHOLDER": "البريد الإلكتروني",
+    "PASSWORD_PLACEHOLDER": "كلمة المرور",
+    "FORGOT_PASSWORD": "هل نسيت كلمة المرور؟",
+    "OR": "أو",
+    "LOGIN_BTN": "دخول",
+    "NO_ACCOUNT": "ليس لديك حساب بعد؟",
+    "REGISTER_LINK": "إنشاء حساب"
+  },
+  "AUTHPASSWORD": {
+    "FORGOT_PASS_TITLE": "نسيت كلمة المرور",
+    "FORGOT_PASS_SUBTITLE":"أدخل بريدك الإلكتروني ",
+    "SEND_CODE_BTN": "إرسال الرمز",
+    "BACK_TO_LOGIN": "العودة لتسجيل الدخول",
+    "EMAIL_PLACEHOLDER": "البريد الإلكتروني"
+  },
+  "OTP": {
+  "TITLE": "رمز التحقق",
+  "SUBTITLE": "أدخل رمز التحقق المرسل لبريدك الإلكتروني",
+  "CONFIRM_BTN": "تأكيد",
+  "RESEND_PROMPT": "لم تستلم رمز التحقق؟",
+  "RESEND_LINK": "إعادة إرسال الرمز؟"
+  },
+  "RESET_PASS": {
+  "TITLE": "إنشاء كلمة مرور جديدة",
+  "SUBTITLE": "تأكد من أن تكون 8 أرقام/أحرف أو أكثر",
+  "NEW_PASSWORD_PLACEHOLDER": "كلمة المرور الجديدة",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "تأكيد كلمة المرور",
+  "DONE_BTN": "تم"
+}
+}

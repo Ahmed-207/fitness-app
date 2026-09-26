@@ -1,0 +1,35 @@
+{
+  "AUTHLOGIN": {
+    "HEY_THERE": "Hey There",
+    "WELCOME_BACK": "WELCOME BACK",
+    "LOGIN_TITLE": "Login",
+    "EMAIL_PLACEHOLDER": "Email",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "FORGOT_PASSWORD": "Forget Password ?",
+    "OR": "Or",
+    "LOGIN_BTN": "Login",
+    "NO_ACCOUNT": "Dont Have An Account Yet ?",
+    "REGISTER_LINK": "Register"
+  },
+  "AUTHPASSWORD": {
+    "FORGOT_PASS_TITLE": "Forgot Password",
+    "FORGOT_PASS_SUBTITLE": "Enter your email",
+    "SEND_CODE_BTN": "Send OTP",
+    "BACK_TO_LOGIN": "Back to Login",
+    "EMAIL_PLACEHOLDER": "Email"
+  },
+  "OTP": {
+  "TITLE": "OTP CODE",
+  "SUBTITLE": "Enter Your OTP Check Your Email",
+  "CONFIRM_BTN": "Confirm",
+  "RESEND_PROMPT": "Didnt Recieve Verification Code?",
+  "RESEND_LINK": "Resend Code?"
+},
+"RESET_PASS": {
+  "TITLE": "Create New Password",
+  "SUBTITLE": "Make Sure Its 8 Characters Or More",
+  "NEW_PASSWORD_PLACEHOLDER": "Password",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "Password",
+  "DONE_BTN": "Done"
+}
+}
