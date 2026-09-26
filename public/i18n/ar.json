@@ -1,0 +1,14 @@
+{
+  "AUTHLOGIN": {
+    "HEY_THERE": "أهلاً بك",
+    "WELCOME_BACK": "مرحباً بعودتك",
+    "LOGIN_TITLE": "تسجيل الدخول",
+    "EMAIL_PLACEHOLDER": "البريد الإلكتروني",
+    "PASSWORD_PLACEHOLDER": "كلمة المرور",
+    "FORGOT_PASSWORD": "هل نسيت كلمة المرور؟",
+    "OR": "أو",
+    "LOGIN_BTN": "دخول",
+    "NO_ACCOUNT": "ليس لديك حساب بعد؟",
+    "REGISTER_LINK": "إنشاء حساب"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "AUTHLOGIN": {
+    "HEY_THERE": "Hey There",
+    "WELCOME_BACK": "WELCOME BACK",
+    "LOGIN_TITLE": "Login",
+    "EMAIL_PLACEHOLDER": "Email",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "FORGOT_PASSWORD": "Forget Password ?",
+    "OR": "Or",
+    "LOGIN_BTN": "Login",
+    "NO_ACCOUNT": "Dont Have An Account Yet ?",
+    "REGISTER_LINK": "Register"
+  }
+}
