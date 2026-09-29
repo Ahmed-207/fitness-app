@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { matchPasswordValidator } from '../../../core/validators/match-pass'
 
 @Component({
   selector: 'app-reset-password',
@@ -23,16 +24,9 @@ export class ResetPasswordComponent {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
     },
-    { validators: this.passwordMatchValidator }
+    { validators: matchPasswordValidator('password' , 'confirmPassword') }
   );
 
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
-    return password && confirmPassword && password !== confirmPassword
-      ? { passwordMismatch: true }
-      : null;
-  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
