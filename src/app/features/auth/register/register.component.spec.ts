@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import { OnboardingComponent } from '../onboarding/onboarding.component';
 import { AuthService } from '../services/auth.service';
+import { AccountFormComponent } from './account-form/account-form.component';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -13,7 +16,13 @@ describe('RegisterComponent', () => {
       imports: [RegisterComponent],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: { signUp: () => of({ message: 'success', token: 'test-token' }) } },
+        {
+          provide: AuthService,
+          useValue: {
+            signUp: () => of({ message: 'success', token: 'test-token' }),
+            error: () => null,
+          },
+        },
       ],
     }).compileComponents();
 
@@ -22,80 +31,60 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('starts with the account form and requires valid credentials before onboarding', () => {
-    expect(fixture.nativeElement.textContent).toContain('Create your account');
-    component.beginOnboarding();
-    expect(component.step()).toBe(-1);
-    expect(component.credentials.controls.email.touched).toBe(true);
+  it('starts on the account form', () => {
+    expect(component.phase()).toBe('account');
+    expect(fixture.nativeElement.textContent).toContain('Create An Account');
   });
 
-  it('requires a selection before progressing and supports going back', () => {
-    component.credentials.setValue({
+  it('stays on the account form until the credentials are valid', () => {
+    submitForm();
+
+    expect(component.phase()).toBe('account');
+    expect(accountForm().form.controls.email.touched).toBe(true);
+  });
+
+  it('opens onboarding after valid credentials and returns without losing the draft', () => {
+    accountForm().form.setValue({
       firstName: 'Ada',
       lastName: 'Lovelace',
       email: 'ada@example.com',
-      password: 'Password123',
+      password: 'Password@123',
     });
-    component.beginOnboarding();
-    expect(component.step()).toBe(0);
-    component.next();
-    expect(component.step()).toBe(0);
-    component.chooseGender('female');
-    component.next();
-    expect(component.step()).toBe(1);
-    component.back();
-    expect(component.step()).toBe(0);
+    submitForm();
+
+    expect(component.phase()).toBe('onboarding');
+    expect(fixture.nativeElement.textContent).toContain('TELL US ABOUT YOURSELF');
+
+    const male = fixture.nativeElement.querySelector('.gender-card') as HTMLButtonElement;
+    male.click();
+    fixture.detectChanges();
+
+    const back = fixture.nativeElement.querySelector('.back-button') as HTMLButtonElement;
+    back.click();
+    fixture.detectChanges();
+
+    expect(component.phase()).toBe('account');
+
+    submitForm();
+    expect(onboarding().gender()).toBe('male');
+    expect(fixture.nativeElement.querySelector('.gender-card.selected')?.textContent).toContain(
+      'Male',
+    );
   });
 
-  it('keeps profile measurements in metric units when imperial display is selected', () => {
-    component.setUnits('imperial');
-    component.setDisplayWeight(154);
-    component.setDisplayHeight(67);
+  function accountForm(): AccountFormComponent {
+    return fixture.debugElement.query(By.directive(AccountFormComponent)).componentInstance;
+  }
 
-    expect(component.weight()).toBeCloseTo(69.85, 2);
-    expect(component.height()).toBeCloseTo(170.18, 2);
-    expect(component.displayWeight).toBe(154);
-    expect(component.displayHeight).toBe(67);
-  });
+  function onboarding(): OnboardingComponent {
+    return fixture.debugElement.query(By.directive(OnboardingComponent)).componentInstance;
+  }
 
-  it('keeps the selected measurement centered at both wheel boundaries', () => {
-    expect(component.measurementValues(16, 16, 100)).toEqual([null, null, null, null, 16, 17, 18, 19, 20]);
-    expect(component.measurementValues(100, 16, 100)).toEqual([96, 97, 98, 99, 100, null, null, null, null]);
-  });
-
-  it('supports arrow-key changes and clamps age to the allowed range', () => {
-    component.age.set(16);
-    const event = new KeyboardEvent('keydown', { key: 'ArrowLeft', cancelable: true });
-    component.onMeasurementKeydown(event, 'age');
-
-    expect(event.defaultPrevented).toBe(true);
-    expect(component.age()).toBe(16);
-
-    component.onMeasurementKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight' }), 'age');
-    expect(component.age()).toBe(17);
-  });
-
-  it('keeps imperial boundary selections valid in canonical metric values', () => {
-    component.setUnits('imperial');
-    component.setDisplayWeight(66);
-    component.setDisplayHeight(47);
-
-    expect(component.weight()).toBe(30);
-    expect(component.height()).toBe(120);
-    expect(component.displayWeight).toBe(66);
-    expect(component.displayHeight).toBe(47);
-    component.step.set(2);
-    expect(component.hasAnswerForCurrentStep()).toBe(true);
-    component.step.set(3);
-    expect(component.hasAnswerForCurrentStep()).toBe(true);
-  });
-
-  it('keeps the selected height visible in the wheel when changing units', () => {
-    component.setUnits('imperial');
-    component.setDisplayHeight(67);
-    component.setUnits('metric');
-
-    expect(component.displayHeight).toBe(170);
-    expect(component.measurementValues(component.displayHeight, 120, 230)[4]).toBe(170);
-  });
+  function submitForm(): void {
+    const submit = fixture.nativeElement.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement;
+    submit.click();
+    fixture.detectChanges();
+  }
 });

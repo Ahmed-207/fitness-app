@@ -1,0 +1,27 @@
+<h1 id="step-title">{{ title() }}</h1>
+<p class="intro">{{ intro() }}</p>
+<div class="measure-panel">
+  @if (captionMode() === 'units') {
+    <button
+      class="measure-caption unit-caption"
+      type="button"
+      [attr.aria-label]="unitAriaLabel()"
+      (click)="toggleUnits()"
+    >
+      {{ caption() }}
+    </button>
+  } @else {
+    <span class="measure-caption">{{ caption() }}</span>
+  }
+  <app-measurement-wheel
+    [value]="value()"
+    [minimum]="minimum()"
+    [maximum]="maximum()"
+    [ariaLabel]="ariaLabel()"
+    [unitSuffix]="unitSuffix()"
+    (valueChange)="valueChange.emit($event)"
+  />
+  @if (feet() !== null && inches() !== null) {
+    <p class="height-conversion">{{ feet() }} ft {{ inches() }} in</p>
+  }
+</div>

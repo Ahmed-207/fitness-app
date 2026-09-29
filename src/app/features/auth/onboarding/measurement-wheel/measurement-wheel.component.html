@@ -1,0 +1,31 @@
+<div
+  class="measurement-wheel"
+  role="group"
+  tabindex="0"
+  [attr.aria-label]="ariaLabel()"
+  (keydown)="onKeydown($event)"
+  (wheel)="onWheel($event)"
+  (pointerdown)="startSwipe($event)"
+  (pointerup)="endSwipe($event)"
+  (pointercancel)="cancelSwipe()"
+>
+  @for (slot of slots(); track $index; let index = $index) {
+    @if (slot === null) {
+      <span class="wheel-value wheel-empty" aria-hidden="true"></span>
+    } @else {
+      <button
+        type="button"
+        class="wheel-value"
+        tabindex="-1"
+        [class.selected]="slot === value()"
+        [class.near]="isNear(index)"
+        [attr.aria-pressed]="slot === value()"
+        [attr.aria-label]="slot + unitSuffix()"
+        (click)="select(slot)"
+      >
+        {{ slot }}
+      </button>
+    }
+  }
+  <span class="wheel-marker" aria-hidden="true"></span>
+</div>

@@ -1,0 +1,18 @@
+<h1 id="step-title">{{ title() }}</h1>
+<p class="intro">{{ intro() }}</p>
+<div class="option-list" role="group" [attr.aria-label]="groupLabel()">
+  @for (item of options(); track item.value) {
+    <button
+      type="button"
+      class="option-card"
+      [class.selected]="selected() === item.value"
+      [attr.aria-pressed]="selected() === item.value"
+      (click)="selectedChange.emit(item.value)"
+    >
+      <span class="option-copy"
+        ><strong>{{ item.label }}</strong></span
+      >
+      <span class="radio-mark" aria-hidden="true"></span>
+    </button>
+  }
+</div>

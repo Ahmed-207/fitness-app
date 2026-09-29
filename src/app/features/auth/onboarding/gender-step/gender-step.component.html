@@ -1,0 +1,22 @@
+<h1 id="step-title" class="gender-title">TELL US ABOUT YOURSELF!</h1>
+<p class="intro">We Need To Know Your Gender</p>
+<div class="gender-grid" role="group" aria-label="Choose a profile">
+  <button
+    type="button"
+    class="gender-card"
+    [class.selected]="selected() === 'male'"
+    [attr.aria-pressed]="selected() === 'male'"
+    (click)="selectedChange.emit('male')"
+  >
+    <span class="gender-symbol" aria-hidden="true">♂</span><span>Male</span>
+  </button>
+  <button
+    type="button"
+    class="gender-card"
+    [class.selected]="selected() === 'female'"
+    [attr.aria-pressed]="selected() === 'female'"
+    (click)="selectedChange.emit('female')"
+  >
+    <span class="gender-symbol" aria-hidden="true">♀</span><span>Female</span>
+  </button>
+</div>

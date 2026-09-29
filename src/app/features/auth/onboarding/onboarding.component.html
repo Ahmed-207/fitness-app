@@ -1,0 +1,95 @@
+<app-onboarding-chrome
+  [step]="step()"
+  [canContinue]="hasAnswer()"
+  [isSubmitting]="isSubmitting()"
+  [continueLabel]="continueLabel()"
+  [errorMessage]="errorMessage()"
+  (back)="back()"
+  (nextStep)="next()"
+>
+  @switch (step()) {
+    @case (0) {
+      <app-gender-step [selected]="gender()" (selectedChange)="gender.set($event)" />
+    }
+    @case (1) {
+      <app-measurement-step
+        title="How Old Are You ?"
+        caption="Year"
+        [value]="age()"
+        [minimum]="16"
+        [maximum]="100"
+        ariaLabel="Age in years. Use the arrow keys, swipe, or scroll to change the value."
+        unitSuffix=" years"
+        (valueChange)="age.set($event)"
+      />
+    }
+    @case (2) {
+      <app-measurement-step
+        title="What Is Your Weight ?"
+        captionMode="units"
+        [caption]="metric() ? 'Kg' : 'Lb'"
+        [unitAriaLabel]="
+          'Weight units: ' +
+          (metric() ? 'kilograms. Switch to pounds' : 'pounds. Switch to kilograms')
+        "
+        [units]="units()"
+        [value]="shownWeight()"
+        [minimum]="metric() ? 30 : 66"
+        [maximum]="metric() ? 250 : 550"
+        [ariaLabel]="
+          'Weight in ' +
+          (metric() ? 'kilograms' : 'pounds') +
+          '. Use the arrow keys, swipe, or scroll to change the value.'
+        "
+        [unitSuffix]="metric() ? ' kilograms' : ' pounds'"
+        (unitsChange)="units.set($event)"
+        (valueChange)="onWeight($event)"
+      />
+    }
+    @case (3) {
+      <app-measurement-step
+        title="What Is Your Height ?"
+        captionMode="units"
+        [caption]="metric() ? 'Cm' : 'Ft / In'"
+        [unitAriaLabel]="
+          'Height units: ' +
+          (metric()
+            ? 'centimetres. Switch to feet and inches'
+            : 'feet and inches. Switch to centimetres')
+        "
+        [units]="units()"
+        [value]="shownHeight()"
+        [minimum]="metric() ? 120 : 47"
+        [maximum]="metric() ? 230 : 90"
+        [ariaLabel]="
+          'Height in ' +
+          (metric() ? 'centimetres' : 'inches') +
+          '. Use the arrow keys, swipe, or scroll to change the value.'
+        "
+        [unitSuffix]="metric() ? ' centimetres' : ' inches'"
+        [feet]="metric() ? null : shownHeightFeet()"
+        [inches]="metric() ? null : shownHeightInches()"
+        (unitsChange)="units.set($event)"
+        (valueChange)="onHeight($event)"
+      />
+    }
+    @case (4) {
+      <app-option-step
+        title="What Is Your Goal ?"
+        groupLabel="Choose your main fitness goal"
+        [options]="goals"
+        [selected]="goal()"
+        (selectedChange)="chooseGoal($event)"
+      />
+    }
+    @default {
+      <app-option-step
+        title="Your Regular Physical Activity Level ?"
+        groupLabel="Choose your training experience"
+        [options]="activityLevels"
+        [selected]="activity()"
+        (selectedChange)="chooseActivity($event)"
+      />
+    }
+  }
+</app-onboarding-chrome>

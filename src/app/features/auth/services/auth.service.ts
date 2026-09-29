@@ -18,6 +18,28 @@ import {
   VerifyResetCodeResponse,
 } from '../models/auth.models';
 
+function readApiErrorMessage(body: unknown): string | null {
+  if (typeof body === 'string' && body.trim()) {
+    return body;
+  }
+
+  if (!body || typeof body !== 'object') {
+    return null;
+  }
+
+  const apiError = body as { error?: unknown; message?: unknown };
+
+  if (typeof apiError.error === 'string' && apiError.error.trim()) {
+    return apiError.error;
+  }
+
+  if (typeof apiError.message === 'string' && apiError.message.trim()) {
+    return apiError.message;
+  }
+
+  return null;
+}
+
 const initialState: AuthState = {
   user: null,
   isLoading: false,
@@ -148,10 +170,10 @@ export class AuthService {
 
   private getErrorMessage(error: unknown): string {
     if (error instanceof HttpErrorResponse) {
-      const apiError = error.error as { message?: unknown } | null;
+      const apiMessage = readApiErrorMessage(error.error);
 
-      if (typeof apiError?.message === 'string') {
-        return apiError.message;
+      if (apiMessage) {
+        return apiMessage;
       }
 
       return error.message;
