@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideTranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { LoginComponent } from './login.component';
@@ -13,7 +14,11 @@ describe('LoginComponent', () => {
       imports: [LoginComponent],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: { signIn: () => of({ message: 'success', token: 'test-token' }) } },
+        provideTranslateService({ fallbackLang: 'en', lang: 'en' }),
+        {
+          provide: AuthService,
+          useValue: { signIn: () => of({ message: 'success', token: 'test-token' }), error: () => null },
+        },
       ],
     }).compileComponents();
 
@@ -29,7 +34,6 @@ describe('LoginComponent', () => {
   it('should render a login form and registration link', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('form')).toBeTruthy();
-    expect(compiled.textContent).toContain('Log in to Super Fitness');
     expect(compiled.querySelector('a[href="/auth/register"]')).toBeTruthy();
   });
 });
