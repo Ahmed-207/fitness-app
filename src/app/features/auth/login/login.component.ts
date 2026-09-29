@@ -1,17 +1,48 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
-/**
- * Placeholder login page.
- *
- * This is a temporary stand-in so the auth layout can be visually verified.
- * The real login form will replace this component.
- */
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {}
+export class LoginComponent {
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
+  readonly showPassword = signal(false);
+  readonly isSubmitting = signal(false);
+  readonly errorMessage = signal<string | null>(null);
+  readonly successMessage = signal<string | null>(null);
+  readonly form = new FormGroup({
+    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  });
+
+  submit(): void {
+    this.form.markAllAsTouched();
+    if (this.form.invalid || this.isSubmitting()) return;
+
+    this.isSubmitting.set(true);
+    this.errorMessage.set(null);
+    this.successMessage.set(null);
+    this.auth.signIn(this.form.getRawValue()).pipe(finalize(() => this.isSubmitting.set(false))).subscribe({
+      next: () => {
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        if (returnUrl?.startsWith('/') && !returnUrl.startsWith('//')) {
+          void this.router.navigateByUrl(returnUrl);
+          return;
+        }
+        this.successMessage.set('You’re signed in. Your fitness profile is ready.');
+      },
+      error: () => this.errorMessage.set(this.auth.error() ?? 'We couldn’t sign you in. Please try again.'),
+    });
+  }
+}

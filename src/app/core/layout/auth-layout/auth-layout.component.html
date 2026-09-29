@@ -1,5 +1,4 @@
 <div class="relative min-h-screen font-['Baloo_Thambi_2',_system-ui,_sans-serif]">
-  <!-- Full-screen background -->
   <img
     src="/assets/main-background.png"
     alt=""
@@ -7,50 +6,48 @@
     aria-hidden="true"
   />
 
-  <!-- Dark blurred overlay -->
   <div
     class="absolute inset-0 bg-[#242424]/60 backdrop-blur-[86px]"
     aria-hidden="true"
     data-testid="auth-overlay"
   ></div>
 
-  <!-- Content -->
   <div class="relative z-10 flex min-h-screen">
-    <!-- Left visual panel -->
     <aside
       class="auth-layout__visual hidden lg:flex lg:w-1/2 flex-col items-center justify-center overflow-hidden border-r border-[#FF4100]/20 shadow-[0_4px_80px_47px_rgba(0,0,0,0.25)]"
       aria-label="Super Fitness branding"
     >
-      <div class="relative z-10 flex w-full max-w-2xl flex-col items-center gap-12 px-8">
+      <div class="relative z-10 flex w-full max-w-2xl flex-col items-center gap-8 px-4">
         <img
-          src="/assets/logo-image.png"
+          src="/assets/logo-image-512.png"
           alt="Super Fitness"
+          width="512"
+          height="512"
           class="w-[38%] max-w-[15rem] object-contain"
         />
         <img
-          src="/assets/auth-image.png"
+          src="/assets/auth-image-1024.png"
           alt=""
-          class="auth-layout__hero w-[98%] max-w-[28rem] object-contain"
+          width="1024"
+          height="1024"
+          class="auth-layout__hero w-[115%] max-w-[44rem] object-contain"
           aria-hidden="true"
           data-testid="auth-hero"
         />
       </div>
     </aside>
 
-    <!-- Right area -->
-    <main
-      class="flex w-full lg:w-1/2 min-h-screen flex-col items-center justify-center px-6 py-12"
-    >
-      <!-- Mobile logo -->
+    <main class="flex w-full min-h-screen flex-col items-center justify-center px-6 py-12 lg:w-1/2">
       <img
-        src="/assets/logo-image.png"
+        src="/assets/logo-image-512.png"
         alt="Super Fitness"
-        class="lg:hidden w-40 mb-8"
+        width="512"
+        height="512"
+        class="mb-8 w-40 lg:hidden"
       />
 
-      <!-- Glassmorphism card -->
       <div
-        class="w-full max-w-[519px] rounded-[50px] border border-[#D3D3D3] bg-[#242424]/10 p-10 backdrop-blur-[86px]"
+        class="w-full max-w-[700px]"
         data-testid="auth-card"
       >
         <router-outlet />

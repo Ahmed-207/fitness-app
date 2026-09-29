@@ -1,4 +1,25 @@
-<div class="login-placeholder">
-  <h1 class="login-placeholder__title">Welcome back</h1>
-  <p class="login-placeholder__text">Login form coming soon</p>
-</div>
+<section class="login-panel" aria-labelledby="login-title">
+  <p class="eyebrow">WELCOME BACK</p>
+  <h1 id="login-title">Log in to Super Fitness</h1>
+  <p class="intro">Pick up where you left off and keep moving forward.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <label class="field">
+      <span>Email address</span>
+      <input type="email" autocomplete="email" inputmode="email" formControlName="email" placeholder="you@example.com" />
+      @if (form.controls.email.touched && form.controls.email.invalid) { <small>Enter a valid email address.</small> }
+    </label>
+    <label class="field">
+      <span>Password</span>
+      <span class="password-wrap">
+        <input [type]="showPassword() ? 'text' : 'password'" autocomplete="current-password" formControlName="password" placeholder="Your password" />
+        <button class="password-toggle" type="button" (click)="showPassword.update((show) => !show)" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">{{ showPassword() ? 'Hide' : 'Show' }}</button>
+      </span>
+      @if (form.controls.password.touched && form.controls.password.invalid) { <small>Enter your password.</small> }
+    </label>
+    @if (errorMessage()) { <p class="form-error" role="alert">{{ errorMessage() }}</p> }
+    @if (successMessage()) { <p class="form-success" role="status">{{ successMessage() }}</p> }
+    <button class="primary-button" type="submit" [disabled]="form.invalid || isSubmitting()">{{ isSubmitting() ? 'Signing in…' : 'Log in' }}</button>
+  </form>
+  <p class="switch-auth">New to Super Fitness? <a routerLink="/auth/register">Create an account</a></p>
+</section>

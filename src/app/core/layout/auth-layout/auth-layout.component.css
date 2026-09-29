@@ -3,3 +3,11 @@
 .auth-layout__visual {
   background-color: rgba(36, 36, 36, 0.2);
 }
+
+.auth-layout__visual > div {
+  transform: translateY(-2rem);
+}
+
+.auth-layout__hero {
+  transform: translateY(-18vh);
+}
