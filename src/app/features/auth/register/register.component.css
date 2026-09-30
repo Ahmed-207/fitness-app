@@ -1,0 +1,16 @@
+:host {
+  --accent: #ff4a12;
+  --accent-strong: #ff4308;
+  --accent-hot: #ff6132;
+  --accent-press: #e83b05;
+  --text: #f8f8f8;
+  --muted: #c5c5c5;
+  --error: #ff9c7e;
+  display: block;
+  width: 100%;
+  color: var(--text);
+}
+
+.view-hidden {
+  display: none;
+}

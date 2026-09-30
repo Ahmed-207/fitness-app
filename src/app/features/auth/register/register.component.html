@@ -1,0 +1,16 @@
+@if (phase() !== 'success') {
+  <app-account-form
+    [class.view-hidden]="phase() !== 'account'"
+    (submitted)="startOnboarding($event)"
+  />
+  @if (account(); as credentials) {
+    <app-onboarding
+      [class.view-hidden]="phase() !== 'onboarding'"
+      [account]="credentials"
+      (exit)="showAccount()"
+      (finished)="showSuccess()"
+    />
+  }
+} @else {
+  <app-registration-success />
+}

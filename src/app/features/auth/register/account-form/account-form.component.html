@@ -1,0 +1,129 @@
+<section class="register-page" aria-labelledby="register-title">
+  <p class="register-greeting">{{ 'AUTHREGISTER.HEY_THERE' | translate }}</p>
+  <h1 id="register-title" class="register-page-title">{{ 'AUTHREGISTER.CREATE_ACCOUNT' | translate }}</h1>
+  <div class="register-panel">
+    <h2 class="register-form-title">{{ 'AUTHREGISTER.REGISTER_TITLE' | translate }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="name-row">
+        <label class="field">
+          <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.2" />
+            <path d="M5.5 20v-1.2a6.5 6.5 0 0 1 13 0V20" />
+          </svg>
+          <span class="visually-hidden">{{ 'AUTHREGISTER.FIRST_NAME' | translate }}</span>
+          <input
+            autocomplete="given-name"
+            formControlName="firstName"
+            [placeholder]="'AUTHREGISTER.FIRST_NAME_PLACEHOLDER' | translate"
+          />
+          @if (form.controls.firstName.touched && form.controls.firstName.hasError('required')) {
+            <small>{{ 'AUTHREGISTER.FIRST_NAME_REQUIRED' | translate }}</small>
+          } @else if (
+            form.controls.firstName.touched && form.controls.firstName.hasError('minlength')
+          ) {
+            <small>{{ 'AUTHREGISTER.NAME_MIN_LENGTH' | translate }}</small>
+          }
+        </label>
+        <label class="field">
+          <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.2" />
+            <path d="M5.5 20v-1.2a6.5 6.5 0 0 1 13 0V20" />
+          </svg>
+          <span class="visually-hidden">{{ 'AUTHREGISTER.LAST_NAME' | translate }}</span>
+          <input
+            autocomplete="family-name"
+            formControlName="lastName"
+            [placeholder]="'AUTHREGISTER.LAST_NAME_PLACEHOLDER' | translate"
+          />
+          @if (form.controls.lastName.touched && form.controls.lastName.hasError('required')) {
+            <small>{{ 'AUTHREGISTER.LAST_NAME_REQUIRED' | translate }}</small>
+          } @else if (
+            form.controls.lastName.touched && form.controls.lastName.hasError('minlength')
+          ) {
+            <small>{{ 'AUTHREGISTER.NAME_MIN_LENGTH' | translate }}</small>
+          }
+        </label>
+      </div>
+
+      <label class="field">
+        <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+        <span class="visually-hidden">{{ 'AUTHREGISTER.EMAIL' | translate }}</span>
+        <input
+          type="email"
+          autocomplete="email"
+          inputmode="email"
+          formControlName="email"
+          [placeholder]="'AUTHREGISTER.EMAIL_PLACEHOLDER' | translate"
+        />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <small>{{ 'AUTHREGISTER.EMAIL_INVALID' | translate }}</small>
+        }
+      </label>
+
+      <label class="field password-field">
+        <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="10" width="14" height="11" rx="2" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+        </svg>
+        <span class="visually-hidden">{{ 'AUTHREGISTER.PASSWORD' | translate }}</span>
+        <span class="password-wrap">
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            autocomplete="new-password"
+            formControlName="password"
+            [placeholder]="'AUTHREGISTER.PASSWORD_PLACEHOLDER' | translate"
+          />
+          <button
+            class="password-toggle"
+            type="button"
+            (click)="showPassword.update((show) => !show)"
+            [attr.aria-label]="
+              (showPassword() ? 'AUTHREGISTER.HIDE_PASSWORD' : 'AUTHREGISTER.SHOW_PASSWORD')
+                | translate
+            "
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6Z" />
+              <circle cx="12" cy="12" r="2.6" />
+            </svg>
+          </button>
+        </span>
+        @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+          <small>{{ 'AUTHREGISTER.PASSWORD_REQUIRED' | translate }}</small>
+        } @else if (
+          form.controls.password.touched && form.controls.password.hasError('passwordStrength')
+        ) {
+          <small>{{ 'AUTHREGISTER.PASSWORD_RULE' | translate }}</small>
+        }
+      </label>
+
+      <div class="register-actions">
+        <span class="forgot-password">{{ 'AUTHREGISTER.FORGOT_PASSWORD' | translate }}</span>
+      </div>
+      <div class="register-divider" aria-hidden="true">
+        <span></span>{{ 'AUTHREGISTER.OR' | translate }}<span></span>
+      </div>
+      <div class="social-markers" aria-hidden="true">
+        <span>f</span>
+        <span>G</span>
+        <span>
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M16.9 12.7c0-2.2 1.8-3.3 1.9-3.4a4.1 4.1 0 0 0-3.2-1.7c-1.4-.1-2.7.8-3.4.8s-1.8-.8-3-.8a4.5 4.5 0 0 0-3.8 2.3c-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3s1.6-.7 3-.7 1.8.7 3.1.7 2.1-1.1 2.9-2.3a10 10 0 0 0 1.3-2.7 3.8 3.8 0 0 1-2.9-3.8ZM14.7 6.1a4 4 0 0 0 .9-2.9 4.1 4.1 0 0 0-2.7 1.4 3.8 3.8 0 0 0-.9 2.8 3.4 3.4 0 0 0 2.7-1.3Z"
+            />
+          </svg>
+        </span>
+      </div>
+      <button class="primary-button" type="submit">{{ 'AUTHREGISTER.REGISTER_BTN' | translate }}</button>
+    </form>
+
+    <p class="switch-auth">
+      {{ 'AUTHREGISTER.HAVE_ACCOUNT' | translate }}
+      <a routerLink="/auth/login">{{ 'AUTHREGISTER.LOGIN_LINK' | translate }}</a>
+    </p>
+  </div>
+</section>

@@ -208,4 +208,19 @@ describe('AuthService', () => {
     expect(service.error()).toBe('Invalid email or password');
     expect(service.isLoading()).toBe(false);
   });
+
+  it('reads the API error string used by the live auth endpoints', () => {
+    service.signIn({ email: 'wrong@example.com', password: 'Password@123' }).subscribe({
+      error: () => undefined,
+    });
+
+    const request = httpController.expectOne(API_ENDPOINTS.auth.signin);
+    request.flush(
+      { error: 'incorrect email or password' },
+      { status: 401, statusText: 'Unauthorized' },
+    );
+
+    expect(service.error()).toBe('incorrect email or password');
+    expect(service.isLoading()).toBe(false);
+  });
 });

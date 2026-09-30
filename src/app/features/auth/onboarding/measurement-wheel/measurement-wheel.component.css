@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+.measurement-wheel {
+  position: relative;
+  display: grid;
+  width: min(100%, 520px);
+  height: 66px;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  column-gap: 0.25rem;
+  align-items: center;
+  margin: 0.7rem auto 0;
+  outline: none;
+  touch-action: pan-y;
+}
+
+.measurement-wheel:focus-visible {
+  border-radius: 10px;
+  outline: 2px solid var(--accent, #ff4a12);
+  outline-offset: 3px;
+}
+
+.wheel-value {
+  display: grid;
+  min-width: 0;
+  height: 52px;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  color: #f1f1f1;
+  background: transparent;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.55;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    font-size 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.wheel-value.near {
+  font-size: 1.25rem;
+  opacity: 0.86;
+}
+
+.wheel-value.selected {
+  color: var(--accent-strong, #ff4308);
+  font-size: 2.2rem;
+  font-weight: 800;
+  opacity: 1;
+}
+
+.wheel-empty {
+  cursor: default;
+}
+
+.wheel-marker {
+  position: absolute;
+  bottom: -0.1rem;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-right: 7px solid transparent;
+  border-bottom: 0;
+  border-left: 7px solid transparent;
+  border-top: 8px solid var(--accent, #ff4a12);
+  pointer-events: none;
+}
+
+@media (max-width: 520px) {
+  .measurement-wheel {
+    height: 62px;
+  }
+
+  .wheel-value {
+    font-size: 0.72rem;
+  }
+
+  .wheel-value.near {
+    font-size: 0.98rem;
+  }
+
+  .wheel-value.selected {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 1024px) {
+  .measurement-wheel {
+    height: 58px;
+    margin-top: 0.65rem;
+  }
+}

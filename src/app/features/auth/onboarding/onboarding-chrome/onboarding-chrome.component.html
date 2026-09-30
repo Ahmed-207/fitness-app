@@ -1,0 +1,66 @@
+<div class="step-topline">
+  <button
+    class="back-button"
+    type="button"
+    (click)="back.emit()"
+    [attr.aria-label]="'ONBOARDING.GO_BACK' | translate"
+  >
+    ← <span>{{ 'ONBOARDING.BACK' | translate }}</span>
+  </button>
+  @if (step() === 0) {
+    <span
+      class="step-count first-step-count"
+      role="progressbar"
+      aria-valuenow="1"
+      aria-valuemin="1"
+      aria-valuemax="6"
+      [attr.aria-label]="'ONBOARDING.STEP' | translate: { current: 1, total: 6 }"
+    >
+      1/6
+    </span>
+  } @else {
+    <span
+      class="step-count step-ring"
+      role="progressbar"
+      [attr.aria-valuenow]="stepNumber()"
+      aria-valuemin="1"
+      aria-valuemax="6"
+      [attr.aria-label]="'ONBOARDING.STEP' | translate: { current: stepNumber(), total: 6 }"
+    >
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle class="step-ring-track" cx="32" cy="32" r="27" />
+        <circle
+          class="step-ring-progress"
+          cx="32"
+          cy="32"
+          r="27"
+          [attr.stroke-dashoffset]="progressOffset()"
+        />
+      </svg>
+      <span>{{ stepNumber() }}/6</span>
+    </span>
+  }
+</div>
+
+<ng-content />
+
+@if (apiError.message()) {
+  <p class="form-error" role="alert">{{ apiError.message() }}</p>
+}
+<button
+  class="primary-button"
+  type="button"
+  [disabled]="!canContinue() || isSubmitting()"
+  (click)="nextStep.emit()"
+>
+  @if (isSubmitting()) {
+    {{ 'ONBOARDING.CREATING' | translate }}
+  } @else if (step() === 5) {
+    {{ 'ONBOARDING.CREATE_ACCOUNT' | translate }}
+  } @else {
+    {{ 'ONBOARDING.NEXT' | translate }}
+  }
+</button>
+<p class="secure-note">
+  <span aria-hidden="true">◆</span> {{ 'ONBOARDING.SECURE' | translate }}
+</p>

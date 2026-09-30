@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { isPublicAuthRequest } from '../auth/public-auth-request';
 import { AuthSessionService } from '../services/auth-session.service';
 
 export const unauthorizedInterceptor: HttpInterceptorFn = (request, next) => {
@@ -10,7 +11,12 @@ export const unauthorizedInterceptor: HttpInterceptorFn = (request, next) => {
 
   return next(request).pipe(
     catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
+      const isExpiredSession =
+        error instanceof HttpErrorResponse &&
+        error.status === 401 &&
+        !isPublicAuthRequest(request.url);
+
+      if (isExpiredSession) {
         const returnUrl = router.url;
 
         session.clearToken();

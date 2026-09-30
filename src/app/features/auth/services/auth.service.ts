@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, defer, finalize, Observable, tap, throwError } from 'rxjs';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints';
+import { readApiErrorMessage } from '../../../core/http/read-api-error-message';
 import { AuthSessionService } from '../../../core/services/auth-session.service';
 import {
   ApiMessageResponse,
@@ -148,10 +149,10 @@ export class AuthService {
 
   private getErrorMessage(error: unknown): string {
     if (error instanceof HttpErrorResponse) {
-      const apiError = error.error as { message?: unknown } | null;
+      const apiMessage = readApiErrorMessage(error.error);
 
-      if (typeof apiError?.message === 'string') {
-        return apiError.message;
+      if (apiMessage) {
+        return apiMessage;
       }
 
       return error.message;

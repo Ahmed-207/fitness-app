@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'auth/register', pathMatch: 'full' },
   {
     path: 'auth',
     loadComponent: () =>
@@ -8,7 +9,14 @@ export const routes: Routes = [
         (m) => m.AuthLayoutComponent
       ),
     children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '', redirectTo: 'register', pathMatch: 'full' },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./features/auth/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
+      },
       {
         path: 'login',
         loadComponent: () =>
@@ -18,4 +26,5 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: '**', redirectTo: 'auth/register' },
 ];

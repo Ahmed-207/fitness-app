@@ -1,0 +1,162 @@
+:host {
+  display: block;
+}
+
+.step-topline {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin: 0 0 1.05rem;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  border: 0;
+  padding: 0.4rem 0;
+  color: #aaa;
+  background: transparent;
+  font: inherit;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.back-button span {
+  margin-left: 0.25rem;
+}
+
+.back-button:focus-visible {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.step-count {
+  color: #f8f8f8;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.first-step-count {
+  color: #fff;
+}
+
+.step-ring {
+  position: relative;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  font-size: 1rem;
+}
+
+.step-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.step-ring circle {
+  fill: none;
+  stroke-width: 2.4;
+}
+
+.step-ring-track {
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.step-ring-progress {
+  stroke: var(--accent, #ff4a12);
+  stroke-dasharray: 169.65;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.25s ease;
+}
+
+.step-ring span {
+  position: relative;
+}
+
+.primary-button {
+  display: flex;
+  width: 80%;
+  max-width: 310px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin: 1.7rem auto 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  color: #fff;
+  background: var(--accent-strong, #ff4308);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: var(--accent-press, #e83b05);
+  transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+  color: #fff;
+  background: #d4d4d4;
+  cursor: not-allowed;
+}
+
+.primary-button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.form-error {
+  margin: 0.5rem 0;
+  color: var(--error, #ff9c7e);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.secure-note {
+  display: none;
+  margin: 0.75rem 0 0;
+  color: #aaa;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .step-topline {
+    margin-bottom: 0.9rem;
+  }
+
+  .primary-button {
+    margin-top: 1.45rem;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 1024px) {
+  .step-topline {
+    min-height: 48px;
+    margin-bottom: 0.75rem;
+  }
+}
