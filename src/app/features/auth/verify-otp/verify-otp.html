@@ -1,0 +1,76 @@
+<div class="flex flex-col items-center justify-center w-full text-white">
+  
+  <h1 class="text-3xl font-black tracking-wider mb-8 text-white text-center">
+    {{ 'OTP.TITLE' | translate }}
+  </h1>
+
+  <div class="w-full max-w-105 rounded-[35px] border border-gray-500/40 bg-[#1E1E1E]/40 p-8 backdrop-blur-xl shadow-2xl flex flex-col items-center">
+    
+    <p class="text-gray-200 text-sm font-semibold text-center mb-8">
+      {{ 'OTP.SUBTITLE' | translate }}
+    </p>
+
+    <form [formGroup]="otpForm" (ngSubmit)="onVerify()" class="w-full flex flex-col items-center gap-6">
+      
+      <div class="flex justify-center gap-4 w-full px-2" formGroupName="otpInputs">
+        
+        <input
+          #input1
+          type="text"
+          maxlength="1"
+          formControlName="digit1"
+          (keyup)="onDigitInput($event, input2, null)"
+          class="w-14 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
+          [ngClass]="input1.value ? 'border-[#FF5722]' : 'border-gray-400'"
+        />
+
+        <input
+          #input2
+          type="text"
+          maxlength="1"
+          formControlName="digit2"
+          (keyup)="onDigitInput($event, input3, input1)"
+          class="w-14 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
+          [ngClass]="input2.value ? 'border-[#FF5722]' : 'border-gray-400'"
+        />
+
+        <input
+          #input3
+          type="text"
+          maxlength="1"
+          formControlName="digit3"
+          (keyup)="onDigitInput($event, input4, input2)"
+          class="w-14 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
+          [ngClass]="input3.value ? 'border-[#FF5722]' : 'border-gray-400'"
+        />
+
+        <input
+          #input4
+          type="text"
+          maxlength="1"
+          formControlName="digit4"
+          (keyup)="onDigitInput($event, null, input3)"
+          class="w-14 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
+          [ngClass]="input4.value ? 'border-[#FF5722]' : 'border-gray-400'"
+        />
+
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="otpForm.invalid"
+        class="w-full rounded-full bg-[#FF5722] hover:bg-[#E64A19] py-3 mt-4 text-white font-bold text-base shadow-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {{ 'OTP.CONFIRM_BTN' | translate }}
+      </button>
+
+      <div class="flex flex-col items-center text-center mt-1 text-xs text-gray-300 gap-1">
+        <span>{{ 'OTP.RESEND_PROMPT' | translate }}</span>
+        <button type="button" (click)="resendCode()" class="text-[#FF5722] hover:underline font-semibold">
+          {{ 'OTP.RESEND_LINK' | translate }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
