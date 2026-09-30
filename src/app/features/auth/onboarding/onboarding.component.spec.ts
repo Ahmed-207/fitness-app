@@ -2,6 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { throwError } from 'rxjs';
 import { of } from 'rxjs';
 import { vi } from 'vitest';
+import { ApiErrorService } from '../../../core/http/api-error.service';
+import {
+  loadEnglishTranslations,
+  provideEnglishTranslations,
+} from '../../../../testing/english-translations';
 import { AccountCredentials } from '../register/account-credentials';
 import { AuthService } from '../services/auth.service';
 import { heightFromDisplay, weightFromDisplay } from './measurement';
@@ -11,7 +16,6 @@ describe('OnboardingComponent', () => {
   let fixture: ComponentFixture<OnboardingComponent>;
   let component: OnboardingComponent;
   let signUp: ReturnType<typeof vi.fn>;
-  let authError: string | null;
 
   const account: AccountCredentials = {
     firstName: 'Ada',
@@ -21,22 +25,22 @@ describe('OnboardingComponent', () => {
   };
 
   beforeEach(async () => {
-    authError = null;
     signUp = vi.fn(() => of({ message: 'success', token: 'test-token' }));
 
     await TestBed.configureTestingModule({
       imports: [OnboardingComponent],
       providers: [
+        ...provideEnglishTranslations(),
         {
           provide: AuthService,
           useValue: {
             signUp,
-            error: () => authError,
           },
         },
       ],
     }).compileComponents();
 
+    loadEnglishTranslations();
     fixture = TestBed.createComponent(OnboardingComponent);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('account', account);
@@ -100,17 +104,22 @@ describe('OnboardingComponent', () => {
     expect(component.height()).toBeCloseTo(170.18, 2);
   });
 
-  it('shows the API error and stays on the last step when signup fails', () => {
-    authError = 'Email already exists';
+  it('stays on the last step when signup fails and shows the interceptor message', () => {
     signUp.mockReturnValue(throwError(() => new Error('fail')));
+    TestBed.inject(ApiErrorService).set('Email already exists');
     component.gender.set('male');
     component.goal.set('Lose weight');
     component.activity.set('level2');
     component.step.set(5);
 
+    let finished = false;
+    component.finished.subscribe(() => {
+      finished = true;
+    });
     component.next();
     fixture.detectChanges();
 
+    expect(finished).toBe(false);
     expect(component.step()).toBe(5);
     expect(fixture.nativeElement.textContent).toContain('Email already exists');
   });

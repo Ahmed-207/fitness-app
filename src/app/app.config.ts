@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { apiErrorInterceptor } from './core/interceptors/api-error.interceptor';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { unauthorizedInterceptor } from './core/interceptors/unauthorized.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -13,7 +14,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor, unauthorizedInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor, unauthorizedInterceptor, apiErrorInterceptor]),
+    ),
     provideClientHydration(withEventReplay()),
     provideTranslateService({
       fallbackLang: 'en',

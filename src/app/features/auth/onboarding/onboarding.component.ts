@@ -7,7 +7,8 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
+import { ApiErrorService } from '../../../core/http/api-error.service';
 import { Gender } from '../models/auth.models';
 import { AccountCredentials } from '../register/account-credentials';
 import { AuthService } from '../services/auth.service';
@@ -52,6 +53,7 @@ import { isCompleteOnboardingDraft, toSignUpRequest } from './signup-request';
 })
 export class OnboardingComponent {
   private readonly auth = inject(AuthService);
+  private readonly apiError = inject(ApiErrorService);
 
   readonly account = input.required<AccountCredentials>();
   readonly exit = output<void>();
@@ -66,7 +68,6 @@ export class OnboardingComponent {
   readonly activity = signal<ActivityLevel | null>(null);
   readonly units = signal<UnitSystem>('metric');
   readonly isSubmitting = signal(false);
-  readonly errorMessage = signal<string | null>(null);
 
   readonly goals = GOAL_OPTIONS;
   readonly activityLevels = ACTIVITY_OPTIONS;
@@ -76,16 +77,9 @@ export class OnboardingComponent {
   readonly shownHeight = computed(() => displayHeight(this.height(), this.units()));
   readonly shownHeightFeet = computed(() => heightFeet(this.shownHeight()));
   readonly shownHeightInches = computed(() => heightInches(this.shownHeight()));
-  readonly continueLabel = computed(() => {
-    if (this.isSubmitting()) {
-      return 'Creating your plan…';
-    }
-
-    return this.step() === 5 ? 'Create my account' : 'Next';
-  });
 
   back(): void {
-    this.errorMessage.set(null);
+    this.apiError.clear();
 
     if (this.step() === 0) {
       this.exit.emit();
@@ -164,16 +158,12 @@ export class OnboardingComponent {
     }
 
     this.isSubmitting.set(true);
-    this.errorMessage.set(null);
     this.auth
       .signUp(toSignUpRequest(this.account(), draft))
-      .pipe(finalize(() => this.isSubmitting.set(false)))
-      .subscribe({
-        next: () => this.finished.emit(),
-        error: () =>
-          this.errorMessage.set(
-            this.auth.error() ?? 'We couldn’t create your account. Please try again.',
-          ),
-      });
+      .pipe(
+        finalize(() => this.isSubmitting.set(false)),
+        catchError(() => EMPTY),
+      )
+      .subscribe(() => this.finished.emit());
   }
 }

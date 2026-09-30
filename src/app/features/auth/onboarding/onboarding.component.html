@@ -2,8 +2,6 @@
   [step]="step()"
   [canContinue]="hasAnswer()"
   [isSubmitting]="isSubmitting()"
-  [continueLabel]="continueLabel()"
-  [errorMessage]="errorMessage()"
   (back)="back()"
   (nextStep)="next()"
 >
@@ -13,60 +11,48 @@
     }
     @case (1) {
       <app-measurement-step
-        title="How Old Are You ?"
-        caption="Year"
+        title="ONBOARDING.AGE_TITLE"
+        caption="ONBOARDING.YEAR"
         [value]="age()"
         [minimum]="16"
         [maximum]="100"
-        ariaLabel="Age in years. Use the arrow keys, swipe, or scroll to change the value."
-        unitSuffix=" years"
+        ariaLabel="ONBOARDING.AGE_ARIA"
+        unitSuffix="ONBOARDING.UNIT_YEARS"
         (valueChange)="age.set($event)"
       />
     }
     @case (2) {
       <app-measurement-step
-        title="What Is Your Weight ?"
+        title="ONBOARDING.WEIGHT_TITLE"
         captionMode="units"
-        [caption]="metric() ? 'Kg' : 'Lb'"
+        [caption]="metric() ? 'ONBOARDING.KG' : 'ONBOARDING.LB'"
         [unitAriaLabel]="
-          'Weight units: ' +
-          (metric() ? 'kilograms. Switch to pounds' : 'pounds. Switch to kilograms')
+          metric() ? 'ONBOARDING.WEIGHT_UNITS_METRIC' : 'ONBOARDING.WEIGHT_UNITS_IMPERIAL'
         "
         [units]="units()"
         [value]="shownWeight()"
         [minimum]="metric() ? 30 : 66"
         [maximum]="metric() ? 250 : 550"
-        [ariaLabel]="
-          'Weight in ' +
-          (metric() ? 'kilograms' : 'pounds') +
-          '. Use the arrow keys, swipe, or scroll to change the value.'
-        "
-        [unitSuffix]="metric() ? ' kilograms' : ' pounds'"
+        [ariaLabel]="metric() ? 'ONBOARDING.WEIGHT_ARIA_METRIC' : 'ONBOARDING.WEIGHT_ARIA_IMPERIAL'"
+        [unitSuffix]="metric() ? 'ONBOARDING.UNIT_KILOGRAMS' : 'ONBOARDING.UNIT_POUNDS'"
         (unitsChange)="units.set($event)"
         (valueChange)="onWeight($event)"
       />
     }
     @case (3) {
       <app-measurement-step
-        title="What Is Your Height ?"
+        title="ONBOARDING.HEIGHT_TITLE"
         captionMode="units"
-        [caption]="metric() ? 'Cm' : 'Ft / In'"
+        [caption]="metric() ? 'ONBOARDING.CM' : 'ONBOARDING.FT_IN'"
         [unitAriaLabel]="
-          'Height units: ' +
-          (metric()
-            ? 'centimetres. Switch to feet and inches'
-            : 'feet and inches. Switch to centimetres')
+          metric() ? 'ONBOARDING.HEIGHT_UNITS_METRIC' : 'ONBOARDING.HEIGHT_UNITS_IMPERIAL'
         "
         [units]="units()"
         [value]="shownHeight()"
         [minimum]="metric() ? 120 : 47"
         [maximum]="metric() ? 230 : 90"
-        [ariaLabel]="
-          'Height in ' +
-          (metric() ? 'centimetres' : 'inches') +
-          '. Use the arrow keys, swipe, or scroll to change the value.'
-        "
-        [unitSuffix]="metric() ? ' centimetres' : ' inches'"
+        [ariaLabel]="metric() ? 'ONBOARDING.HEIGHT_ARIA_METRIC' : 'ONBOARDING.HEIGHT_ARIA_IMPERIAL'"
+        [unitSuffix]="metric() ? 'ONBOARDING.UNIT_CENTIMETRES' : 'ONBOARDING.UNIT_INCHES'"
         [feet]="metric() ? null : shownHeightFeet()"
         [inches]="metric() ? null : shownHeightInches()"
         (unitsChange)="units.set($event)"
@@ -75,8 +61,8 @@
     }
     @case (4) {
       <app-option-step
-        title="What Is Your Goal ?"
-        groupLabel="Choose your main fitness goal"
+        title="ONBOARDING.GOAL_TITLE"
+        groupLabel="ONBOARDING.GOAL_GROUP"
         [options]="goals"
         [selected]="goal()"
         (selectedChange)="chooseGoal($event)"
@@ -84,8 +70,8 @@
     }
     @default {
       <app-option-step
-        title="Your Regular Physical Activity Level ?"
-        groupLabel="Choose your training experience"
+        title="ONBOARDING.ACTIVITY_TITLE"
+        groupLabel="ONBOARDING.ACTIVITY_GROUP"
         [options]="activityLevels"
         [selected]="activity()"
         (selectedChange)="chooseActivity($event)"

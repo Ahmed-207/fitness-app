@@ -2,6 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import {
+  loadEnglishTranslations,
+  provideEnglishTranslations,
+} from '../../../../testing/english-translations';
 import { OnboardingComponent } from '../onboarding/onboarding.component';
 import { AuthService } from '../services/auth.service';
 import { AccountFormComponent } from './account-form/account-form.component';
@@ -16,16 +20,17 @@ describe('RegisterComponent', () => {
       imports: [RegisterComponent],
       providers: [
         provideRouter([]),
+        ...provideEnglishTranslations(),
         {
           provide: AuthService,
           useValue: {
             signUp: () => of({ message: 'success', token: 'test-token' }),
-            error: () => null,
           },
         },
       ],
     }).compileComponents();
 
+    loadEnglishTranslations();
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

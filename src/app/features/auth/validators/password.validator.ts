@@ -4,9 +4,6 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 export const API_PASSWORD_PATTERN =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
-export const PASSWORD_REQUIREMENTS =
-  'Use 8+ characters with uppercase, lowercase, a number, and a symbol.';
-
 export function passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value;
 

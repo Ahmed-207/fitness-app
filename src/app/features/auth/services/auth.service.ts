@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, defer, finalize, Observable, tap, throwError } from 'rxjs';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints';
+import { readApiErrorMessage } from '../../../core/http/read-api-error-message';
 import { AuthSessionService } from '../../../core/services/auth-session.service';
 import {
   ApiMessageResponse,
@@ -17,28 +18,6 @@ import {
   VerifyResetCodeRequest,
   VerifyResetCodeResponse,
 } from '../models/auth.models';
-
-function readApiErrorMessage(body: unknown): string | null {
-  if (typeof body === 'string' && body.trim()) {
-    return body;
-  }
-
-  if (!body || typeof body !== 'object') {
-    return null;
-  }
-
-  const apiError = body as { error?: unknown; message?: unknown };
-
-  if (typeof apiError.error === 'string' && apiError.error.trim()) {
-    return apiError.error;
-  }
-
-  if (typeof apiError.message === 'string' && apiError.message.trim()) {
-    return apiError.message;
-  }
-
-  return null;
-}
 
 const initialState: AuthState = {
   user: null,

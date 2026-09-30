@@ -14,19 +14,19 @@ export interface OnboardingOption<T extends string = string> {
 }
 
 export const GOAL_OPTIONS: readonly OnboardingOption<Goal>[] = [
-  { value: 'Gain weight', label: 'Gain Weight', detail: '' },
-  { value: 'Lose weight', label: 'Lose Weight', detail: '' },
-  { value: 'Get fitter', label: 'Get Fitter', detail: '' },
-  { value: 'Improve flexibility', label: 'Gain More Flexible', detail: '' },
-  { value: 'Learn the basics', label: 'Learn The Basic', detail: '' },
+  { value: 'Gain weight', label: 'ONBOARDING.GOAL_GAIN_WEIGHT', detail: '' },
+  { value: 'Lose weight', label: 'ONBOARDING.GOAL_LOSE_WEIGHT', detail: '' },
+  { value: 'Get fitter', label: 'ONBOARDING.GOAL_GET_FITTER', detail: '' },
+  { value: 'Improve flexibility', label: 'ONBOARDING.GOAL_FLEXIBILITY', detail: '' },
+  { value: 'Learn the basics', label: 'ONBOARDING.GOAL_BASICS', detail: '' },
 ];
 
 export const ACTIVITY_OPTIONS: readonly OnboardingOption<ActivityLevel>[] = [
-  { value: 'level1', label: 'Rookie', detail: '' },
-  { value: 'level2', label: 'Beginner', detail: 'I train occasionally' },
-  { value: 'level3', label: 'Intermediate', detail: 'I train a few times a week' },
-  { value: 'level4', label: 'Advance', detail: '' },
-  { value: 'level5', label: 'True Beast', detail: '' },
+  { value: 'level1', label: 'ONBOARDING.LEVEL_ROOKIE', detail: '' },
+  { value: 'level2', label: 'ONBOARDING.LEVEL_BEGINNER', detail: '' },
+  { value: 'level3', label: 'ONBOARDING.LEVEL_INTERMEDIATE', detail: '' },
+  { value: 'level4', label: 'ONBOARDING.LEVEL_ADVANCE', detail: '' },
+  { value: 'level5', label: 'ONBOARDING.LEVEL_BEAST', detail: '' },
 ];
 
 export interface OnboardingDraft {

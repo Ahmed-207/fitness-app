@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import {
+  loadEnglishTranslations,
+  provideEnglishTranslations,
+} from '../../../../../testing/english-translations';
 import { AccountFormComponent } from './account-form.component';
 
 describe('AccountFormComponent', () => {
@@ -9,9 +13,10 @@ describe('AccountFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AccountFormComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), ...provideEnglishTranslations()],
     }).compileComponents();
 
+    loadEnglishTranslations();
     fixture = TestBed.createComponent(AccountFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

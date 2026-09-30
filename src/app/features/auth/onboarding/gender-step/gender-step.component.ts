@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Gender } from '../../models/auth.models';
 
 @Component({
   selector: 'app-gender-step',
+  imports: [TranslatePipe],
   templateUrl: './gender-step.component.html',
   styleUrl: './gender-step.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

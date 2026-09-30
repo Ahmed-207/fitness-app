@@ -1,17 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ApiErrorService } from '../../../../core/http/api-error.service';
 
 @Component({
   selector: 'app-onboarding-chrome',
+  imports: [TranslatePipe],
   templateUrl: './onboarding-chrome.component.html',
   styleUrl: './onboarding-chrome.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OnboardingChromeComponent {
+  readonly apiError = inject(ApiErrorService);
   readonly step = input.required<number>();
   readonly canContinue = input.required<boolean>();
   readonly isSubmitting = input.required<boolean>();
-  readonly continueLabel = input.required<string>();
-  readonly errorMessage = input<string | null>(null);
 
   readonly back = output<void>();
   readonly nextStep = output<void>();

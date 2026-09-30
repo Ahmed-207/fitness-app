@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { UnitSystem } from '../onboarding.models';
 import { MeasurementWheelComponent } from '../measurement-wheel/measurement-wheel.component';
 
 @Component({
   selector: 'app-measurement-step',
-  imports: [MeasurementWheelComponent],
+  imports: [MeasurementWheelComponent, TranslatePipe],
   templateUrl: './measurement-step.component.html',
   styleUrl: './measurement-step.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeasurementStepComponent {
   readonly title = input.required<string>();
-  readonly intro = input('This Helps Us Create Your Personalized Plan');
+  readonly intro = input('ONBOARDING.PLAN_INTRO');
   readonly caption = input.required<string>();
   readonly captionMode = input<'label' | 'units'>('label');
   readonly unitAriaLabel = input('');
