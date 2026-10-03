@@ -11,36 +11,16 @@
   margin: 0 0 1.05rem;
 }
 
-.back-button {
+.step-back {
   position: absolute;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  clip-path: inset(50%);
-  border: 0;
-  padding: 0.4rem 0;
-  color: #aaa;
-  background: transparent;
-  font: inherit;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  cursor: pointer;
+  inset-inline-start: 0;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
 }
 
-.back-button span {
-  margin-left: 0.25rem;
-}
-
-.back-button:focus-visible {
-  width: auto;
-  height: auto;
-  overflow: visible;
-  clip: auto;
-  clip-path: none;
-  outline: 3px solid #fff;
-  outline-offset: 3px;
+.step-back .auth-back-button {
+  margin: 0;
 }
 
 .step-count {

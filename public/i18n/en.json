@@ -1,4 +1,7 @@
 {
+  "AUTHCOMMON": {
+    "BACK": "Back"
+  },
   "AUTHLOGIN": {
     "HEY_THERE": "Hey There",
     "WELCOME_BACK": "WELCOME BACK",
@@ -11,7 +14,20 @@
     "NO_ACCOUNT": "Dont Have An Account Yet ?",
     "REGISTER_LINK": "Register",
     "SHOW_PASSWORD": "Show password",
-    "HIDE_PASSWORD": "Hide password"
+    "HIDE_PASSWORD": "Hide password",
+    "EMAIL_REQUIRED": "Enter your email address.",
+    "EMAIL_INVALID": "Enter a valid email address.",
+    "PASSWORD_REQUIRED": "Enter your password.",
+    "PASSWORD_MIN_LENGTH": "Use at least 6 characters."
+  },
+  "PREFERENCES": {
+    "ARIA_LABEL": "Language and theme",
+    "LANGUAGE_LABEL": "Language",
+    "THEME_LABEL": "Theme",
+    "LANG_EN": "EN",
+    "LANG_AR": "عربي",
+    "THEME_DARK": "Dark",
+    "THEME_LIGHT": "Light"
   },
   "ERRORS": {
     "REQUEST_FAILED": "Something went wrong. Please try again."
@@ -104,7 +120,9 @@
     "FORGOT_PASS_SUBTITLE": "Enter your email",
     "SEND_CODE_BTN": "Send OTP",
     "BACK_TO_LOGIN": "Back to Login",
-    "EMAIL_PLACEHOLDER": "Email"
+    "EMAIL_PLACEHOLDER": "Email",
+    "EMAIL_REQUIRED": "Enter your email address.",
+    "EMAIL_INVALID": "Enter a valid email address."
   },
   "OTP": {
     "TITLE": "OTP CODE",

@@ -1,55 +1,46 @@
-<div class="relative min-h-screen font-['Baloo_Thambi_2',_system-ui,_sans-serif]">
+<div class="auth-layout">
   <img
     src="/assets/main-background.png"
     alt=""
-    class="absolute inset-0 h-full w-full object-cover"
+    class="auth-layout__bg"
     aria-hidden="true"
   />
 
-  <div
-    class="absolute inset-0 bg-[#242424]/60 backdrop-blur-[86px]"
-    aria-hidden="true"
-    data-testid="auth-overlay"
-  ></div>
+  <div class="auth-layout__overlay" aria-hidden="true" data-testid="auth-overlay"></div>
 
-  <div class="relative z-10 flex min-h-screen">
-    <aside
-      class="auth-layout__visual hidden lg:flex lg:w-1/2 flex-col items-center justify-center overflow-hidden border-r border-[#FF4100]/20 shadow-[0_4px_80px_47px_rgba(0,0,0,0.25)]"
-      aria-label="Super Fitness branding"
-    >
-      <div class="relative z-10 flex w-full max-w-2xl flex-col items-center gap-8 px-4">
+  <div class="auth-layout__content">
+    <aside class="auth-layout__visual" aria-label="Super Fitness branding">
+      <div class="auth-layout__visual-inner">
         <img
           src="/assets/logo-image-512.png"
           alt="Super Fitness"
           width="512"
           height="512"
-          class="w-[38%] max-w-[15rem] object-contain"
+          class="auth-layout__logo"
         />
         <img
           src="/assets/auth-image-1024.png"
           alt=""
           width="1024"
           height="1024"
-          class="auth-layout__hero w-[115%] max-w-[44rem] object-contain"
+          class="auth-layout__hero"
           aria-hidden="true"
           data-testid="auth-hero"
         />
       </div>
     </aside>
 
-    <main class="flex w-full min-h-screen flex-col items-center justify-center px-6 py-12 lg:w-1/2">
+    <main class="auth-layout__main">
       <img
         src="/assets/logo-image-512.png"
         alt="Super Fitness"
         width="512"
         height="512"
-        class="mb-8 w-40 lg:hidden"
+        class="auth-layout__logo-mobile"
       />
 
-      <div
-        class="w-full max-w-[700px]"
-        data-testid="auth-card"
-      >
+      <div class="auth-layout__card" data-testid="auth-card">
+        <app-preferences-bar />
         <router-outlet />
       </div>
     </main>

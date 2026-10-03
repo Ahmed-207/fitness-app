@@ -1,4 +1,7 @@
 {
+  "AUTHCOMMON": {
+    "BACK": "رجوع"
+  },
   "AUTHLOGIN": {
     "HEY_THERE": "أهلاً بك",
     "WELCOME_BACK": "مرحباً بعودتك",
@@ -11,7 +14,20 @@
     "NO_ACCOUNT": "ليس لديك حساب بعد؟",
     "REGISTER_LINK": "إنشاء حساب",
     "SHOW_PASSWORD": "إظهار كلمة المرور",
-    "HIDE_PASSWORD": "إخفاء كلمة المرور"
+    "HIDE_PASSWORD": "إخفاء كلمة المرور",
+    "EMAIL_REQUIRED": "أدخل بريدك الإلكتروني.",
+    "EMAIL_INVALID": "أدخل بريداً إلكترونياً صالحاً.",
+    "PASSWORD_REQUIRED": "أدخل كلمة المرور.",
+    "PASSWORD_MIN_LENGTH": "استخدم 6 أحرف على الأقل."
+  },
+  "PREFERENCES": {
+    "ARIA_LABEL": "اللغة والمظهر",
+    "LANGUAGE_LABEL": "اللغة",
+    "THEME_LABEL": "المظهر",
+    "LANG_EN": "EN",
+    "LANG_AR": "عربي",
+    "THEME_DARK": "داكن",
+    "THEME_LIGHT": "فاتح"
   },
   "ERRORS": {
     "REQUEST_FAILED": "حدث خطأ. حاول مرة أخرى."
@@ -104,7 +120,9 @@
     "FORGOT_PASS_SUBTITLE": "أدخل بريدك الإلكتروني ",
     "SEND_CODE_BTN": "إرسال الرمز",
     "BACK_TO_LOGIN": "العودة لتسجيل الدخول",
-    "EMAIL_PLACEHOLDER": "البريد الإلكتروني"
+    "EMAIL_PLACEHOLDER": "البريد الإلكتروني",
+    "EMAIL_REQUIRED": "أدخل بريدك الإلكتروني.",
+    "EMAIL_INVALID": "أدخل بريدًا إلكترونيًا صالحًا."
   },
   "OTP": {
     "TITLE": "رمز التحقق",

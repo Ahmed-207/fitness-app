@@ -1,4 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
 @import '@fontsource/baloo-thambi-2';
+
+/* Dark theme (default) */
+:root,
+[data-theme='dark'] {
+  --color-bg: #1a1a1a;
+  --color-surface: rgba(25, 25, 25, 0.12);
+  --color-surface-solid: #191919;
+  --color-text: #f8f8f8;
+  --color-text-heading: #ffffff;
+  --color-muted: #c9c9c9;
+  --color-border: rgba(220, 220, 220, 0.58);
+  --color-overlay: rgba(36, 36, 36, 0.6);
+  --accent: #ff4a12;
+  --accent-strong: #ff4308;
+  --accent-press: #e83b05;
+  --color-error: #ff9c7e;
+  --field-bg: rgba(20, 20, 20, 0.26);
+  --field-border: #858585;
+  --field-border-focus: var(--accent-strong);
+  --field-border-invalid: #e85a4a;
+  --field-icon: #bcbcbc;
+  --field-placeholder: #999999;
+  --field-focus-ring: rgba(255, 67, 8, 0.13);
+  --btn-disabled-bg: #d4d4d4;
+  --auth-panel-radius: 42px;
+  --field-min-height: 50px;
+  --field-radius: 20px;
+  --text: var(--color-text);
+  --error: var(--color-error);
+  --muted: var(--color-muted);
+}
+
+[data-theme='light'] {
+  --color-bg: #f0f0f2;
+  --color-surface: rgba(255, 255, 255, 0.85);
+  --color-surface-solid: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-heading: #111111;
+  --color-muted: #5c5c5c;
+  --color-border: rgba(0, 0, 0, 0.12);
+  --color-overlay: rgba(255, 255, 255, 0.72);
+  --accent: #ff4a12;
+  --accent-strong: #ff4308;
+  --accent-press: #e83b05;
+  --color-error: #c2410c;
+  --field-bg: rgba(255, 255, 255, 0.9);
+  --field-border: #b0b0b0;
+  --field-border-focus: var(--accent-strong);
+  --field-border-invalid: #dc2626;
+  --field-icon: #666666;
+  --field-placeholder: #888888;
+  --field-focus-ring: rgba(255, 67, 8, 0.2);
+  --btn-disabled-bg: #d4d4d4;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-bg);
+}

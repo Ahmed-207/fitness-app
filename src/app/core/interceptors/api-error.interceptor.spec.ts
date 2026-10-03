@@ -1,9 +1,8 @@
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TranslateService } from '@ngx-translate/core';
 import { ApiErrorService } from '../http/api-error.service';
-import { apiErrorInterceptor } from './api-error.interceptor';
+import { apiErrorInterceptor, REQUEST_FAILED_MESSAGE_KEY } from './api-error.interceptor';
 
 describe('apiErrorInterceptor', () => {
   let http: HttpClient;
@@ -15,7 +14,6 @@ describe('apiErrorInterceptor', () => {
       providers: [
         provideHttpClient(withInterceptors([apiErrorInterceptor])),
         provideHttpClientTesting(),
-        { provide: TranslateService, useValue: { instant: (key: string) => key } },
       ],
     });
 
@@ -43,7 +41,7 @@ describe('apiErrorInterceptor', () => {
       .expectOne('/auth/profile-data')
       .flush({}, { status: 500, statusText: 'Server Error' });
 
-    expect(apiError.message()).toBe('ERRORS.REQUEST_FAILED');
+    expect(apiError.message()).toBe(REQUEST_FAILED_MESSAGE_KEY);
   });
 
   it('clears the previous message when the next request starts', () => {

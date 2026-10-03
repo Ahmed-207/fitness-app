@@ -42,7 +42,8 @@ describe('RegisterComponent', () => {
   });
 
   it('stays on the account form until the credentials are valid', () => {
-    submitForm();
+    accountForm().submit();
+    fixture.detectChanges();
 
     expect(component.phase()).toBe('account');
     expect(accountForm().form.controls.email.touched).toBe(true);
@@ -64,7 +65,9 @@ describe('RegisterComponent', () => {
     male.click();
     fixture.detectChanges();
 
-    const back = fixture.nativeElement.querySelector('.back-button') as HTMLButtonElement;
+    const back = fixture.nativeElement.querySelector(
+      'app-auth-back-button button',
+    ) as HTMLButtonElement;
     back.click();
     fixture.detectChanges();
 
@@ -86,10 +89,7 @@ describe('RegisterComponent', () => {
   }
 
   function submitForm(): void {
-    const submit = fixture.nativeElement.querySelector(
-      'button[type="submit"]',
-    ) as HTMLButtonElement;
-    submit.click();
+    accountForm().submit();
     fixture.detectChanges();
   }
 });

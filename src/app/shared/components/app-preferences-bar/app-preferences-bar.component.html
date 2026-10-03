@@ -1,0 +1,38 @@
+<div class="preferences-bar" role="group" [attr.aria-label]="'PREFERENCES.ARIA_LABEL' | translate">
+  <div class="segment" role="group" [attr.aria-label]="'PREFERENCES.LANGUAGE_LABEL' | translate">
+    <button
+      type="button"
+      class="segment-btn"
+      [class.segment-btn--active]="currentLanguage() === 'en'"
+      (click)="setLanguage('en')"
+    >
+      {{ 'PREFERENCES.LANG_EN' | translate }}
+    </button>
+    <button
+      type="button"
+      class="segment-btn"
+      [class.segment-btn--active]="currentLanguage() === 'ar'"
+      (click)="setLanguage('ar')"
+    >
+      {{ 'PREFERENCES.LANG_AR' | translate }}
+    </button>
+  </div>
+  <div class="segment" role="group" [attr.aria-label]="'PREFERENCES.THEME_LABEL' | translate">
+    <button
+      type="button"
+      class="segment-btn"
+      [class.segment-btn--active]="currentTheme() === 'dark'"
+      (click)="setTheme('dark')"
+    >
+      {{ 'PREFERENCES.THEME_DARK' | translate }}
+    </button>
+    <button
+      type="button"
+      class="segment-btn"
+      [class.segment-btn--active]="currentTheme() === 'light'"
+      (click)="setTheme('light')"
+    >
+      {{ 'PREFERENCES.THEME_LIGHT' | translate }}
+    </button>
+  </div>
+</div>

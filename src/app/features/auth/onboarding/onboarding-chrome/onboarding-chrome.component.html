@@ -1,12 +1,9 @@
 <div class="step-topline">
-  <button
-    class="back-button"
-    type="button"
-    (click)="back.emit()"
-    [attr.aria-label]="'ONBOARDING.GO_BACK' | translate"
-  >
-    ← <span>{{ 'ONBOARDING.BACK' | translate }}</span>
-  </button>
+  <app-auth-back-button
+    class="step-back"
+    [labelKey]="'ONBOARDING.BACK'"
+    (pressed)="back.emit()"
+  />
   @if (step() === 0) {
     <span
       class="step-count first-step-count"
@@ -45,7 +42,7 @@
 <ng-content />
 
 @if (apiError.message()) {
-  <p class="form-error" role="alert">{{ apiError.message() }}</p>
+  <p class="form-error" role="alert">{{ apiError.message() | translate }}</p>
 }
 <button
   class="primary-button"

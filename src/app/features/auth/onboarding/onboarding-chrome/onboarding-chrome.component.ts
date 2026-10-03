@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiErrorService } from '../../../../core/http/api-error.service';
+import { AuthBackButtonComponent } from '../../../../shared/components/auth/auth-back-button.component';
 
 @Component({
   selector: 'app-onboarding-chrome',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, AuthBackButtonComponent],
   templateUrl: './onboarding-chrome.component.html',
   styleUrl: './onboarding-chrome.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

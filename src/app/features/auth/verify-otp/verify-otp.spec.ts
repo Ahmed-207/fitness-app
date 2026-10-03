@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideTranslateService } from '@ngx-translate/core';
 
-import { VerifyOtp } from './verify-otp';
+import { VerifyOtpComponent } from './verify-otp';
 
-describe('VerifyOtp', () => {
-  let component: VerifyOtp;
-  let fixture: ComponentFixture<VerifyOtp>;
+describe('VerifyOtpComponent', () => {
+  let component: VerifyOtpComponent;
+  let fixture: ComponentFixture<VerifyOtpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VerifyOtp],
+      imports: [VerifyOtpComponent],
+      providers: [provideRouter([]), provideTranslateService({ fallbackLang: 'en', lang: 'en' })],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VerifyOtp);
+    fixture = TestBed.createComponent(VerifyOtpComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

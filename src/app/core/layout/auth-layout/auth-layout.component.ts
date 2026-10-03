@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AppPreferencesBarComponent } from '../../../shared/components/app-preferences-bar/app-preferences-bar.component';
 
 /**
  * Shell layout for auth-related routes.
@@ -12,7 +13,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-auth-layout',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, AppPreferencesBarComponent],
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

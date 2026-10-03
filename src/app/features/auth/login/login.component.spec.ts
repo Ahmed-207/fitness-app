@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { provideTranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import {
+  loadEnglishTranslations,
+  provideEnglishTranslations,
+} from '../../../../testing/english-translations';
 import { AuthService } from '../services/auth.service';
 import { LoginComponent } from './login.component';
 
@@ -14,7 +17,7 @@ describe('LoginComponent', () => {
       imports: [LoginComponent],
       providers: [
         provideRouter([]),
-        provideTranslateService({ fallbackLang: 'en', lang: 'en' }),
+        ...provideEnglishTranslations(),
         {
           provide: AuthService,
           useValue: { signIn: () => of({ message: 'success', token: 'test-token' }), error: () => null },
@@ -22,6 +25,7 @@ describe('LoginComponent', () => {
       ],
     }).compileComponents();
 
+    loadEnglishTranslations();
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -35,5 +39,14 @@ describe('LoginComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('form')).toBeTruthy();
     expect(compiled.querySelector('a[href="/auth/register"]')).toBeTruthy();
+  });
+
+  it('shows validation messages after submit with an empty form', () => {
+    component.onSubmit();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Enter your email address.');
+    expect(compiled.textContent).toContain('Enter your password.');
   });
 });

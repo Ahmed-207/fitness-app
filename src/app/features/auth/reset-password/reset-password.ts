@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { matchPasswordValidator } from '../../../core/validators/match-pass'
+import { matchPasswordValidator } from '../../../core/validators/match-pass';
+import { AuthBackButtonComponent } from '../../../shared/components/auth/auth-back-button.component';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, TranslatePipe],
+  imports: [ReactiveFormsModule, TranslatePipe, AuthBackButtonComponent],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

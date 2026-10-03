@@ -4,12 +4,26 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { ApiErrorService } from '../../../core/http/api-error.service';
+import { AuthFieldComponent } from '../../../shared/components/auth/auth-field.component';
+import { AuthFormErrorComponent } from '../../../shared/components/auth/auth-form-error.component';
+import { AuthPasswordFieldComponent } from '../../../shared/components/auth/auth-password-field.component';
+import { AuthBackButtonComponent } from '../../../shared/components/auth/auth-back-button.component';
+import { AuthPrimaryButtonComponent } from '../../../shared/components/auth/auth-primary-button.component';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    TranslatePipe,
+    AuthFieldComponent,
+    AuthPasswordFieldComponent,
+    AuthBackButtonComponent,
+    AuthPrimaryButtonComponent,
+    AuthFormErrorComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +34,6 @@ export class LoginComponent {
   private readonly route = inject(ActivatedRoute);
 
   readonly apiError = inject(ApiErrorService);
-  readonly showPassword = signal(false);
   readonly isSubmitting = signal(false);
   readonly loginForm = new FormGroup({
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -30,8 +43,32 @@ export class LoginComponent {
     }),
   });
 
-  togglePasswordVisibility(): void {
-    this.showPassword.update((show) => !show);
+  emailError(): string | null {
+    const control = this.loginForm.controls.email;
+    if (!control.touched) {
+      return null;
+    }
+    if (control.hasError('required')) {
+      return 'AUTHLOGIN.EMAIL_REQUIRED';
+    }
+    if (control.hasError('email')) {
+      return 'AUTHLOGIN.EMAIL_INVALID';
+    }
+    return null;
+  }
+
+  passwordError(): string | null {
+    const control = this.loginForm.controls.password;
+    if (!control.touched) {
+      return null;
+    }
+    if (control.hasError('required')) {
+      return 'AUTHLOGIN.PASSWORD_REQUIRED';
+    }
+    if (control.hasError('minlength')) {
+      return 'AUTHLOGIN.PASSWORD_MIN_LENGTH';
+    }
+    return null;
   }
 
   onSubmit(): void {

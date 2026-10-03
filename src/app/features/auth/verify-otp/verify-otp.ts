@@ -3,11 +3,12 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AuthBackButtonComponent } from '../../../shared/components/auth/auth-back-button.component';
 
 @Component({
   selector: 'app-verify-otp',
   standalone: true,
-  imports: [ReactiveFormsModule, TranslatePipe , NgClass],
+  imports: [ReactiveFormsModule, TranslatePipe, NgClass, AuthBackButtonComponent],
   templateUrl: './verify-otp.html',
   styleUrl: './verify-otp.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
