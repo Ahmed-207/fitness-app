@@ -6,7 +6,9 @@ import {
   input,
   output,
   signal,
+  DestroyRef,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { ApiErrorService } from '../../../core/http/api-error.service';
 import { Gender } from '../models/auth.models';
@@ -54,6 +56,7 @@ import { isCompleteOnboardingDraft, toSignUpRequest } from './signup-request';
 export class OnboardingComponent {
   private readonly auth = inject(AuthService);
   private readonly apiError = inject(ApiErrorService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly account = input.required<AccountCredentials>();
   readonly exit = output<void>();
@@ -163,6 +166,7 @@ export class OnboardingComponent {
       .pipe(
         finalize(() => this.isSubmitting.set(false)),
         catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => this.finished.emit());
   }

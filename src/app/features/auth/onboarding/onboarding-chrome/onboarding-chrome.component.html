@@ -45,7 +45,7 @@
 <ng-content />
 
 @if (apiError.message()) {
-  <p class="form-error" role="alert">{{ apiError.message() }}</p>
+  <p class="form-error" role="alert">{{ apiError.message() | translate }}</p>
 }
 <button
   class="primary-button"

@@ -19,8 +19,9 @@ import {
   VerifyResetCodeResponse,
 } from '../models/auth.models';
 
-const initialState: AuthState = {
-  user: null,
+type AuthRequestState = Pick<AuthState, 'isLoading' | 'error'>;
+
+const initialState: AuthRequestState = {
   isLoading: false,
   error: null,
 };
@@ -29,10 +30,10 @@ const initialState: AuthState = {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly session = inject(AuthSessionService);
-  private readonly authState = signal<AuthState>(initialState);
+  private readonly authState = signal<AuthRequestState>(initialState);
 
-  readonly state = this.authState.asReadonly();
-  readonly user = computed(() => this.authState().user);
+  readonly state = computed<AuthState>(() => ({ ...this.authState(), user: this.session.user() }));
+  readonly user = this.session.user;
   readonly isLoading = computed(() => this.authState().isLoading);
   readonly error = computed(() => this.authState().error);
   readonly token = this.session.token;
@@ -99,8 +100,7 @@ export class AuthService {
   signOut(): Observable<ApiMessageResponse> {
     return this.runRequest(this.http.get<ApiMessageResponse>(API_ENDPOINTS.auth.logout)).pipe(
       finalize(() => {
-        this.session.clearToken();
-        this.patchState({ user: null });
+        this.clearSession();
       }),
     );
   }
@@ -110,7 +110,7 @@ export class AuthService {
   }
 
   clearSession(): void {
-    this.session.clearToken();
+    this.session.clearSession();
     this.authState.set(initialState);
   }
 
@@ -119,13 +119,13 @@ export class AuthService {
       this.session.setToken(response.token);
 
       if (response.user) {
-        this.patchState({ user: response.user });
+        this.session.setUser(response.user);
       }
     });
   }
 
   private runProfileRequest(request: Observable<ProfileResponse>): Observable<ProfileResponse> {
-    return this.runRequest(request, (response) => this.patchState({ user: response.user }));
+    return this.runRequest(request, (response) => this.session.setUser(response.user));
   }
 
   private runRequest<T>(request: Observable<T>, onSuccess?: (response: T) => void): Observable<T> {
@@ -143,7 +143,7 @@ export class AuthService {
     });
   }
 
-  private patchState(patch: Partial<AuthState>): void {
+  private patchState(patch: Partial<AuthRequestState>): void {
     this.authState.update((state) => ({ ...state, ...patch }));
   }
 

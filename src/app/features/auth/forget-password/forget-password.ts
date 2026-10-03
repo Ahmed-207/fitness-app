@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { catchError, EMPTY, finalize } from 'rxjs';
+import { ApiErrorService } from '../../../core/http/api-error.service';
+import { AuthService } from '../services/auth.service';
+import { PasswordResetFlowService } from '../services/password-reset-flow.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,18 +17,37 @@ import { TranslatePipe } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPasswordComponent {
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly auth = inject(AuthService);
+  private readonly resetFlow = inject(PasswordResetFlowService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  forgotForm = this.fb.group({
+  readonly apiError = inject(ApiErrorService);
+  readonly isSubmitting = signal(false);
+  readonly forgotForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
   });
 
-  onSubmit() {
-    if (this.forgotForm.valid) {
-      console.log('Sending OTP to:', this.forgotForm.value.email);
-      
-      this.router.navigate(['/auth/verify-otp']);
+  onSubmit(): void {
+    this.forgotForm.markAllAsTouched();
+    if (this.forgotForm.invalid || this.isSubmitting()) {
+      return;
     }
+
+    const email = this.forgotForm.controls.email.value.trim();
+    this.isSubmitting.set(true);
+
+    this.auth
+      .forgotPassword({ email })
+      .pipe(
+        finalize(() => this.isSubmitting.set(false)),
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        this.resetFlow.setEmail(email);
+        void this.router.navigate(['/auth/verify-otp']);
+      });
   }
 }

@@ -19,7 +19,7 @@ export const unauthorizedInterceptor: HttpInterceptorFn = (request, next) => {
       if (isExpiredSession) {
         const returnUrl = router.url;
 
-        session.clearToken();
+        session.clearSession();
 
         if (!returnUrl.startsWith('/auth/login')) {
           void router.navigate(['/auth/login'], {

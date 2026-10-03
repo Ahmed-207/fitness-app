@@ -1,7 +1,6 @@
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TranslateService } from '@ngx-translate/core';
 import { ApiErrorService } from '../http/api-error.service';
 import { apiErrorInterceptor } from './api-error.interceptor';
 
@@ -15,7 +14,6 @@ describe('apiErrorInterceptor', () => {
       providers: [
         provideHttpClient(withInterceptors([apiErrorInterceptor])),
         provideHttpClientTesting(),
-        { provide: TranslateService, useValue: { instant: (key: string) => key } },
       ],
     });
 
@@ -36,7 +34,7 @@ describe('apiErrorInterceptor', () => {
     expect(apiError.message()).toBe('Email already exists');
   });
 
-  it('uses a translated fallback when the body has no message', () => {
+  it('stores a translation key fallback when the body has no message', () => {
     http.get('/auth/profile-data').subscribe({ error: () => undefined });
 
     httpController
