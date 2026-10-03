@@ -1,3 +1,7 @@
+import type { AuthUser } from '../../../core/auth/auth-user';
+
+export type { AuthUser } from '../../../core/auth/auth-user';
+
 export type Gender = 'male' | 'female';
 
 export interface SignInRequest {
@@ -51,22 +55,6 @@ export type EditProfileRequest = Partial<
     | 'activityLevel'
   >
 >;
-
-export interface AuthUser {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  gender: Gender;
-  height: number;
-  weight: number;
-  age: number;
-  goal: string;
-  activityLevel: string;
-  photo?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
 
 export interface AuthResponse {
   message: string;
