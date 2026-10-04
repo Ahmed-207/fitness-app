@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { matchPasswordValidator } from '../../../core/validators/match-pass'
+import { catchError, EMPTY, finalize } from 'rxjs';
+import { ApiErrorService } from '../../../core/http/api-error.service';
+import { matchPasswordValidator } from '../../../core/validators/match-pass';
+import { AuthService } from '../services/auth.service';
+import { PasswordResetFlowService } from '../services/password-reset-flow.service';
+import { passwordStrengthValidator } from '../validators/password.validator';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,34 +19,59 @@ import { matchPasswordValidator } from '../../../core/validators/match-pass'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordComponent {
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly auth = inject(AuthService);
+  private readonly resetFlow = inject(PasswordResetFlowService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  showPassword = false;
-  showConfirmPassword = false;
+  readonly apiError = inject(ApiErrorService);
+  readonly showPassword = signal(false);
+  readonly showConfirmPassword = signal(false);
+  readonly isSubmitting = signal(false);
 
-  resetForm = this.fb.group(
+  readonly resetForm = this.fb.nonNullable.group(
     {
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, passwordStrengthValidator]],
       confirmPassword: ['', [Validators.required]],
     },
-    { validators: matchPasswordValidator('password' , 'confirmPassword') }
+    { validators: matchPasswordValidator('password', 'confirmPassword') },
   );
 
-
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  togglePasswordVisibility(): void {
+    this.showPassword.update((visible) => !visible);
   }
 
-  toggleConfirmPasswordVisibility() {
-    this.showConfirmPassword = !this.showConfirmPassword;
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword.update((visible) => !visible);
   }
 
-  onSubmit() {
-    if (this.resetForm.valid) {
-      console.log('Password successfully updated!');
-      
-      this.router.navigate(['/auth/login']);
+  onSubmit(): void {
+    this.resetForm.markAllAsTouched();
+    if (this.resetForm.invalid || this.isSubmitting()) {
+      return;
     }
+
+    const email = this.resetFlow.email();
+    if (!email) {
+      void this.router.navigate(['/auth/forget-password']);
+      return;
+    }
+
+    this.isSubmitting.set(true);
+    this.auth
+      .resetPassword({
+        email,
+        newPassword: this.resetForm.controls.password.value,
+      })
+      .pipe(
+        finalize(() => this.isSubmitting.set(false)),
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        this.resetFlow.clear();
+        void this.router.navigate(['/auth/login']);
+      });
   }
 }

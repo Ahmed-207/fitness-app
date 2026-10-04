@@ -100,7 +100,9 @@
       </div>
 
       @if (apiError.message()) {
-        <p class="text-center text-xs text-[#ff9c7e]" role="alert">{{ apiError.message() }}</p>
+        <p class="text-center text-xs text-[#ff9c7e]" role="alert">
+          {{ apiError.message() | translate }}
+        </p>
       }
 
       <button

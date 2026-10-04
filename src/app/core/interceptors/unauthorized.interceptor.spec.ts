@@ -11,11 +11,11 @@ import { unauthorizedInterceptor } from './unauthorized.interceptor';
 describe('unauthorizedInterceptor', () => {
   let http: HttpClient;
   let httpController: HttpTestingController;
-  let clearToken: ReturnType<typeof vi.fn>;
+  let clearSession: ReturnType<typeof vi.fn>;
   let navigate: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    clearToken = vi.fn();
+    clearSession = vi.fn();
 
     TestBed.configureTestingModule({
       providers: [
@@ -26,7 +26,7 @@ describe('unauthorizedInterceptor', () => {
           provide: AuthSessionService,
           useValue: {
             token: signal('token'),
-            clearToken,
+            clearSession,
           },
         },
       ],
@@ -46,7 +46,7 @@ describe('unauthorizedInterceptor', () => {
       .expectOne(API_ENDPOINTS.auth.signup)
       .flush({ error: 'password is too weak' }, { status: 401, statusText: 'Unauthorized' });
 
-    expect(clearToken).not.toHaveBeenCalled();
+    expect(clearSession).not.toHaveBeenCalled();
     expect(navigate).not.toHaveBeenCalled();
   });
 
@@ -60,7 +60,7 @@ describe('unauthorizedInterceptor', () => {
         { status: 401, statusText: 'Unauthorized' },
       );
 
-    expect(clearToken).toHaveBeenCalledOnce();
+    expect(clearSession).toHaveBeenCalledOnce();
     expect(navigate).toHaveBeenCalledWith(['/auth/login'], {
       queryParams: { returnUrl: '/' },
     });
