@@ -34,7 +34,7 @@ describe('apiErrorInterceptor', () => {
     expect(apiError.message()).toBe('Email already exists');
   });
 
-  it('uses a translated fallback when the body has no message', () => {
+  it('stores a translation key fallback when the body has no message', () => {
     http.get('/auth/profile-data').subscribe({ error: () => undefined });
 
     httpController

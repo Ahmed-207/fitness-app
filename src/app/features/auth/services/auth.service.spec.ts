@@ -9,16 +9,23 @@ import { AuthService } from './auth.service';
 
 class AuthSessionStub {
   private readonly tokenState = signal<string | null>(null);
+  private readonly userState = signal<AuthUser | null>(null);
 
   readonly token = this.tokenState.asReadonly();
+  readonly user = this.userState.asReadonly();
   readonly isAuthenticated = computed(() => Boolean(this.tokenState()));
 
   setToken(token: string): void {
     this.tokenState.set(token);
   }
 
-  clearToken(): void {
+  setUser(user: AuthUser): void {
+    this.userState.set(user);
+  }
+
+  clearSession(): void {
     this.tokenState.set(null);
+    this.userState.set(null);
   }
 }
 
@@ -75,6 +82,8 @@ describe('AuthService', () => {
 
     expect(service.token()).toBe('token');
     expect(service.user()).toEqual(user);
+    expect(session.user()).toEqual(user);
+    expect(session.token()).toBe('token');
     expect(service.isAuthenticated()).toBe(true);
     expect(service.isLoading()).toBe(false);
     expect(service.error()).toBeNull();
@@ -103,6 +112,8 @@ describe('AuthService', () => {
     request.flush({ message: 'success', token: 'token', user } satisfies AuthResponse);
 
     expect(service.user()).toEqual(user);
+    expect(session.token()).toBe('token');
+    expect(session.user()).toEqual(user);
   });
 
   it('changes the password and stores the refreshed token', () => {

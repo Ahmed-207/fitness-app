@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,11 +33,15 @@ export class LoginComponent {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly apiError = inject(ApiErrorService);
   readonly isSubmitting = signal(false);
   readonly loginForm = new FormGroup({
-    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
     password: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(6)],
@@ -81,6 +86,7 @@ export class LoginComponent {
       .pipe(
         finalize(() => this.isSubmitting.set(false)),
         catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
