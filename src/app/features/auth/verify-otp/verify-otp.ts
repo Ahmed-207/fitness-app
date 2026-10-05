@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,13 +6,21 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { ApiErrorService } from '../../../core/http/api-error.service';
 import { AuthBackButtonComponent } from '../../../shared/components/auth/auth-back-button.component';
+import { AuthFormErrorComponent } from '../../../shared/components/auth/auth-form-error.component';
+import { AuthPrimaryButtonComponent } from '../../../shared/components/auth/auth-primary-button.component';
 import { AuthService } from '../services/auth.service';
 import { PasswordResetFlowService } from '../services/password-reset-flow.service';
 
 @Component({
   selector: 'app-verify-otp',
   standalone: true,
-  imports: [ReactiveFormsModule, TranslatePipe, NgClass, AuthBackButtonComponent],
+  imports: [
+    ReactiveFormsModule,
+    TranslatePipe,
+    AuthBackButtonComponent,
+    AuthFormErrorComponent,
+    AuthPrimaryButtonComponent,
+  ],
   templateUrl: './verify-otp.html',
   styleUrl: './verify-otp.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

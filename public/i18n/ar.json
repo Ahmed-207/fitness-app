@@ -18,7 +18,9 @@
     "EMAIL_REQUIRED": "أدخل بريدك الإلكتروني.",
     "EMAIL_INVALID": "أدخل بريداً إلكترونياً صالحاً.",
     "PASSWORD_REQUIRED": "أدخل كلمة المرور.",
-    "PASSWORD_MIN_LENGTH": "استخدم 6 أحرف على الأقل."
+    "PASSWORD_MIN_LENGTH": "استخدم 6 أحرف على الأقل.",
+    "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز.",
+    "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز."
   },
   "PREFERENCES": {
     "ARIA_LABEL": "اللغة والمظهر",
@@ -136,6 +138,10 @@
     "SUBTITLE": "تأكد من أن تكون 8 أرقام/أحرف أو أكثر",
     "NEW_PASSWORD_PLACEHOLDER": "كلمة المرور الجديدة",
     "CONFIRM_PASSWORD_PLACEHOLDER": "تأكيد كلمة المرور",
-    "DONE_BTN": "تم"
+    "DONE_BTN": "تم",
+    "PASSWORD_REQUIRED": "أدخل كلمة مرور جديدة.",
+    "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز.",
+    "CONFIRM_REQUIRED": "أكد كلمة المرور الجديدة.",
+    "PASSWORD_MISMATCH": "كلمتا المرور غير متطابقتين."
   }
 }

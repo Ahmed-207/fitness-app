@@ -18,7 +18,8 @@
     "EMAIL_REQUIRED": "Enter your email address.",
     "EMAIL_INVALID": "Enter a valid email address.",
     "PASSWORD_REQUIRED": "Enter your password.",
-    "PASSWORD_MIN_LENGTH": "Use at least 6 characters."
+    "PASSWORD_MIN_LENGTH": "Use at least 6 characters.",
+    "PASSWORD_RULE": "Use 8+ characters with uppercase, lowercase, a number, and a symbol."
   },
   "PREFERENCES": {
     "ARIA_LABEL": "Language and theme",
@@ -135,7 +136,11 @@
     "TITLE": "Create New Password",
     "SUBTITLE": "Make Sure Its 8 Characters Or More",
     "NEW_PASSWORD_PLACEHOLDER": "Password",
-    "CONFIRM_PASSWORD_PLACEHOLDER": "Password",
-    "DONE_BTN": "Done"
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm password",
+    "DONE_BTN": "Done",
+    "PASSWORD_REQUIRED": "Enter a new password.",
+    "PASSWORD_RULE": "Use 8+ characters with uppercase, lowercase, a number, and a symbol.",
+    "CONFIRM_REQUIRED": "Confirm your new password.",
+    "PASSWORD_MISMATCH": "Passwords do not match."
   }
 }

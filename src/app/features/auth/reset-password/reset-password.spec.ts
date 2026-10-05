@@ -15,11 +15,13 @@ describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
   let resetPassword: ReturnType<typeof vi.fn>;
+  let clearSession: ReturnType<typeof vi.fn>;
   let clear: ReturnType<typeof vi.fn>;
   let navigate: ReturnType<typeof vi.spyOn>;
 
   beforeEach(async () => {
     resetPassword = vi.fn(() => of({ message: 'success', token: 'new-token' }));
+    clearSession = vi.fn();
     clear = vi.fn();
 
     await TestBed.configureTestingModule({
@@ -27,7 +29,7 @@ describe('ResetPasswordComponent', () => {
       providers: [
         provideRouter([]),
         ...provideEnglishTranslations(),
-        { provide: AuthService, useValue: { resetPassword } },
+        { provide: AuthService, useValue: { resetPassword, clearSession } },
         {
           provide: PasswordResetFlowService,
           useValue: { email: signal<string | null>('ahmedmutti@gmail.com'), clear },
@@ -55,6 +57,7 @@ describe('ResetPasswordComponent', () => {
       newPassword: 'Ahmed1@123',
     });
     expect(clear).toHaveBeenCalledOnce();
+    expect(clearSession).toHaveBeenCalledOnce();
     expect(navigate).toHaveBeenCalledWith(['/auth/login']);
   });
 });

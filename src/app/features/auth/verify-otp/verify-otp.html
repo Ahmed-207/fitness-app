@@ -1,116 +1,92 @@
-<div class="flex flex-col items-center justify-center w-full text-white">
-  <h1 class="text-3xl font-black tracking-wider mb-8 text-white text-center">
-    {{ 'OTP.TITLE' | translate }}
-  </h1>
+<section class="otp-page" aria-labelledby="otp-title">
+  <h1 id="otp-title" class="otp-page-title">{{ 'OTP.TITLE' | translate }}</h1>
 
-  <div
-    class="w-full max-w-105 rounded-[35px] border border-gray-500/40 bg-[#1E1E1E]/40 p-8 backdrop-blur-xl shadow-2xl flex flex-col items-stretch"
-  >
+  <div class="otp-panel">
     <app-auth-back-button route="/auth/forget-password" />
+    <p class="otp-lead">{{ 'OTP.SUBTITLE' | translate }}</p>
 
-    <p class="text-gray-200 text-sm font-semibold text-center mb-8">
-      {{ 'OTP.SUBTITLE' | translate }}
-    </p>
-
-    <form
-      [formGroup]="otpForm"
-      (ngSubmit)="onVerify()"
-      class="w-full flex flex-col items-center gap-6"
-    >
-      <div class="flex justify-center gap-2 w-full px-1" formGroupName="otpInputs">
+    <form [formGroup]="otpForm" (ngSubmit)="onVerify()" class="otp-form" novalidate>
+      <div class="otp-row" formGroupName="otpInputs">
         <input
           #input1
+          class="otp-digit"
+          [class.otp-digit--filled]="otpForm.controls.otpInputs.controls.digit1.value"
           type="text"
           inputmode="numeric"
           autocomplete="one-time-code"
           maxlength="1"
           formControlName="digit1"
           (keyup)="onDigitInput($event, input2, null)"
-          class="w-10 sm:w-12 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
-          [ngClass]="input1.value ? 'border-[#FF5722]' : 'border-gray-400'"
         />
-
         <input
           #input2
+          class="otp-digit"
+          [class.otp-digit--filled]="otpForm.controls.otpInputs.controls.digit2.value"
           type="text"
           inputmode="numeric"
           maxlength="1"
           formControlName="digit2"
           (keyup)="onDigitInput($event, input3, input1)"
-          class="w-10 sm:w-12 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
-          [ngClass]="input2.value ? 'border-[#FF5722]' : 'border-gray-400'"
         />
-
         <input
           #input3
+          class="otp-digit"
+          [class.otp-digit--filled]="otpForm.controls.otpInputs.controls.digit3.value"
           type="text"
           inputmode="numeric"
           maxlength="1"
           formControlName="digit3"
           (keyup)="onDigitInput($event, input4, input2)"
-          class="w-10 sm:w-12 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
-          [ngClass]="input3.value ? 'border-[#FF5722]' : 'border-gray-400'"
         />
-
         <input
           #input4
+          class="otp-digit"
+          [class.otp-digit--filled]="otpForm.controls.otpInputs.controls.digit4.value"
           type="text"
           inputmode="numeric"
           maxlength="1"
           formControlName="digit4"
           (keyup)="onDigitInput($event, input5, input3)"
-          class="w-10 sm:w-12 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
-          [ngClass]="input4.value ? 'border-[#FF5722]' : 'border-gray-400'"
         />
-
         <input
           #input5
+          class="otp-digit"
+          [class.otp-digit--filled]="otpForm.controls.otpInputs.controls.digit5.value"
           type="text"
           inputmode="numeric"
           maxlength="1"
           formControlName="digit5"
           (keyup)="onDigitInput($event, input6, input4)"
-          class="w-10 sm:w-12 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
-          [ngClass]="input5.value ? 'border-[#FF5722]' : 'border-gray-400'"
         />
-
         <input
           #input6
+          class="otp-digit"
+          [class.otp-digit--filled]="otpForm.controls.otpInputs.controls.digit6.value"
           type="text"
           inputmode="numeric"
           maxlength="1"
           formControlName="digit6"
           (keyup)="onDigitInput($event, null, input5)"
-          class="w-10 sm:w-12 h-12 text-center text-xl font-bold bg-transparent text-[#FF5722] border-b-2 focus:outline-none transition-colors duration-200"
-          [ngClass]="input6.value ? 'border-[#FF5722]' : 'border-gray-400'"
         />
       </div>
 
-      @if (apiError.message()) {
-        <p class="text-center text-xs text-[#ff9c7e]" role="alert">
-          {{ apiError.message() | translate }}
-        </p>
-      }
+      <app-auth-form-error [message]="apiError.message()" />
 
-      <button
-        type="submit"
-        [disabled]="otpForm.invalid || isSubmitting()"
-        class="w-full rounded-full bg-[#FF5722] hover:bg-[#E64A19] py-3 mt-4 text-white font-bold text-base shadow-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
+      <app-auth-primary-button type="submit" [disabled]="otpForm.invalid || isSubmitting()">
         {{ 'OTP.CONFIRM_BTN' | translate }}
-      </button>
+      </app-auth-primary-button>
 
-      <div class="flex flex-col items-center text-center mt-1 text-xs text-gray-300 gap-1">
+      <p class="auth-resend">
         <span>{{ 'OTP.RESEND_PROMPT' | translate }}</span>
         <button
           type="button"
+          class="auth-text-button"
           (click)="resendCode()"
           [disabled]="isResending() || isSubmitting()"
-          class="text-[#FF5722] hover:underline font-semibold disabled:opacity-50"
         >
           {{ 'OTP.RESEND_LINK' | translate }}
         </button>
-      </div>
+      </p>
     </form>
   </div>
-</div>
+</section>

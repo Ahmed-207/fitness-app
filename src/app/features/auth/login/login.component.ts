@@ -11,6 +11,7 @@ import { AuthPasswordFieldComponent } from '../../../shared/components/auth/auth
 import { AuthBackButtonComponent } from '../../../shared/components/auth/auth-back-button.component';
 import { AuthPrimaryButtonComponent } from '../../../shared/components/auth/auth-primary-button.component';
 import { AuthService } from '../services/auth.service';
+import { passwordStrengthValidator } from '../validators/password.validator';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,7 @@ export class LoginComponent {
     }),
     password: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(6)],
+      validators: [Validators.required, passwordStrengthValidator],
     }),
   });
 
@@ -70,8 +71,8 @@ export class LoginComponent {
     if (control.hasError('required')) {
       return 'AUTHLOGIN.PASSWORD_REQUIRED';
     }
-    if (control.hasError('minlength')) {
-      return 'AUTHLOGIN.PASSWORD_MIN_LENGTH';
+    if (control.hasError('passwordStrength')) {
+      return 'AUTHLOGIN.PASSWORD_RULE';
     }
     return null;
   }

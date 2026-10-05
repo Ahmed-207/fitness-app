@@ -4,5 +4,7 @@
   <p class="eyebrow">{{ 'AUTHREGISTER.SUCCESS_EYEBROW' | translate }}</p>
   <h1>{{ 'AUTHREGISTER.SUCCESS_TITLE' | translate }}</h1>
   <p class="intro">{{ 'AUTHREGISTER.SUCCESS_INTRO' | translate }}</p>
-  <a class="primary-button" routerLink="/auth/login">{{ 'AUTHREGISTER.SUCCESS_CONTINUE' | translate }}</a>
+  <button type="button" class="auth-primary-button" (click)="continueToLogin()">
+    {{ 'AUTHREGISTER.SUCCESS_CONTINUE' | translate }}
+  </button>
 </section>

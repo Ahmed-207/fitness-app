@@ -1,19 +1,32 @@
+@import '../../../../shared/components/auth/auth-form.shared.css';
+
 :host {
   display: block;
   width: 100%;
-  color: var(--text, #f8f8f8);
+  color: var(--color-text);
 }
 
 .success-panel {
   box-sizing: border-box;
+  display: flex;
   width: 100%;
   max-width: 500px;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0 auto;
-  border: 1px solid rgba(220, 220, 220, 0.58);
-  border-radius: 42px;
-  padding: 2.6rem 18% 2.8rem;
-  background: rgba(25, 25, 25, 0.12);
+  border: 1px solid var(--color-border);
+  border-radius: var(--auth-panel-radius, 42px);
+  padding: 2rem 2.5rem 2.25rem;
+  background: var(--color-surface);
   text-align: center;
+}
+
+.success-panel .success-mark,
+.success-panel .eyebrow,
+.success-panel h1,
+.success-panel .intro,
+.success-panel .auth-primary-button {
+  width: 100%;
 }
 
 .success-mark {
@@ -22,15 +35,15 @@
   height: 62px;
   place-items: center;
   margin: 0 auto 1.2rem;
-  border: 1px solid var(--accent, #ff4a12);
+  border: 1px solid var(--accent-strong);
   border-radius: 50%;
-  color: var(--accent, #ff4a12);
+  color: var(--accent-strong);
   font-size: 2rem;
 }
 
 .eyebrow {
   margin: 0 0 0.45rem;
-  color: var(--accent, #ff4a12);
+  color: var(--accent);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -38,7 +51,7 @@
 
 h1 {
   margin: 0;
-  color: #fff;
+  color: var(--color-text-heading);
   font-size: clamp(1.8rem, 4vw, 2.35rem);
   font-weight: 800;
   line-height: 1.08;
@@ -47,33 +60,7 @@ h1 {
 
 .intro {
   margin: 0.8rem 0 1.5rem;
-  color: var(--muted, #c5c5c5);
+  color: var(--color-muted);
   font-size: 0.98rem;
   line-height: 1.45;
-}
-
-.primary-button {
-  display: flex;
-  width: 100%;
-  min-height: 50px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  padding: 0.75rem 1.25rem;
-  color: #fff;
-  background: var(--accent-strong, #ff4308);
-  font: inherit;
-  font-size: 1rem;
-  font-weight: 800;
-  text-align: center;
-  text-decoration: none;
-}
-
-.primary-button:hover {
-  background: var(--accent-press, #e83b05);
-}
-
-.primary-button:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 3px;
 }
