@@ -1,10 +1,5 @@
-<section class="success-panel" aria-live="polite">
-  <app-auth-back-button route="/auth/register" />
+<section class="success-splash" aria-live="polite" role="status">
   <div class="success-mark" aria-hidden="true">✓</div>
-  <p class="eyebrow">{{ 'AUTHREGISTER.SUCCESS_EYEBROW' | translate }}</p>
   <h1>{{ 'AUTHREGISTER.SUCCESS_TITLE' | translate }}</h1>
-  <p class="intro">{{ 'AUTHREGISTER.SUCCESS_INTRO' | translate }}</p>
-  <button type="button" class="auth-primary-button" (click)="continueToLogin()">
-    {{ 'AUTHREGISTER.SUCCESS_CONTINUE' | translate }}
-  </button>
+  <p class="success-hint">{{ 'AUTHREGISTER.SUCCESS_REDIRECT' | translate }}</p>
 </section>

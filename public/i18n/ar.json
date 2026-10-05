@@ -68,10 +68,8 @@
     "LOGIN_LINK": "دخول",
     "SHOW_PASSWORD": "إظهار كلمة المرور",
     "HIDE_PASSWORD": "إخفاء كلمة المرور",
-    "SUCCESS_EYEBROW": "أنت جاهز",
-    "SUCCESS_TITLE": "رحلتك تبدأ من هنا",
-    "SUCCESS_INTRO": "حسابك وملفك الرياضي جاهزان. لنجعل كل تمرين مهماً.",
-    "SUCCESS_CONTINUE": "المتابعة لتسجيل الدخول"
+    "SUCCESS_TITLE": "تم إنشاء الحساب!",
+    "SUCCESS_REDIRECT": "جارٍ تحويلك لتسجيل الدخول…"
   },
   "ONBOARDING": {
     "GENDER_TITLE": "أخبرنا عن نفسك!",
