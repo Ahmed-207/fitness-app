@@ -2,6 +2,15 @@
   "AUTHCOMMON": {
     "BACK": "Back"
   },
+  "HOME": {
+    "SUCCESS_BADGE": "Signed in",
+    "TITLE": "Welcome to Super Fitness",
+    "INTRO": "You are logged in. This demo home confirms sign-in worked and your session is active.",
+    "NAME_LABEL": "Name",
+    "EMAIL_LABEL": "Email",
+    "SIGN_OUT": "Sign out",
+    "SIGNING_OUT": "Signing out…"
+  },
   "AUTHLOGIN": {
     "HEY_THERE": "Hey There",
     "WELCOME_BACK": "WELCOME BACK",

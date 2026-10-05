@@ -93,7 +93,9 @@ export class LoginComponent {
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
         if (returnUrl?.startsWith('/') && !returnUrl.startsWith('//')) {
           void this.router.navigateByUrl(returnUrl);
+          return;
         }
+        void this.router.navigate(['/home']);
       });
   }
 }

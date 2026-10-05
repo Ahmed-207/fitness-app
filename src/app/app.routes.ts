@@ -1,50 +1,56 @@
 
 import { Routes } from '@angular/router';
+import { authGuard, guestGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  {
+    path: 'home',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
+  },
   {
     path: 'auth',
+    canActivate: [guestGuard],
+    canActivateChild: [guestGuard],
     loadComponent: () =>
       import('./core/layout/auth-layout/auth-layout.component').then(
-        (m) => m.AuthLayoutComponent
+        (m) => m.AuthLayoutComponent,
       ),
     children: [
-      { path: '', redirectTo: 'register', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       {
         path: 'register',
         loadComponent: () =>
           import('./features/auth/register/register.component').then(
-            (m) => m.RegisterComponent
+            (m) => m.RegisterComponent,
           ),
       },
       {
         path: 'login',
         loadComponent: () =>
-          import('./features/auth/login/login.component').then(
-            (m) => m.LoginComponent
-          ),
+          import('./features/auth/login/login.component').then((m) => m.LoginComponent),
       },
       {
         path: 'forget-password',
         loadComponent: () =>
           import('./features/auth/forget-password/forget-password').then(
-            (m) => m.ForgotPasswordComponent
+            (m) => m.ForgotPasswordComponent,
           ),
       },
       {
         path: 'verify-otp',
-  loadComponent: () => import('./features/auth/verify-otp/verify-otp').then(
-    m => m.VerifyOtpComponent)
+        loadComponent: () =>
+          import('./features/auth/verify-otp/verify-otp').then((m) => m.VerifyOtpComponent),
       },
       {
         path: 'reset-password',
         loadComponent: () =>
           import('./features/auth/reset-password/reset-password').then(
-            (m) => m.ResetPasswordComponent
+            (m) => m.ResetPasswordComponent,
           ),
       },
     ],
   },
-  { path: '**', redirectTo: 'auth/register' },
+  { path: '**', redirectTo: 'auth/login' },
 ];

@@ -15,3 +15,14 @@ export const authGuard: CanActivateFn = (_route, state) => {
 };
 
 export const authChildGuard: CanActivateChildFn = authGuard;
+
+/** Auth screens (login/register) — send signed-in users to the app home. */
+export const guestGuard: CanActivateFn = () => {
+  const session = inject(AuthSessionService);
+
+  if (!session.isAuthenticated()) {
+    return true;
+  }
+
+  return inject(Router).createUrlTree(['/home']);
+};

@@ -1,0 +1,28 @@
+<main class="home" aria-labelledby="home-title">
+  <div class="home__panel">
+    <p class="home__badge">{{ 'HOME.SUCCESS_BADGE' | translate }}</p>
+    <h1 id="home-title">{{ 'HOME.TITLE' | translate }}</h1>
+    <p class="home__intro">{{ 'HOME.INTRO' | translate }}</p>
+
+    @if (displayName() || email()) {
+      <dl class="home__profile">
+        @if (displayName()) {
+          <div>
+            <dt>{{ 'HOME.NAME_LABEL' | translate }}</dt>
+            <dd>{{ displayName() }}</dd>
+          </div>
+        }
+        @if (email()) {
+          <div>
+            <dt>{{ 'HOME.EMAIL_LABEL' | translate }}</dt>
+            <dd>{{ email() }}</dd>
+          </div>
+        }
+      </dl>
+    }
+
+    <button type="button" class="home__sign-out" [disabled]="isSigningOut()" (click)="signOut()">
+      {{ isSigningOut() ? ('HOME.SIGNING_OUT' | translate) : ('HOME.SIGN_OUT' | translate) }}
+    </button>
+  </div>
+</main>

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { vi } from 'vitest';
 import {
@@ -13,6 +13,7 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let signIn: ReturnType<typeof vi.fn>;
+  let navigate: ReturnType<typeof vi.spyOn>;
 
   beforeEach(async () => {
     signIn = vi.fn(() => of({ message: 'success', token: 'test-token' }));
@@ -30,6 +31,7 @@ describe('LoginComponent', () => {
     }).compileComponents();
 
     loadEnglishTranslations();
+    navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -67,5 +69,6 @@ describe('LoginComponent', () => {
       password: 'Ahmed@123',
     });
     expect(component.isSubmitting()).toBe(false);
+    expect(navigate).toHaveBeenCalledWith(['/home']);
   });
 });

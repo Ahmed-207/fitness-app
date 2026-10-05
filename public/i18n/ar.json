@@ -2,6 +2,15 @@
   "AUTHCOMMON": {
     "BACK": "رجوع"
   },
+  "HOME": {
+    "SUCCESS_BADGE": "تم تسجيل الدخول",
+    "TITLE": "مرحبًا بك في Super Fitness",
+    "INTRO": "أنت مسجّل الدخول. هذه الصفحة التجريبية تؤكد نجاح تسجيل الدخول وأن جلستك نشطة.",
+    "NAME_LABEL": "الاسم",
+    "EMAIL_LABEL": "البريد الإلكتروني",
+    "SIGN_OUT": "تسجيل الخروج",
+    "SIGNING_OUT": "جارٍ تسجيل الخروج…"
+  },
   "AUTHLOGIN": {
     "HEY_THERE": "أهلاً بك",
     "WELCOME_BACK": "مرحباً بعودتك",
