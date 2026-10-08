@@ -24,6 +24,12 @@
   --field-placeholder: #999999;
   --field-focus-ring: rgba(255, 67, 8, 0.13);
   --btn-disabled-bg: #d4d4d4;
+  --color-section-alt: #202222;
+  --section-wordmark: rgba(255, 255, 255, 0.12);
+  --image-shadow: rgba(0, 0, 0, 0.3);
+  --navbar-bg: #232323;
+  --navbar-text: #f7f7f7;
+  --navbar-control-bg: #303030;
   --auth-panel-radius: 42px;
   --field-min-height: 50px;
   --field-radius: 20px;
@@ -53,10 +59,17 @@
   --field-placeholder: #888888;
   --field-focus-ring: rgba(255, 67, 8, 0.2);
   --btn-disabled-bg: #d4d4d4;
+  --color-section-alt: #ffffff;
+  --section-wordmark: rgba(17, 17, 17, 0.12);
+  --image-shadow: rgba(31, 41, 55, 0.15);
+  --navbar-bg: #dedede;
+  --navbar-text: #202020;
+  --navbar-control-bg: rgba(255, 255, 255, 0.7);
 }
 
 body {
   margin: 0;
   color: var(--color-text);
   background: var(--color-bg);
+  font-family: 'Baloo Thambi 2', system-ui, sans-serif;
 }

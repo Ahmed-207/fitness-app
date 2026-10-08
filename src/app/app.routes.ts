@@ -1,30 +1,38 @@
-
 import { Routes } from '@angular/router';
-import { authGuard, guestGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   {
-    path: 'home',
-    canActivate: [authGuard],
-    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
+    path: '',
+    loadComponent: () =>
+      import('./core/layout/site-layout/site-layout.component').then((m) => m.SiteLayoutComponent),
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home',
+        loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
+      },
+      {
+        path: 'about-us',
+        loadComponent: () =>
+          import('./features/about-us/aboutus-page/aboutus-page').then((m) => m.AboutusPage),
+      },
+
+      
+    ],
   },
   {
     path: 'auth',
     canActivate: [guestGuard],
     canActivateChild: [guestGuard],
     loadComponent: () =>
-      import('./core/layout/auth-layout/auth-layout.component').then(
-        (m) => m.AuthLayoutComponent,
-      ),
+      import('./core/layout/auth-layout/auth-layout.component').then((m) => m.AuthLayoutComponent),
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       {
         path: 'register',
         loadComponent: () =>
-          import('./features/auth/register/register.component').then(
-            (m) => m.RegisterComponent,
-          ),
+          import('./features/auth/register/register.component').then((m) => m.RegisterComponent),
       },
       {
         path: 'login',
@@ -52,5 +60,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: 'auth/login' },
+  { path: '**', redirectTo: 'home' },
 ];

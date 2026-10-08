@@ -1,0 +1,127 @@
+<section
+  id="about-us"
+  class="overflow-hidden bg-[var(--color-section-alt)] px-5 py-16 text-[var(--color-text)] transition-colors duration-300 sm:px-8 lg:px-12 lg:py-24"
+  aria-labelledby="about-us-title"
+>
+  <div
+    class="mx-auto grid w-full max-w-[1180px] items-center gap-12 lg:grid-cols-[.98fr_1.02fr] lg:gap-16"
+  >
+    <div
+      class="order-2 mx-auto grid w-full max-w-[560px] grid-cols-[1.1fr_.9fr] gap-3 lg:order-1"
+      [attr.aria-label]="'ABOUT_US.GALLERY_ARIA' | translate"
+    >
+      <img
+        class="row-span-2 h-[360px] w-full rounded-2xl object-cover object-center shadow-[0_18px_50px_var(--image-shadow)] sm:h-[540px] lg:h-[540px]"
+        src="/assets/about/kettlebell-trainer.jpg"
+        [alt]="'ABOUT_US.IMAGES.TRAINER' | translate"
+        width="1024"
+        height="1536"
+        loading="lazy"
+      />
+      <img
+        class="mt-14 h-[130px] w-full rounded-2xl object-cover shadow-[0_18px_50px_var(--image-shadow)] sm:h-[190px] lg:h-[186px]"
+        src="/assets/about/resting-athlete.jpg"
+        [alt]="'ABOUT_US.IMAGES.RESTING' | translate"
+        width="1536"
+        height="1024"
+        loading="lazy"
+      />
+      <img
+        class="-ms-20 h-[250px] w-[calc(100%+5rem)] rounded-2xl object-cover shadow-[0_18px_50px_var(--image-shadow)] sm:h-[335px] lg:h-[330px]"
+        src="/assets/about/navy-shirt-athlete.jpg"
+        [alt]="'ABOUT_US.IMAGES.MEMBER' | translate"
+        width="1024"
+        height="1536"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="order-1 lg:order-2">
+      <div class="relative mb-4 h-11" aria-hidden="true">
+        <span
+  class="absolute -top-5 start-0 whitespace-nowrap text-[3.25rem] font-black uppercase leading-none tracking-[.11em] text-transparent [-webkit-text-stroke:1px_rgb(156_163_175_/_13%)] [-webkit-mask-image:linear-gradient(to_bottom,#000_0%,transparent_90%)] [mask-image:linear-gradient(to_bottom,#000_0%,transparent_90%)] sm:text-[4rem]"
+>
+  {{ 'ABOUT_US.LABEL' | translate }}
+</span>
+        <span
+          class="absolute bottom-0 start-0 flex items-center gap-2 text-xs font-extrabold text-[var(--accent-strong)]"
+        >
+          <svg
+            class="size-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10M2 10v4M22 10v4" stroke-linecap="round" />
+          </svg>
+          {{ 'ABOUT_US.LABEL' | translate }}
+        </span>
+      </div>
+
+      <h2
+        id="about-us-title"
+        class="max-w-[650px] text-3xl font-black uppercase leading-[1.12] tracking-[.015em] text-[var(--color-text-heading)] sm:text-4xl lg:text-[2.65rem]"
+      >
+        {{ 'ABOUT_US.HEADING_BEFORE' | translate }}
+        <span class="text-[var(--accent-strong)]">
+          {{ 'ABOUT_US.HEADING_ACCENT' | translate }}
+        </span>
+        {{ 'ABOUT_US.HEADING_AFTER' | translate }}
+      </h2>
+
+      <p class="mt-5 max-w-[630px] text-[.95rem] leading-7 text-[var(--color-muted)]">
+        {{ 'ABOUT_US.DESCRIPTION' | translate }}
+      </p>
+
+      <div class="mt-8 grid sm:grid-cols-2">
+        @for (feature of features; track feature.titleKey) {
+          <article
+            class="py-5 sm:px-5"
+            [class.border-b]="$index < 2"
+    [class.border-gray-300]="$index < 2"
+    [class.sm:ps-0]="$index % 2 === 0"
+          >
+            <h3
+              class="flex items-center gap-3 text-sm font-extrabold text-[var(--color-text-heading)]"
+            >
+              <svg
+                class="size-4 shrink-0 text-[var(--accent-strong)]"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+              >
+                <path d="M3 12 12 3M7 3h5v5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {{ feature.titleKey | translate }}
+            </h3>
+            <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">
+              {{ feature.descriptionKey | translate }}
+            </p>
+          </article>
+        }
+      </div>
+
+      <a
+        href="#why-us"
+        class="relative mt-7 inline-flex min-h-12 items-center gap-3 rounded-full bg-[var(--accent-strong)] px-6 text-sm font-extrabold text-white shadow-[0_12px_32px_rgba(255,67,8,.24)] transition hover:-translate-y-0.5 hover:bg-[var(--accent-press)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-strong)]"
+      >
+        {{ 'ABOUT_US.GET_STARTED' | translate }}
+        <span
+          class="absolute end-[-14px] top-[13px] flex size-7 items-center justify-center rounded-full border border-white/80 bg-[var(--accent-strong)]"
+        >
+          <svg
+            class="size-4"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M3 12 12 3M7 3h5v5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
