@@ -236,5 +236,19 @@
     "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز.",
     "CONFIRM_REQUIRED": "أكد كلمة المرور الجديدة.",
     "PASSWORD_MISMATCH": "كلمتا المرور غير متطابقتين."
+  },
+  "HEALTHY": {
+    "LABEL": "صحي",
+    "SUBTITLE": "تغذية صحية",
+    "HEADING_BEFORE": "عزّز رحلتك نحو اللياقة البدنية مع",
+    "HEADING_ACCENT_BEFORE": "",
+    "HEADING_ACCENT": "خطط وجبات",
+    "HEADING_AFTER": "مخصصة لك",
+    "READ_MORE": "اقرأ المزيد",
+    "MEALS": {
+      "BREAKFAST": "وجبة إفطار صحية",
+      "LUNCH": "وجبة غداء صحية",
+      "DINNER": "وجبة عشاء صحية"
+    }
   }
 }

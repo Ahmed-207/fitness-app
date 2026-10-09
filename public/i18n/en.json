@@ -235,5 +235,19 @@
     "PASSWORD_RULE": "Use 8+ characters with uppercase, lowercase, a number, and a symbol.",
     "CONFIRM_REQUIRED": "Confirm your new password.",
     "PASSWORD_MISMATCH": "Passwords do not match."
+  },
+  "HEALTHY": {
+    "LABEL": "HEALTHY",
+    "SUBTITLE": "Healthy Nutritions",
+    "HEADING_BEFORE": "FUEL YOUR FITNESS JOURNEY WITH",
+    "HEADING_ACCENT_BEFORE": "CUSTOMIZED",
+    "HEADING_ACCENT": "MEAL PLANS",
+    "HEADING_AFTER": "FOR YOU",
+    "READ_MORE": "Read More",
+    "MEALS": {
+      "BREAKFAST": "Healthy Breakfast",
+      "LUNCH": "Healthy Lunch",
+      "DINNER": "Healthy Dinner"
+    }
   }
 }
