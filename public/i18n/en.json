@@ -241,5 +241,19 @@
   "PERSONAL_TRAINING": "personal training",
   "LIVE_CLASSES": "live classes",
   "PERSONAL_TRAINERS": "personal trainers"
-}
+},
+  "HEALTHY": {
+    "LABEL": "HEALTHY",
+    "SUBTITLE": "Healthy Nutritions",
+    "HEADING_BEFORE": "FUEL YOUR FITNESS JOURNEY WITH",
+    "HEADING_ACCENT_BEFORE": "CUSTOMIZED",
+    "HEADING_ACCENT": "MEAL PLANS",
+    "HEADING_AFTER": "FOR YOU",
+    "READ_MORE": "Read More",
+    "MEALS": {
+      "BREAKFAST": "Healthy Breakfast",
+      "LUNCH": "Healthy Lunch",
+      "DINNER": "Healthy Dinner"
+    }
+  }
 }
