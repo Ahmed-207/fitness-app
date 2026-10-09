@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AboutUsSectionComponent } from './components/about-us-section/about-us-section.component';
 import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
+import { MarqueeBannerComponent } from '../../shared/components/marquee-banner/marquee-banner';
 
 @Component({
   selector: 'app-home',
-  imports: [WhyUsSectionComponent, AboutUsSectionComponent],
+  imports: [WhyUsSectionComponent, AboutUsSectionComponent , MarqueeBannerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

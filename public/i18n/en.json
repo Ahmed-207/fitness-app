@@ -235,5 +235,11 @@
     "PASSWORD_RULE": "Use 8+ characters with uppercase, lowercase, a number, and a symbol.",
     "CONFIRM_REQUIRED": "Confirm your new password.",
     "PASSWORD_MISMATCH": "Passwords do not match."
-  }
+  },
+ "MARQUEE": {
+  "OUTDOOR_ONLINE": "outdoor & online trainers",
+  "PERSONAL_TRAINING": "personal training",
+  "LIVE_CLASSES": "live classes",
+  "PERSONAL_TRAINERS": "personal trainers"
+}
 }

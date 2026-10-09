@@ -236,5 +236,11 @@
     "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز.",
     "CONFIRM_REQUIRED": "أكد كلمة المرور الجديدة.",
     "PASSWORD_MISMATCH": "كلمتا المرور غير متطابقتين."
-  }
+  },
+ "MARQUEE": {
+  "OUTDOOR_ONLINE": "مدربون عبر الإنترنت وفي الهواء الطلق",
+  "PERSONAL_TRAINING": "تدريب شخصي",
+  "LIVE_CLASSES": "حصص مباشرة",
+  "PERSONAL_TRAINERS": "مدربون شخصيون"
+}
 }
