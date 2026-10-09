@@ -252,9 +252,9 @@
     "HEADING_AFTER": "مخصصة لك",
     "READ_MORE": "اقرأ المزيد",
     "MEALS": {
-      "BREAKFAST": "وجبة إفطار صحية",
-      "LUNCH": "وجبة غداء صحية",
-      "DINNER": "وجبة عشاء صحية"
+      "BREAKFAST": "إفطار",
+      "LUNCH": "غداء",
+      "DINNER": "عشاء"
     }
   }
 }
