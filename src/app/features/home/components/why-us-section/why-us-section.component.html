@@ -1,0 +1,113 @@
+<section
+  id="why-us"
+  class="overflow-hidden bg-[var(--color-bg)] px-5 py-16 text-[var(--color-text)] transition-colors duration-300 sm:px-8 lg:px-12 lg:py-24"
+  aria-labelledby="why-us-title"
+>
+  <div
+    class="mx-auto grid w-full max-w-[1180px] items-center gap-12 lg:grid-cols-[1.03fr_.97fr] lg:gap-16"
+  >
+    <div>
+      <div class="relative mb-4 h-11" aria-hidden="true">
+        <span
+  class="absolute -top-5 start-0 whitespace-nowrap text-[3.25rem] font-black uppercase leading-none tracking-[.11em] text-transparent [-webkit-text-stroke:1px_rgb(156_163_175_/_13%)] [-webkit-mask-image:linear-gradient(to_bottom,#000_0%,transparent_90%)] [mask-image:linear-gradient(to_bottom,#000_0%,transparent_90%)] sm:text-[4rem]"
+>
+ {{ 'WHY_US.LABEL' | translate }}
+</span>
+       
+        <span
+          class="absolute bottom-0 start-0 flex items-center gap-2 text-xs font-extrabold text-[var(--accent-strong)]"
+        >
+          <svg
+            class="size-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10M2 10v4M22 10v4" stroke-linecap="round" />
+          </svg>
+          {{ 'WHY_US.LABEL' | translate }}
+        </span>
+      </div>
+
+      <h2
+        id="why-us-title"
+        class="max-w-[650px] text-3xl font-black uppercase leading-[1.12] tracking-[.015em] text-[var(--color-text-heading)] sm:text-4xl lg:text-[2.65rem]"
+      >
+        {{ 'WHY_US.HEADING_BEFORE' | translate }}
+        <span class="text-[var(--accent-strong)]">
+          {{ 'WHY_US.HEADING_ACCENT' | translate }}
+        </span>
+        {{ 'WHY_US.HEADING_AFTER' | translate }}
+      </h2>
+
+      <p class="mt-5 max-w-[660px] text-[.95rem] leading-7 text-[var(--color-muted)]">
+        {{ 'WHY_US.DESCRIPTION' | translate }}
+      </p>
+
+      <ol class="mt-9 space-y-6">
+        @for (benefit of benefits; track benefit.number) {
+          <li class="grid grid-cols-[3rem_1fr] gap-5 sm:grid-cols-[3.25rem_1fr] sm:gap-6">
+            <div class="relative flex justify-center">
+              <span
+                class="relative z-10 flex size-11 shrink-0 items-center justify-center rounded-full bg-[var(--accent-strong)] text-xs font-black text-white shadow-[0_10px_28px_rgba(255,67,8,.22)]"
+              >
+                {{ benefit.number }}
+              </span>
+              @if (!$last) {
+                <span
+                  class="absolute bottom-[-1.75rem] top-11 w-px bg-[var(--color-border)]"
+                ></span>
+              }
+            </div>
+
+            <div class="pt-0.5">
+              <h3 class="text-base font-extrabold text-[var(--color-text-heading)]">
+                {{ benefit.titleKey | translate }}
+              </h3>
+              <p class="mt-1 max-w-[570px] text-sm leading-6 text-[var(--color-muted)]">
+                {{ benefit.descriptionKey | translate }}
+              </p>
+            </div>
+          </li>
+        }
+      </ol>
+    </div>
+
+    <div
+      class="mx-auto grid w-full max-w-[560px] grid-cols-2 gap-2 sm:gap-3"
+      [attr.aria-label]="'WHY_US.GALLERY_ARIA' | translate"
+    >
+      <img
+        class="h-52 w-full rounded-2xl object-cover shadow-[0_18px_50px_var(--image-shadow)] sm:h-72 lg:h-[322px]"
+        src="/assets/about/fitness-white-shirt.jpg"
+        [alt]="'WHY_US.IMAGES.STANDING' | translate"
+        width="1024"
+        height="1536"
+      />
+      <img
+        class="mt-12 h-40 w-full rounded-2xl object-cover shadow-[0_18px_50px_var(--image-shadow)] sm:h-56 lg:mt-16 lg:h-[242px]"
+        src="/assets/about/dumbbell-curl.jpg"
+        [alt]="'WHY_US.IMAGES.CURL' | translate"
+        width="1536"
+        height="1024"
+      />
+      <img
+        class="h-44 w-full rounded-2xl object-cover shadow-[0_18px_50px_var(--image-shadow)] sm:h-60 lg:h-[270px]"
+        src="/assets/about/gym-trainer.jpg"
+        [alt]="'WHY_US.IMAGES.TRAINER' | translate"
+        width="1024"
+        height="1536"
+        loading="lazy"
+      />
+      <img
+        class="-mt-7 h-52 w-full rounded-2xl object-cover shadow-[0_18px_50px_var(--image-shadow)] sm:-mt-9 sm:h-72 lg:-mt-14 lg:h-[294px]"
+        src="/assets/about/stretching-athlete.jpg"
+        [alt]="'WHY_US.IMAGES.STRETCHING' | translate"
+        width="1024"
+        height="1536"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

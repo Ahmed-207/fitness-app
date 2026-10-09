@@ -2,6 +2,92 @@
   "AUTHCOMMON": {
     "BACK": "Back"
   },
+  "NAV": {
+    "MAIN_ARIA": "Main navigation",
+    "LOGO_ALT": "Super Fitness",
+    "HOME": "Home",
+    "ABOUT": "About",
+    "CLASSES": "Classes",
+    "HEALTHY": "Healthy",
+    "LOGIN": "Login",
+    "SIGN_UP": "Sign up",
+    "SIGN_OUT": "Sign out",
+    "SIGNING_OUT": "Signing out…",
+    "OPEN_MENU": "Open menu",
+    "CLOSE_MENU": "Close menu",
+    "OPEN_PROFILE": "Open profile menu",
+    "SWITCH_LANGUAGE": "Switch language",
+    "USE_LIGHT_THEME": "Use light theme",
+    "USE_DARK_THEME": "Use dark theme"
+  },
+  "PAGES": {
+    "CLASSES_EYEBROW": "Train your way",
+    "CLASSES_TITLE": "Fitness Classes",
+    "CLASSES_DESCRIPTION": "Explore guided workouts created for every fitness level. Class details are coming soon.",
+    "HEALTHY_EYEBROW": "Live stronger",
+    "HEALTHY_TITLE": "Healthy Lifestyle",
+    "HEALTHY_DESCRIPTION": "Discover practical nutrition and wellness guidance designed to support your training journey."
+  },
+  "ABOUT_US": {
+    "LABEL": "About Us",
+    "HEADING_BEFORE": "Empowering you to achieve",
+    "HEADING_ACCENT": "your fitness",
+    "HEADING_AFTER": "goals",
+    "DESCRIPTION": "We believe fitness is more than just a workout—it's a lifestyle. With top-of-the-line facilities, certified trainers, and a supportive community, we're here to inspire and guide you every step of the way.",
+    "GET_STARTED": "Get Started",
+    "GALLERY_ARIA": "Our gym community gallery",
+    "IMAGES": {
+      "TRAINER": "Trainer holding a kettlebell in a modern gym",
+      "RESTING": "Athlete resting between sets",
+      "MEMBER": "Gym member standing near cardio equipment"
+    },
+    "FEATURES": {
+      "PERSONAL_TRAINER": {
+        "TITLE": "Personal Trainer",
+        "DESCRIPTION": "Achieve your fitness goals with the guidance of our certified trainers."
+      },
+      "CARDIO": {
+        "TITLE": "Cardio Programs",
+        "DESCRIPTION": "From steady-state runs to interval sprints, our treadmill programs."
+      },
+      "EQUIPMENT": {
+        "TITLE": "Quality Equipment",
+        "DESCRIPTION": "Our gym is equipped with the latest cardio and strength machines."
+      },
+      "NUTRITION": {
+        "TITLE": "Healthy Nutrition",
+        "DESCRIPTION": "Fuel your fitness journey with customized meal plans for you."
+      }
+    }
+  },
+  "WHY_US": {
+    "LABEL": "Why Us",
+    "HEADING_BEFORE": "Elevate fitness with the",
+    "HEADING_ACCENT": "best way",
+    "HEADING_AFTER": "possible",
+    "DESCRIPTION": "We offer a fitness journey tailored to your goals, supported by professional trainers and a welcoming community. Whether it's weight loss, strength building, or overall wellness, our proven methods help you progress.",
+    "GALLERY_ARIA": "Fitness training gallery",
+    "IMAGES": {
+      "STANDING": "Athlete standing in a modern training gym",
+      "CURL": "Athlete performing a dumbbell curl",
+      "TRAINER": "Personal trainer beside strength equipment",
+      "STRETCHING": "Athlete stretching before a workout"
+    },
+    "BENEFITS": {
+      "PERSONALIZED": {
+        "TITLE": "Personalized Fitness Plans",
+        "DESCRIPTION": "We tailor every workout to your unique goals and fitness level, ensuring you make the most progress."
+      },
+      "RESULTS": {
+        "TITLE": "Results-Driven Focus",
+        "DESCRIPTION": "Everything we do is designed to help you achieve measurable results, whatever your goal may be."
+      },
+      "EQUIPMENT": {
+        "TITLE": "State-Of-The-Art Equipment",
+        "DESCRIPTION": "We provide the latest gym equipment, from cardio machines to free weights, for every training style."
+      }
+    }
+  },
   "HOME": {
     "SUCCESS_BADGE": "Signed in",
     "TITLE": "Welcome to Super Fitness",
