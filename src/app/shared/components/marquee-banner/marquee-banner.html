@@ -1,0 +1,16 @@
+<div class="w-full bg-[#FF5722] py-3 overflow-hidden whitespace-nowrap shadow-md border-y border-[#FF5722]/30">
+  <div class="animate-marquee flex items-center gap-8">
+    
+    @for (repeat of [1, 2]; track repeat) {
+      <div class="flex items-center gap-8">
+        @for (item of items; track $index) {
+          <span class="text-white text-base md:text-lg font-black tracking-widest uppercase flex items-center gap-8">
+            {{ item | translate }}
+            <span class="text-white/70 text-sm">★</span>
+          </span>
+        }
+      </div>
+    }
+
+  </div>
+</div>
