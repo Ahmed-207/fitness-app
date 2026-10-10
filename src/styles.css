@@ -4,6 +4,8 @@
 /* Dark theme (default) */
 :root,
 [data-theme='dark'] {
+   --workouts-layer-bg: rgba(36, 36, 36, 0.60);
+  --workouts-footer-bg: rgba(36, 36, 36, 0.50);
   --color-bg: #1a1a1a;
   --color-surface: rgba(25, 25, 25, 0.12);
   --color-surface-solid: #191919;
@@ -39,6 +41,8 @@
 }
 
 [data-theme='light'] {
+  --workouts-layer-bg: rgba(255, 255, 255, 0.60); 
+   --workouts-footer-bg: rgba(255, 255, 255, 0.50);
   --color-bg: #f0f0f2;
   --color-surface: rgba(255, 255, 255, 0.85);
   --color-surface-solid: #ffffff;

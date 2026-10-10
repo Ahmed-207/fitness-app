@@ -241,5 +241,20 @@
   "PERSONAL_TRAINING": "personal training",
   "LIVE_CLASSES": "live classes",
   "PERSONAL_TRAINERS": "personal trainers"
+},
+"WORKOUTS": {
+  "TITLE_1": "TRANSFORM YOUR BODY WITH OUR",
+  "TITLE_2": "DYNAMIC",
+  "TITLE_3": "UPCOMING WORKOUTS",
+  "EXPLORE": "Explore",
+  "CATEGORIES": {
+    "FULL_BODY": "Full Body",
+    "CHEST": "Chest",
+    "ARM": "Arm",
+    "SHOULDER": "Shoulder",
+    "BACK": "Back",
+    "LEGS": "Legs",
+    "STOMACH": "Stomach"
+  }
 }
 }

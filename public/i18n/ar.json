@@ -242,5 +242,20 @@
   "PERSONAL_TRAINING": "تدريب شخصي",
   "LIVE_CLASSES": "حصص مباشرة",
   "PERSONAL_TRAINERS": "مدربون شخصيون"
+},
+"WORKOUTS": {
+  "TITLE_1": "حوّل جسمك مع تماريننا",
+  "TITLE_2": "الديناميكية",
+  "TITLE_3": "القادمة",
+  "EXPLORE": "استكشف",
+  "CATEGORIES": {
+    "FULL_BODY": "الجسم بالكامل",
+    "CHEST": "الصدر",
+    "ARM": "الذراعين",
+    "SHOULDER": "الكتف",
+    "BACK": "الظهر",
+    "LEGS": "الأرجل",
+    "STOMACH": "البطن"
+  }
 }
 }

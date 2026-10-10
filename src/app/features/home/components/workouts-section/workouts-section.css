@@ -1,0 +1,9 @@
+:root, .dark, body.dark, html.dark {
+  --workouts-layer-bg: rgba(36, 36, 36, 0.60); 
+  --workouts-footer-bg: rgba(36, 36, 36, 0.50); 
+}
+
+.light, .light-mode, body.light, body.light-mode, html.light, html.light-mode {
+  --workouts-layer-bg: rgba(255, 255, 255, 0.60); 
+  --workouts-footer-bg: rgba(222, 229, 231, 0.5); 
+}

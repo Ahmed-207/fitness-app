@@ -1,0 +1,124 @@
+<section
+  id="workouts"
+  class="relative w-full h-200 overflow-hidden bg-(--color-section-alt) px-4 py-16 text-(--color-text) transition-colors duration-300 sm:px-6 lg:px-8 lg:py-24"
+  aria-labelledby="workouts-title"
+>
+  <div class="absolute inset-0 z-0 h-full w-full">
+    <img 
+      src="/assets/bg-workouts.jpg" 
+      alt="" 
+      class="h-full w-full object-cover object-center opacity-90 dark:opacity-40"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-black/10 dark:bg-black/40"></div>
+  </div>
+  <div 
+  class="relative z-10 mx-auto w-full h-100 max-w-295 rounded-3xl border border-black/10 dark:border-white/10 p-6 shadow-2xl backdrop-blur-[86px] transition-colors duration-300 sm:p-10 lg:p-12 text-center"
+  [style.background-color]="'var(--workouts-layer-bg)'"
+>
+    
+    <div class="relative mb-4 h-11 flex justify-center items-center" aria-hidden="true">
+      <span
+        class="absolute -top-5 whitespace-nowrap text-[3.25rem] font-black uppercase leading-none tracking-[.11em] text-transparent [-webkit-text-stroke:1px_var(--color-text-heading)] opacity-10 sm:text-[4rem]"
+      >
+        {{ 'WORKOUTS.TITLE_3' | translate }}
+      </span>
+      <span
+        class="absolute bottom-0 flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-(--accent-strong)"
+      >
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10M2 10v4M22 10v4" stroke-linecap="round" />
+        </svg>
+        {{ 'WORKOUTS.TITLE_3' | translate }}
+      </span>
+    </div>
+
+    
+    <h2
+      id="workouts-title"
+      class="mx-auto max-w-175 text-2xl font-black uppercase leading-[1.12] tracking-[.015em] text-(--color-text-heading) transition-colors duration-300 sm:text-3xl lg:text-[2.5rem]"
+    >
+      {{ 'WORKOUTS.TITLE_1' | translate }} {{ 'WORKOUTS.TITLE_2' | translate }}
+      <span class="text-(--accent-strong) block sm:inline">
+        {{ 'WORKOUTS.TITLE_3' | translate }}
+      </span>
+    </h2>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+   
+      <button
+        (click)="selectCategory('all')"
+        class="rounded-full px-5 py-2 text-xs font-extrabold uppercase tracking-wider transition-all duration-300 sm:text-sm"
+        [class.bg-[var(--accent-strong)]]="selectedMuscleId() === 'all'"
+        [class.text-white]="selectedMuscleId() === 'all'"
+        [class.bg-black/5]="selectedMuscleId() !== 'all'"
+        [class.dark:bg-white/10]="selectedMuscleId() !== 'all'"
+        [class.text-[var(--color-text-heading)]]="selectedMuscleId() !== 'all'"
+      >
+        ALL
+      </button>
+
+      @for (group of muscleGroups(); track group._id) {
+        <button
+          (click)="selectCategory(group._id)"
+          class="rounded-full px-5 py-2 text-xs font-extrabold uppercase tracking-wider transition-all duration-300 sm:text-sm"
+          [class.bg-[var(--accent-strong)]]="selectedMuscleId() === group._id"
+          [class.text-white]="selectedMuscleId() === group._id"
+          [class.bg-black/5]="selectedMuscleId() !== group._id"
+          [class.dark:bg-white/10]="selectedMuscleId() !== group._id"
+          [class.text-[var(--color-text-heading)]]="selectedMuscleId() !== group._id"
+        >
+          {{ group.name }}
+        </button>
+      }
+    </div>
+
+    <div class="mt-10 grid gap-6 text-start sm:grid-cols-2 lg:grid-cols-3">
+      @for (item of displayedExercises(); track item._id) {
+       <article
+          class="group relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-(--accent-strong)/50"
+        >
+          <div class="relative h-64 w-full overflow-hidden bg-black/10">
+            <img
+              [src]="item.image || 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop'"
+              [alt]="item.name"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+
+          <div 
+            class="p-5 backdrop-blur-[58.2px] transition-colors duration-300"
+            [style.background-color]="'var(--workouts-footer-bg)'"
+          >
+            <h3 
+              class="text-base font-extrabold uppercase tracking-wider text-(--color-text-heading) transition-colors group-hover:text-(--accent-strong)"
+            >
+              {{ item.name }}
+            </h3>
+
+            <a
+              href="#"
+              class="mt-3 inline-flex items-center gap-2 text-xs font-extrabold text-(--color-muted) transition-colors hover:text-(--color-text-heading)"
+            >
+              <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
+              <span class="flex size-5 items-center justify-center rounded-full bg-(--accent-strong) text-[10px] text-white">
+                <svg class="size-3 rtl:rotate-180" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 12 12 3M7 3h5v5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </article>
+      }
+      
+    </div>
+
+    <div class="mt-10 flex items-center justify-center gap-2" aria-hidden="true">
+      <span class="h-2 w-7 rounded-full bg-(--accent-strong)"></span>
+      <span class="size-2 rounded-full bg-(--color-text-heading) opacity-30"></span>
+      <span class="size-2 rounded-full bg-(--color-text-heading) opacity-30"></span>
+    </div>
+
+  </div>
+</section>
