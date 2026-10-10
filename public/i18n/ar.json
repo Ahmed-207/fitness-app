@@ -242,5 +242,19 @@
   "PERSONAL_TRAINING": "تدريب شخصي",
   "LIVE_CLASSES": "حصص مباشرة",
   "PERSONAL_TRAINERS": "مدربون شخصيون"
-}
+},
+  "HEALTHY": {
+    "LABEL": "صحي",
+    "SUBTITLE": "تغذية صحية",
+    "HEADING_BEFORE": "عزّز رحلتك نحو اللياقة البدنية مع",
+    "HEADING_ACCENT_BEFORE": "",
+    "HEADING_ACCENT": "خطط وجبات",
+    "HEADING_AFTER": "مخصصة لك",
+    "READ_MORE": "اقرأ المزيد",
+    "MEALS": {
+      "BREAKFAST": "إفطار",
+      "LUNCH": "غداء",
+      "DINNER": "عشاء"
+    }
+  }
 }

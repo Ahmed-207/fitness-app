@@ -1,0 +1,126 @@
+<section class="relative isolate overflow-hidden bg-stone-800 bg-cover
+    bg-center-bottom bg-no-repeat font-sans pb-10 sm:pb-14" 
+    style="background-image: url('/assets/healthy/bg-healthy.jpg');" >
+  <div
+    class="absolute inset-x-0 top-10 -z-10 h-[292px]
+           bg-[var(--section-healthy)] backdrop-blur-[3px]"
+  ></div>
+
+  <header class="relative flex h-10 items-center justify-center">
+    <span
+      class="absolute top-3 left-1/2 -translate-x-1/2
+             whitespace-nowrap font-light opacity-25
+             text-2xl md:text-4xl tracking-widest text-transparent"
+      style="-webkit-text-stroke: 0.6px #ffffff;"
+    >
+      {{ 'HEALTHY.LABEL' | translate }}
+    </span>
+
+    <div
+      class="absolute left-1/2 top-[43px] flex -translate-x-1/2
+             items-center gap-1.5 whitespace-nowrap text-[10px]
+             font-bold text-[#ff4b16]"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M6 9v6M3 10v4M9 7v10M15 7v10M18 9v6M21 10v4M9 12h6"
+        />
+      </svg>
+
+      <span>{{ 'HEALTHY.SUBTITLE' | translate }}</span>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-6xl px-5 pb-14 pt-10 sm:px-8">
+    <h1
+      class="mx-auto mb-6 max-w-2xl text-center text-2xl
+             font-extrabold uppercase leading-tight tracking-wide
+             text-[var(--color-text)] sm:text-[25px] sm:leading-[1.4]"
+    >
+      {{ 'HEALTHY.HEADING_BEFORE' | translate }}
+      <br />
+
+      {{ 'HEALTHY.HEADING_ACCENT_BEFORE' | translate }}
+
+      <span class="text-[#ff4b16]">
+        {{ 'HEALTHY.HEADING_ACCENT' | translate }}
+      </span>
+
+      {{ 'HEALTHY.HEADING_AFTER' | translate }}
+    </h1>
+
+    <div
+      class="grid grid-cols-1 gap-5 sm:grid-cols-2
+             lg:grid-cols-3 lg:gap-[22px]"
+    >
+      @for (meal of meals(); track meal.id) {
+        <article
+          class="group overflow-hidden rounded-xl border border-white/30
+                 bg-white/90 shadow-lg transition duration-300
+                 hover:-translate-y-1 hover:shadow-2xl"
+        >
+          <div class="h-[210px] overflow-hidden">
+            <img
+              [src]="meal.image"
+              [alt]="meal.titleKey | translate"
+              class="h-full w-full object-cover transition-transform
+                     duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+
+          <div
+            class="min-h-[70px] bg-[var(--section-healthy)]
+                   px-3 py-3.5"
+          >
+            <h2
+              class="mb-3 text-sm font-extrabold tracking-[2px]
+                     text-[var(--color-text)]"
+            >
+              {{ meal.titleKey | translate }}
+            </h2>
+
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 text-[13px]
+                     font-medium text-[#ff4b16] transition
+                     hover:text-[#d93608]"
+            >
+              <span>{{ 'HEALTHY.READ_MORE' | translate }}</span>
+
+              <span
+                class="flex h-[17px] w-[17px] items-center
+                       justify-center rounded-full bg-[#ff4b16]
+                       text-black"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  </main>
+</section>

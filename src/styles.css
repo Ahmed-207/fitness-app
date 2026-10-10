@@ -36,6 +36,8 @@
   --text: var(--color-text);
   --error: var(--color-error);
   --muted: var(--color-muted);
+  --section-healthy: rgb(35 36 37 / 75%);
+
 }
 
 [data-theme='light'] {
@@ -65,6 +67,8 @@
   --navbar-bg: #dedede;
   --navbar-text: #202020;
   --navbar-control-bg: rgba(255, 255, 255, 0.7);
+  --section-healthy: rgb(243 243 244 / 75%);
+
 }
 
 body {
