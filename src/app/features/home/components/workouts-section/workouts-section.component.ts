@@ -59,13 +59,26 @@ export class WorkoutsSectionComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.initViewportLayout();
+    this.loadInitialData();
+  }
+
+  private initViewportLayout(): void {
     this.updateVisibleSlots();
-    if (typeof window !== 'undefined') {
-      const onResize = () => this.updateVisibleSlots();
-      window.addEventListener('resize', onResize);
-      this.destroyRef.onDestroy(() => window.removeEventListener('resize', onResize));
+    this.registerResizeListener();
+  }
+
+  private registerResizeListener(): void {
+    if (typeof window === 'undefined') {
+      return;
     }
 
+    const onResize = () => this.updateVisibleSlots();
+    window.addEventListener('resize', onResize);
+    this.destroyRef.onDestroy(() => window.removeEventListener('resize', onResize));
+  }
+
+  private loadInitialData(): void {
     this.fetchMuscleGroups();
     this.fetchExercises();
   }
