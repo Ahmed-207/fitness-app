@@ -1,17 +1,17 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MuscleGroupsResponse, ExercisesResponse } from './../../../features/auth/models/workouts-models';
+import { API_ENDPOINTS } from '../../../core/constants/api-endpoints';
+import { ExercisesResponse, MuscleGroupsResponse } from '../models/workouts-models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WorkoutsService {
-  private http = inject(HttpClient);
-  private baseUrl = 'https://fitness.elevateegy.com/api/v1';
+  private readonly http = inject(HttpClient);
 
   getMuscleGroups(): Observable<MuscleGroupsResponse> {
-    return this.http.get<MuscleGroupsResponse>(`${this.baseUrl}/muscles`);
+    return this.http.get<MuscleGroupsResponse>(API_ENDPOINTS.muscles.groups);
   }
 
   getExercisesByMuscle(muscleGroupId?: string): Observable<ExercisesResponse> {
@@ -19,6 +19,6 @@ export class WorkoutsService {
     if (muscleGroupId && muscleGroupId !== 'all') {
       params = params.set('muscleGroup', muscleGroupId);
     }
-    return this.http.get<ExercisesResponse>(`${this.baseUrl}/exercises, { params }`);
+    return this.http.get<ExercisesResponse>(API_ENDPOINTS.exercises.all, { params });
   }
 }

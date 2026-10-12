@@ -1,0 +1,81 @@
+<section id="workouts" class="workouts" aria-labelledby="workouts-title">
+  <div class="workouts__bg" aria-hidden="true"></div>
+  <div class="workouts__header-overlay" aria-hidden="true"></div>
+
+  <div class="workouts__inner">
+    <div class="workouts__eyebrow" aria-hidden="true">
+      <span class="workouts__watermark">{{ 'WORKOUTS.WATERMARK' | translate }}</span>
+      <span class="workouts__eyebrow-row">
+        <svg class="workouts__dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10M2 10v4M22 10v4" stroke-linecap="round" />
+        </svg>
+        <span class="workouts__fitness-class">{{ 'WORKOUTS.FITNESS_CLASS' | translate }}</span>
+      </span>
+    </div>
+
+    <h2 id="workouts-title" class="workouts__title">
+      {{ 'WORKOUTS.TITLE_LINE_1' | translate }}
+      <span class="workouts__title-accent">
+        {{ 'WORKOUTS.TITLE_LINE_2' | translate }}
+      </span>
+    </h2>
+
+    <div class="workouts__categories" role="tablist" [attr.aria-label]="'WORKOUTS.CATEGORIES_ARIA' | translate">
+      @for (key of categoryKeys; track key) {
+        <button
+          type="button"
+          role="tab"
+          class="workouts__category"
+          [class.workouts__category--active]="
+            key === 'FULL_BODY' ? selectedMuscleId() === 'all' : selectedMuscleId() === key
+          "
+          [attr.aria-selected]="
+            key === 'FULL_BODY' ? selectedMuscleId() === 'all' : selectedMuscleId() === key
+          "
+          (click)="selectCategory(key === 'FULL_BODY' ? 'all' : key)"
+        >
+          {{ 'WORKOUTS.CATEGORIES.' + key | translate }}
+        </button>
+      }
+    </div>
+
+    <div class="workouts__cards">
+      @for (item of visibleExercises(); track item._id) {
+        <article class="workouts__card">
+          <div class="workouts__card-media">
+            <img
+              [src]="item.image || '/assets/bg-workouts.jpg'"
+              [alt]="item.name"
+              class="workouts__card-photo"
+              loading="lazy"
+            />
+            <div class="workouts__card-gradient" aria-hidden="true"></div>
+          </div>
+          <div class="workouts__card-panel">
+            <h3 class="workouts__card-title">{{ item.name }}</h3>
+            <a class="workouts__explore" href="/classes">
+              <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
+              <span class="workouts__explore-badge" aria-hidden="true">
+                <app-sf-arrow-icon size="sm" />
+              </span>
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="workouts__pagination" role="tablist" [attr.aria-label]="'WORKOUTS.PAGINATION_ARIA' | translate">
+      @for (page of pageIndexes(); track page) {
+        <button
+          type="button"
+          role="tab"
+          class="workouts__dot"
+          [class.workouts__dot--active]="slideIndex() === page"
+          [attr.aria-selected]="slideIndex() === page"
+          [attr.aria-label]="'Page ' + (page + 1)"
+          (click)="goToSlide(page)"
+        ></button>
+      }
+    </div>
+  </div>
+</section>

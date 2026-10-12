@@ -77,6 +77,13 @@
   --error: var(--color-error);
   --muted: var(--color-muted);
   --section-healthy: rgb(35 36 37 / 75%);
+
+  --workouts-section-base: #3a3a3a;
+  --workouts-section-image: url('/assets/bg-workouts.jpg');
+  --workouts-header-overlay: rgb(36 36 36 / 60%);
+  --workouts-card-border: rgb(243 243 244 / 14%);
+  --workouts-card-panel: rgb(36 36 36 / 50%);
+  --workouts-pagination-inactive: #f3f3f4;
 }
 
 [data-theme='light'] {
@@ -125,6 +132,13 @@
   --navbar-control-bg: rgb(255 255 255 / 85%);
 
   --section-healthy: rgb(243 243 244 / 75%);
+
+  --workouts-section-base: #f3f3f4;
+  --workouts-section-image: url('/assets/bg-workouts.jpg');
+  --workouts-header-overlay: rgb(255 255 255 / 60%);
+  --workouts-card-border: rgb(36 36 36 / 14%);
+  --workouts-card-panel: rgb(255 255 255 / 50%);
+  --workouts-pagination-inactive: #242424;
 }
 
 body {

@@ -3,7 +3,7 @@ import { AboutUsSectionComponent } from './components/about-us-section/about-us-
 import { HealthyNutritionSection } from './components/healthy-nutrition-section/healthy-nutrition-section';
 import { HomeHeroSectionComponent } from './components/home-hero-section/home-hero-section.component';
 import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
-import { WorkoutsSectionComponent } from './components/workouts-section/workouts-section';
+import { WorkoutsSectionComponent } from './components/workouts-section/workouts-section.component';
 
 @Component({
   selector: 'app-home',

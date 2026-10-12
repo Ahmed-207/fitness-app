@@ -278,10 +278,13 @@
     "PERSONAL_TRAINERS": "مدربون شخصيون"
   },
   "WORKOUTS": {
-    "TITLE_1": "حوّل جسمك مع تماريننا",
-    "TITLE_2": "الديناميكية",
-    "TITLE_3": "القادمة",
+    "WATERMARK": "تمارين",
+    "FITNESS_CLASS": "فئة اللياقة",
+    "TITLE_LINE_1": "حوّل جسمك مع تماريننا الديناميكية",
+    "TITLE_LINE_2": "القادمة",
     "EXPLORE": "استكشف",
+    "CATEGORIES_ARIA": "فئات التمارين",
+    "PAGINATION_ARIA": "صفحات بطاقات التمارين",
     "CATEGORIES": {
       "FULL_BODY": "الجسم بالكامل",
       "CHEST": "الصدر",
