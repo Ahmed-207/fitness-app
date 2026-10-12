@@ -29,7 +29,7 @@
     "HEALTHY_DESCRIPTION": "Discover practical nutrition and wellness guidance designed to support your training journey."
   },
   "ABOUT_US": {
-    "LABEL": "About Us",
+    "LABEL": "WORKOUT",
     "HEADING_BEFORE": "Empowering you to achieve",
     "HEADING_ACCENT": "your fitness",
     "HEADING_AFTER": "goals",
@@ -89,13 +89,48 @@
     }
   },
   "HOME": {
-    "SUCCESS_BADGE": "Signed in",
-    "TITLE": "Welcome to Super Fitness",
-    "INTRO": "You are logged in. This demo home confirms sign-in worked and your session is active.",
-    "NAME_LABEL": "Name",
-    "EMAIL_LABEL": "Email",
-    "SIGN_OUT": "Sign out",
-    "SIGNING_OUT": "Signing out…"
+    "HERO": {
+      "TITLE_LINE_1_BEFORE": "YOUR BODY CAN ",
+      "TITLE_LINE_1_ACCENT": "STAND",
+      "TITLE_LINE_2_ACCENT": "ALMOST",
+      "TITLE_LINE_2_AFTER": " ANYTHING",
+      "LEAD": "It's your mind that needs convincing. Push past your limits, stay committed, and watch as your body transform into powerhouse of strength and resilience. Start your journey today & truly capable of!",
+      "STATS": {
+        "MEMBERS_VALUE": "1200+",
+        "MEMBERS_LABEL": "Active Members",
+        "TRAINERS_VALUE": "12+",
+        "TRAINERS_LABEL": "Certified Trainers",
+        "EXPERIENCE_VALUE": "20+",
+        "EXPERIENCE_LABEL": "Year Of Experience"
+      },
+      "GET_STARTED": "Get Started",
+      "EXPLORE_MORE": "Explore More"
+    }
+  },
+  "ASSISTANT": {
+    "LABEL": "Hey Ask Me",
+    "ARIA": "Fitness assistant",
+    "TAP_TO_CLOSE": "Tap To Close",
+    "PANEL_TITLE": "Smart Coach",
+    "GREETING": "Hello How Can I Assist You Today ?",
+    "SAMPLE_USER": "Lorem ipsum dolor sit amet",
+    "INPUT_PLACEHOLDER": "Ask Me Any Things",
+    "HISTORY_TITLE": "Previous Conversations",
+    "HISTORY_SAMPLE": "Lorem ipsum dolor sit amet"
+  },
+  "FOOTER": {
+    "SERVICES_TICKER_ARIA": "Fitness services",
+    "BRAND_LINE_1": "Push harder, go further. Your",
+    "BRAND_LINE_2": "fitness journey starts today!",
+    "CONTACT_TITLE": "CONTACT US",
+    "PHONE": "+91 123 456 789",
+    "EMAIL": "info@gmail.com",
+    "HOURS_TITLE": "OUR GYM TIMING",
+    "HOURS_WEEKDAY": "Mon - Fri : 08:00 AM - 10:00 PM",
+    "HOURS_WEEKEND": "Sat - Sun : 08:00 AM - 09:00 PM",
+    "LOCATION_TITLE": "OUR LOCATION",
+    "ADDRESS_LINE_1": "2715 Ash Dr. San Jose, South",
+    "ADDRESS_LINE_2": "Dakota 83475"
   },
   "AUTHLOGIN": {
     "HEY_THERE": "Hey There",
@@ -236,25 +271,39 @@
     "CONFIRM_REQUIRED": "Confirm your new password.",
     "PASSWORD_MISMATCH": "Passwords do not match."
   },
- "MARQUEE": {
-  "OUTDOOR_ONLINE": "outdoor & online trainers",
-  "PERSONAL_TRAINING": "personal training",
-  "LIVE_CLASSES": "live classes",
-  "PERSONAL_TRAINERS": "personal trainers"
-},
-"WORKOUTS": {
-  "TITLE_1": "TRANSFORM YOUR BODY WITH OUR",
-  "TITLE_2": "DYNAMIC",
-  "TITLE_3": "UPCOMING WORKOUTS",
-  "EXPLORE": "Explore",
-  "CATEGORIES": {
-    "FULL_BODY": "Full Body",
-    "CHEST": "Chest",
-    "ARM": "Arm",
-    "SHOULDER": "Shoulder",
-    "BACK": "Back",
-    "LEGS": "Legs",
-    "STOMACH": "Stomach"
+  "MARQUEE": {
+    "OUTDOOR_ONLINE": "outdoor & online trainers",
+    "PERSONAL_TRAINING": "personal training",
+    "LIVE_CLASSES": "live classes",
+    "PERSONAL_TRAINERS": "personal trainers"
+  },
+  "WORKOUTS": {
+    "TITLE_1": "TRANSFORM YOUR BODY WITH OUR",
+    "TITLE_2": "DYNAMIC",
+    "TITLE_3": "UPCOMING WORKOUTS",
+    "EXPLORE": "Explore",
+    "CATEGORIES": {
+      "FULL_BODY": "Full Body",
+      "CHEST": "Chest",
+      "ARM": "Arm",
+      "SHOULDER": "Shoulder",
+      "BACK": "Back",
+      "LEGS": "Legs",
+      "STOMACH": "Stomach"
+    }
+  },
+  "HEALTHY": {
+    "LABEL": "HEALTHY",
+    "SUBTITLE": "Healthy Nutritions",
+    "HEADING_BEFORE": "FUEL YOUR FITNESS JOURNEY WITH",
+    "HEADING_ACCENT_BEFORE": "CUSTOMIZED",
+    "HEADING_ACCENT": "MEAL PLANS",
+    "HEADING_AFTER": "FOR YOU",
+    "READ_MORE": "Read More",
+    "MEALS": {
+      "BREAKFAST": "Breakfast",
+      "LUNCH": "Lunch",
+      "DINNER": "Dinner"
+    }
   }
-}
 }

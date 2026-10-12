@@ -1,0 +1,51 @@
+.about-us {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--color-text);
+}
+
+.about-us::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--page-frame-image) center / cover no-repeat;
+  pointer-events: none;
+}
+
+.about-us::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--section-about-overlay);
+  backdrop-filter: blur(var(--section-about-overlay-blur));
+  -webkit-backdrop-filter: blur(var(--section-about-overlay-blur));
+  pointer-events: none;
+}
+
+.about-us__wordmark {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--section-wordmark);
+}
+
+.about-us__feature-grid article {
+  border-color: var(--color-divider);
+}
+
+.about-us__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 1.5rem 2.75rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.about-us__cta-badge {
+  top: 50%;
+  inset-inline-end: -0.875rem;
+  transform: translateY(-50%);
+}
+

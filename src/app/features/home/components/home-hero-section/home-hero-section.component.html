@@ -1,0 +1,59 @@
+<div class="home-hero-block">
+<section class="home-hero" aria-labelledby="home-hero-title">
+  <div class="home-hero__inner">
+    <div class="home-hero__copy">
+      <h1 id="home-hero-title" class="home-hero__title">
+        <span class="home-hero__title-line">
+          {{ 'HOME.HERO.TITLE_LINE_1_BEFORE' | translate }}
+          <span class="home-hero__accent">{{ 'HOME.HERO.TITLE_LINE_1_ACCENT' | translate }}</span>
+        </span>
+        <span class="home-hero__title-line">
+          <span class="home-hero__accent">{{ 'HOME.HERO.TITLE_LINE_2_ACCENT' | translate }}</span>
+          {{ 'HOME.HERO.TITLE_LINE_2_AFTER' | translate }}
+        </span>
+      </h1>
+
+      <div class="home-hero__lead">
+        <span class="home-hero__lead-accent" aria-hidden="true"></span>
+        <p>{{ 'HOME.HERO.LEAD' | translate }}</p>
+      </div>
+
+      <dl class="home-hero__stats">
+        @for (stat of stats; track stat.valueKey) {
+          <div class="home-hero__stat">
+            <dt class="home-hero__stat-value">{{ stat.valueKey | translate }}</dt>
+            <dd class="home-hero__stat-label">{{ stat.labelKey | translate }}</dd>
+          </div>
+        }
+      </dl>
+
+      <div class="home-hero__actions">
+        <a class="home-hero__btn home-hero__btn--solid" routerLink="/auth/register">
+          {{ 'HOME.HERO.GET_STARTED' | translate }}
+          <span class="home-hero__btn-badge home-hero__btn-badge--solid" aria-hidden="true">
+            <app-sf-arrow-icon size="md" />
+          </span>
+        </a>
+        <a class="home-hero__btn home-hero__btn--outline" href="#about-us">
+          {{ 'HOME.HERO.EXPLORE_MORE' | translate }}
+          <span class="home-hero__btn-badge home-hero__btn-badge--outline" aria-hidden="true">
+            <app-sf-arrow-icon size="md" tone="accent" />
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="home-hero__visual" aria-hidden="true">
+      <img
+        class="home-hero__athlete"
+        src="/assets/home/hero-athlete.png"
+        alt=""
+        width="665"
+        height="1024"
+      />
+    </div>
+  </div>
+</section>
+
+<app-services-ticker class="home-hero-block__ticker" />
+</div>

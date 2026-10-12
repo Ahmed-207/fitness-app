@@ -1,79 +1,148 @@
 @import 'tailwindcss';
 @import '@fontsource/baloo-thambi-2';
 
+/* Shared gym photo (Figma page-frame fill) */
+:root {
+  --site-nav-height: 5rem;
+  --page-frame-image: url('/assets/about/gym-trainer.jpg');
+  --page-frame-blur: 75.4px;
+  --brand-orange: #ff4100;
+  --chat-user-orange: #ff6a00;
+
+  /* Smart Coach — dark panel only (verified); not theme-switched */
+  --chat-panel-border: #ff4100;
+  --chat-panel-scrim: rgb(36 36 36 / 42%);
+  --chat-panel-text: #f3f3f4;
+  --chat-bubble-assistant: rgb(36 36 36 / 50%);
+  --chat-bubble-user: rgb(255 106 0 / 50%);
+  --chat-history-overlay: rgb(36 36 36 / 80%);
+  --chat-muted-text: #d3d3d3;
+  --chat-input-border: #f3f3f4;
+  --chat-shadow: rgb(0 0 0 / 25%);
+  --chat-bubble-blur: 30px;
+  --chat-history-blur: 20px;
+}
+
 /* Dark theme (default) */
 :root,
 [data-theme='dark'] {
-   --workouts-layer-bg: rgba(36, 36, 36, 0.60);
-  --workouts-footer-bg: rgba(36, 36, 36, 0.50);
-  --color-bg: #1a1a1a;
-  --color-surface: rgba(25, 25, 25, 0.12);
-  --color-surface-solid: #191919;
-  --color-text: #f8f8f8;
-  --color-text-heading: #ffffff;
-  --color-muted: #c9c9c9;
-  --color-border: rgba(220, 220, 220, 0.58);
-  --color-overlay: rgba(36, 36, 36, 0.6);
-  --accent: #ff4a12;
-  --accent-strong: #ff4308;
+  --workouts-layer-bg: rgba(36, 36, 36, 0.6);
+  --workouts-footer-bg: rgba(36, 36, 36, 0.5);
+  --page-frame-base: #3a3a3a;
+  --hero-overlay: rgb(36 36 36 / 60%);
+  --hero-overlay-blur: 86.1px;
+  --section-about-overlay: rgb(36 36 36 / 95%);
+  --section-about-overlay-blur: 86px;
+
+  --color-bg: #3a3a3a;
+  --color-surface: rgb(36 36 36 / 12%);
+  --color-surface-solid: #242424;
+  --color-text: #f3f3f4;
+  --color-text-heading: #f3f3f4;
+  --color-muted: rgb(243 243 244 / 72%);
+  --color-border: rgb(243 243 244 / 22%);
+  --color-overlay: rgb(36 36 36 / 60%);
+  --color-divider: rgb(243 243 244 / 14%);
+
+  --accent: var(--brand-orange);
+  --accent-strong: var(--brand-orange);
   --accent-press: #e83b05;
   --color-error: #ff9c7e;
-  --field-bg: rgba(20, 20, 20, 0.26);
+
+  --field-bg: rgb(36 36 36 / 26%);
   --field-border: #858585;
   --field-border-focus: var(--accent-strong);
   --field-border-invalid: #e85a4a;
   --field-icon: #bcbcbc;
   --field-placeholder: #999999;
-  --field-focus-ring: rgba(255, 67, 8, 0.13);
+  --field-focus-ring: rgb(255 65 0 / 13%);
   --btn-disabled-bg: #d4d4d4;
-  --color-section-alt: #202222;
-  --section-wordmark: rgba(255, 255, 255, 0.12);
-  --image-shadow: rgba(0, 0, 0, 0.3);
-  --navbar-bg: #232323;
-  --navbar-text: #f7f7f7;
-  --navbar-control-bg: #303030;
+
+  --color-section-alt: transparent;
+  --section-wordmark: rgb(243 243 244 / 13%);
+  --image-shadow: rgb(0 0 0 / 30%);
+
+  --footer-bg: #232424;
+  --footer-text: #f3f3f4;
+  --footer-icon-border: #3f4553;
+
+  --navbar-border: rgb(243 243 244 / 8%);
+  --navbar-text: #f3f3f4;
+  --navbar-control-bg: rgb(58 58 58 / 85%);
+
   --auth-panel-radius: 42px;
   --field-min-height: 50px;
   --field-radius: 20px;
   --text: var(--color-text);
   --error: var(--color-error);
   --muted: var(--color-muted);
+  --section-healthy: rgb(35 36 37 / 75%);
 }
 
 [data-theme='light'] {
-  --workouts-layer-bg: rgba(255, 255, 255, 0.60); 
-   --workouts-footer-bg: rgba(255, 255, 255, 0.50);
-  --color-bg: #f0f0f2;
-  --color-surface: rgba(255, 255, 255, 0.85);
+  --workouts-layer-bg: rgba(255, 255, 255, 0.6);
+  --workouts-footer-bg: rgba(222, 229, 231, 0.5);
+  --page-frame-base: #f3f3f4;
+  --hero-overlay: rgb(255 255 255 / 60%);
+  --hero-overlay-blur: 86.1px;
+  --section-about-overlay: rgb(255 255 255 / 95%);
+  --section-about-overlay-blur: 86px;
+
+  --color-bg: #f3f3f4;
+  --color-surface: rgb(255 255 255 / 85%);
   --color-surface-solid: #ffffff;
-  --color-text: #1a1a1a;
-  --color-text-heading: #111111;
-  --color-muted: #5c5c5c;
-  --color-border: rgba(0, 0, 0, 0.12);
-  --color-overlay: rgba(255, 255, 255, 0.72);
-  --accent: #ff4a12;
-  --accent-strong: #ff4308;
+  --color-text: #242424;
+  --color-text-heading: #242424;
+  --color-muted: rgb(36 36 36 / 62%);
+  --color-border: rgb(36 36 36 / 14%);
+  --color-overlay: rgb(255 255 255 / 60%);
+  --color-divider: rgb(36 36 36 / 14%);
+
+  --accent: var(--brand-orange);
+  --accent-strong: var(--brand-orange);
   --accent-press: #e83b05;
   --color-error: #c2410c;
-  --field-bg: rgba(255, 255, 255, 0.9);
+
+  --field-bg: rgb(255 255 255 / 90%);
   --field-border: #b0b0b0;
   --field-border-focus: var(--accent-strong);
   --field-border-invalid: #dc2626;
   --field-icon: #666666;
   --field-placeholder: #888888;
-  --field-focus-ring: rgba(255, 67, 8, 0.2);
+  --field-focus-ring: rgb(255 65 0 / 20%);
   --btn-disabled-bg: #d4d4d4;
-  --color-section-alt: #ffffff;
-  --section-wordmark: rgba(17, 17, 17, 0.12);
-  --image-shadow: rgba(31, 41, 55, 0.15);
-  --navbar-bg: #dedede;
-  --navbar-text: #202020;
-  --navbar-control-bg: rgba(255, 255, 255, 0.7);
+
+  --color-section-alt: transparent;
+  --section-wordmark: rgb(36 36 36 / 13%);
+  --image-shadow: rgb(31 41 55 / 15%);
+
+  --footer-bg: #f3f3f4;
+  --footer-text: #242424;
+  --footer-icon-border: #242424;
+
+  --navbar-border: rgb(36 36 36 / 10%);
+  --navbar-text: #242424;
+  --navbar-control-bg: rgb(255 255 255 / 85%);
+
+  --section-healthy: rgb(243 243 244 / 75%);
 }
 
 body {
   margin: 0;
   color: var(--color-text);
-  background: var(--color-bg);
+  background: var(--page-frame-base);
   font-family: 'Baloo Thambi 2', system-ui, sans-serif;
+}
+
+/* Pill CTAs with end arrow badges — RTL typography and spacing */
+[dir='rtl'] .nav-auth-cta,
+[dir='rtl'] .nav-mobile-auth-cta,
+[dir='rtl'] .home-hero__btn,
+[dir='rtl'] .about-us__cta {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[dir='rtl'] .nav-auth-cta {
+  font-size: 0.875rem;
 }

@@ -11,12 +11,10 @@
   <div class="auth-layout__content">
     <aside class="auth-layout__visual" aria-label="Super Fitness branding">
       <div class="auth-layout__visual-inner">
-        <img
-          src="/assets/logo-image-512.png"
-          alt="Super Fitness"
-          width="512"
-          height="512"
-          class="auth-layout__logo"
+        <app-brand-logo
+          imgClass="auth-layout__logo"
+          [width]="512"
+          [height]="512"
         />
         <img
           src="/assets/auth-image-1024.png"
@@ -31,16 +29,36 @@
     </aside>
 
     <main class="auth-layout__main">
-      <img
-        src="/assets/logo-image-512.png"
-        alt="Super Fitness"
-        width="512"
-        height="512"
-        class="auth-layout__logo-mobile"
+      <app-brand-logo
+        imgClass="auth-layout__logo-mobile"
+        [width]="512"
+        [height]="512"
       />
 
       <div class="auth-layout__card" data-testid="auth-card">
-        <app-preferences-bar />
+        <div class="auth-layout__card-toolbar">
+          <app-preferences-bar />
+          <a
+            class="auth-layout__home-button"
+            routerLink="/home"
+            [attr.aria-label]="'NAV.HOME' | translate"
+          >
+            <svg
+              class="auth-layout__home-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
         <router-outlet />
       </div>
     </main>

@@ -1,5 +1,25 @@
 :host {
   display: block;
+  position: relative;
   min-height: 100vh;
-  background: var(--color-bg);
+  color: var(--color-text);
+  background: var(--page-frame-base);
+}
+
+.site-layout__frame {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--page-frame-base);
+  pointer-events: none;
+}
+
+.site-layout__frame::before {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  background: var(--page-frame-image) center / cover no-repeat;
+  filter: blur(var(--page-frame-blur));
+  transform: translateZ(0);
 }

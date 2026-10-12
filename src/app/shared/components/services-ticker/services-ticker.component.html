@@ -1,0 +1,14 @@
+<div class="services-ticker" role="region" [attr.aria-label]="'FOOTER.SERVICES_TICKER_ARIA' | translate">
+  <div class="services-ticker__track">
+    @for (repeat of [1, 2]; track repeat) {
+      <div class="services-ticker__group">
+        @for (item of items; track $index) {
+          <span class="services-ticker__item">
+            {{ item | translate }}
+            <span class="services-ticker__star" aria-hidden="true">✦</span>
+          </span>
+        }
+      </div>
+    }
+  </div>
+</div>
