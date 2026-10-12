@@ -1,11 +1,13 @@
+:host {
+  display: block;
+}
+
 .preferences-bar {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
-  width: 100%;
-  margin-bottom: 1rem;
 }
 
 .segment {

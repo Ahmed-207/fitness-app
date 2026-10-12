@@ -1,16 +1,14 @@
-<div class="w-full bg-[#FF5722] py-3 overflow-hidden whitespace-nowrap shadow-md border-y border-[#FF5722]/30">
-  <div class="animate-marquee flex items-center gap-8">
-    
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-strip__track">
     @for (repeat of [1, 2]; track repeat) {
-      <div class="flex items-center gap-8">
+      <div class="marquee-strip__group">
         @for (item of items; track $index) {
-          <span class="text-white text-base md:text-lg font-black tracking-widest uppercase flex items-center gap-8">
+          <span class="marquee-strip__item">
             {{ item | translate }}
-            <span class="text-white/70 text-sm">★</span>
+            <span class="marquee-strip__sep" aria-hidden="true">✦</span>
           </span>
         }
       </div>
     }
-
   </div>
 </div>

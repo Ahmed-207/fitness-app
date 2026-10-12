@@ -17,7 +17,8 @@
   position: absolute;
   inset: 0;
   background: var(--color-overlay);
-  backdrop-filter: blur(86px);
+  backdrop-filter: blur(var(--hero-overlay-blur));
+  -webkit-backdrop-filter: blur(var(--hero-overlay-blur));
 }
 
 .auth-layout__content {
@@ -102,4 +103,54 @@
 .auth-layout__card {
   width: 100%;
   max-width: 700px;
+}
+
+.auth-layout__card-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.auth-layout__card-toolbar app-preferences-bar {
+  flex: 1;
+  min-width: 0;
+}
+
+.auth-layout__home-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-muted);
+  background: var(--field-bg);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.auth-layout__home-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.auth-layout__home-button:hover {
+  color: #fff;
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+}
+
+.auth-layout__home-button:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
 }

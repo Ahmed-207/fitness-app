@@ -55,6 +55,13 @@ describe('AuthLayoutComponent', () => {
     expect(card?.querySelector('app-preferences-bar')).toBeTruthy();
   });
 
+  it('should render a home icon link to the home page', () => {
+    const homeLink = compiled.querySelector('.auth-layout__home-button');
+    expect(homeLink).toBeTruthy();
+    expect(homeLink?.getAttribute('href')).toBe('/home');
+    expect(homeLink?.querySelector('.auth-layout__home-icon')).toBeTruthy();
+  });
+
   it('should render the mobile logo', () => {
     const mobileLogo = compiled.querySelector('.auth-layout__logo-mobile');
     expect(mobileLogo).toBeTruthy();

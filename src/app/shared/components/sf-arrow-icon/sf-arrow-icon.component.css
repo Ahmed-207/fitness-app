@@ -1,0 +1,21 @@
+:host.sf-arrow-icon-host {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.sf-arrow-icon {
+  display: block;
+}
+
+.sf-arrow-icon path {
+  fill: #f3f3f4;
+}
+
+.sf-arrow-icon--accent path {
+  fill: var(--accent-strong);
+}
+
+:host-context([dir='rtl']) .sf-arrow-icon--flip-start {
+  transform: scaleX(-1);
+}

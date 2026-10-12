@@ -1,0 +1,336 @@
+.smart-coach {
+  position: fixed;
+  z-index: 50;
+  inset-inline-end: clamp(0.75rem, 2vw, 1.5rem);
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.smart-coach--open {
+  gap: 0.35rem;
+}
+
+.smart-coach__close-hint {
+  pointer-events: auto;
+  border: 0;
+  padding: 0.25rem 0.5rem;
+  color: #242424;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.smart-coach__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: min(375px, calc(100vw - 1.5rem));
+  height: min(753px, calc(100vh - 6rem));
+  border: 2px solid var(--chat-panel-border);
+  border-radius: 20px;
+  box-shadow: 0 4px 217.4px rgba(0, 0, 0, 1);
+  pointer-events: auto;
+}
+
+.smart-coach__panel-bg {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/chat/panel-bg.jpg') center / cover no-repeat;
+}
+
+.smart-coach__panel-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--chat-panel-scrim);
+}
+
+.smart-coach__header,
+.smart-coach__messages,
+.smart-coach__input-wrap,
+.smart-coach__history {
+  position: relative;
+  z-index: 1;
+}
+
+.smart-coach__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.5rem;
+}
+
+.smart-coach__title {
+  margin: 0;
+  color: var(--chat-panel-text);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.smart-coach__menu-btn {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.smart-coach__menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 1.25rem;
+}
+
+.smart-coach__menu-icon span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--chat-panel-border);
+}
+
+.smart-coach__history-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.smart-coach__history {
+  position: absolute;
+  z-index: 5;
+  top: 3px;
+  inset-inline-end: 0.75rem;
+  width: min(263px, calc(100% - 1.5rem));
+  max-height: 284px;
+  padding: 24px 16px;
+  border-radius: 10px;
+  background: var(--chat-history-overlay);
+  backdrop-filter: blur(var(--chat-history-blur));
+  box-shadow: 0 0 10px var(--chat-shadow);
+}
+
+.smart-coach__history-title {
+  margin: 0 0 8px;
+  color: var(--chat-panel-text);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.smart-coach__history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.smart-coach__history-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.65rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(211, 211, 211, 0.2);
+  color: var(--chat-muted-text);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.26px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.smart-coach__history-row:last-child {
+  border-bottom: 0;
+}
+
+.smart-coach__history-chevron {
+  flex-shrink: 0;
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--chat-panel-border);
+}
+
+.smart-coach__messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.5rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.smart-coach__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 343px;
+}
+
+.smart-coach__row--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  padding-inline-start: 16px;
+}
+
+.smart-coach__avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.smart-coach__avatar--user {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--chat-user-orange);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.smart-coach__bubble {
+  padding: 8px;
+  color: var(--chat-panel-text);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  box-shadow: 0 0 10px var(--chat-shadow);
+  backdrop-filter: blur(var(--chat-bubble-blur));
+}
+
+.smart-coach__bubble--assistant {
+  max-width: 226px;
+  background: var(--chat-bubble-assistant);
+  border-radius: 0 20px 20px 20px;
+}
+
+.smart-coach__bubble--user {
+  max-width: 250px;
+  background: var(--chat-bubble-user);
+  border-radius: 20px 0 20px 20px;
+}
+
+.smart-coach__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 1rem 1rem;
+  min-height: 37px;
+  padding: 8px 16px;
+  border: 1px solid var(--chat-input-border);
+  border-radius: 20px;
+  background: rgba(36, 36, 36, 0.55);
+  backdrop-filter: blur(12px);
+}
+
+.smart-coach__input-icon {
+  flex-shrink: 0;
+  color: var(--chat-panel-border);
+}
+
+.smart-coach__input-icon svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.smart-coach__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  color: var(--chat-panel-text);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.smart-coach__input::placeholder {
+  color: var(--chat-muted-text);
+}
+
+.smart-coach__input:focus {
+  outline: none;
+}
+
+.smart-coach__launcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.smart-coach__launcher-label {
+  padding: 0.5rem 1.05rem;
+  border-radius: 999px;
+  color: #f3f3f4;
+  background: var(--brand-orange);
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow:
+    0 0 16px rgb(255 65 0 / 50%),
+    0 0 32px rgb(255 65 0 / 28%),
+    0 8px 20px rgb(0 0 0 / 18%);
+  pointer-events: none;
+}
+
+.smart-coach__launcher-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 14px rgb(255 65 0 / 42%)) drop-shadow(0 0 26px rgb(255 65 0 / 24%));
+}
+
+.smart-coach__launcher-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 65 0 / 48%) 0%, rgb(255 65 0 / 18%) 45%, rgb(255 65 0 / 0%) 72%);
+}
+
+.smart-coach__launcher-figure {
+  position: relative;
+  z-index: 1;
+  width: clamp(5.25rem, 13vw, 6.5rem);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgb(255 65 0 / 38%)) drop-shadow(0 10px 22px rgb(0 0 0 / 16%));
+}
+
+@media (max-width: 480px) {
+  .smart-coach__launcher-label {
+    display: none;
+  }
+
+  .smart-coach__panel {
+    height: min(753px, calc(100dvh - 4.5rem));
+  }
+}

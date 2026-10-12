@@ -1,12 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AboutUsSectionComponent } from './components/about-us-section/about-us-section.component';
-import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
 import { HealthyNutritionSection } from './components/healthy-nutrition-section/healthy-nutrition-section';
-import { MarqueeBannerComponent } from '../../shared/components/marquee-banner/marquee-banner';
+import { HomeHeroSectionComponent } from './components/home-hero-section/home-hero-section.component';
+import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
 
 @Component({
   selector: 'app-home',
-  imports: [WhyUsSectionComponent, AboutUsSectionComponent, HealthyNutritionSection , MarqueeBannerComponent],
+  imports: [
+    HomeHeroSectionComponent,
+    AboutUsSectionComponent,
+    WhyUsSectionComponent,
+    HealthyNutritionSection,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -29,7 +29,7 @@
     "HEALTHY_DESCRIPTION": "اكتشف نصائح عملية للتغذية والصحة مصممة لدعم رحلتك الرياضية."
   },
   "ABOUT_US": {
-    "LABEL": "من نحن",
+    "LABEL": "تمرين",
     "HEADING_BEFORE": "نمنحك القوة لتحقيق",
     "HEADING_ACCENT": "أهداف لياقتك",
     "HEADING_AFTER": "بنجاح",
@@ -89,13 +89,48 @@
     }
   },
   "HOME": {
-    "SUCCESS_BADGE": "تم تسجيل الدخول",
-    "TITLE": "مرحبًا بك في Super Fitness",
-    "INTRO": "أنت مسجّل الدخول. هذه الصفحة التجريبية تؤكد نجاح تسجيل الدخول وأن جلستك نشطة.",
-    "NAME_LABEL": "الاسم",
-    "EMAIL_LABEL": "البريد الإلكتروني",
-    "SIGN_OUT": "تسجيل الخروج",
-    "SIGNING_OUT": "جارٍ تسجيل الخروج…"
+    "HERO": {
+      "TITLE_LINE_1_BEFORE": "جسمك يمكنه ",
+      "TITLE_LINE_1_ACCENT": "التحمل",
+      "TITLE_LINE_2_ACCENT": "تقريباً",
+      "TITLE_LINE_2_AFTER": " لأي شيء",
+      "LEAD": "عقلك هو من يحتاج إلى الإقناع. تجاوز حدودك، وابقَ ملتزماً، وشاهد جسدك يتحول إلى قوة وحيوية. ابدأ رحلتك اليوم واكتشف ما أنت قادر عليه!",
+      "STATS": {
+        "MEMBERS_VALUE": "+1200",
+        "MEMBERS_LABEL": "عضو نشط",
+        "TRAINERS_VALUE": "+12",
+        "TRAINERS_LABEL": "مدرب معتمد",
+        "EXPERIENCE_VALUE": "+20",
+        "EXPERIENCE_LABEL": "سنة خبرة"
+      },
+      "GET_STARTED": "ابدأ الآن",
+      "EXPLORE_MORE": "استكشف المزيد"
+    }
+  },
+  "ASSISTANT": {
+    "LABEL": "اسألني",
+    "ARIA": "مساعد اللياقة",
+    "TAP_TO_CLOSE": "اضغط للإغلاق",
+    "PANEL_TITLE": "المدرب الذكي",
+    "GREETING": "مرحباً، كيف يمكنني مساعدتك اليوم؟",
+    "SAMPLE_USER": "نص تجريبي للمحادثة",
+    "INPUT_PLACEHOLDER": "اسألني أي شيء",
+    "HISTORY_TITLE": "المحادثات السابقة",
+    "HISTORY_SAMPLE": "نص تجريبي للمحادثة"
+  },
+  "FOOTER": {
+    "SERVICES_TICKER_ARIA": "خدمات اللياقة",
+    "BRAND_LINE_1": "ادفع بقوة، واصل أبعد.",
+    "BRAND_LINE_2": "رحلتك الرياضية تبدأ اليوم!",
+    "CONTACT_TITLE": "تواصل معنا",
+    "PHONE": "+91 123 456 789",
+    "EMAIL": "info@gmail.com",
+    "HOURS_TITLE": "أوقات النادي",
+    "HOURS_WEEKDAY": "الإثنين - الجمعة : 08:00 ص - 10:00 م",
+    "HOURS_WEEKEND": "السبت - الأحد : 08:00 ص - 09:00 م",
+    "LOCATION_TITLE": "موقعنا",
+    "ADDRESS_LINE_1": "2715 Ash Dr. San Jose, South",
+    "ADDRESS_LINE_2": "Dakota 83475"
   },
   "AUTHLOGIN": {
     "HEY_THERE": "أهلاً بك",
@@ -114,7 +149,6 @@
     "EMAIL_INVALID": "أدخل بريداً إلكترونياً صالحاً.",
     "PASSWORD_REQUIRED": "أدخل كلمة المرور.",
     "PASSWORD_MIN_LENGTH": "استخدم 6 أحرف على الأقل.",
-    "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز.",
     "PASSWORD_RULE": "استخدم 8 أحرف أو أكثر مع حرف كبير وصغير ورقم ورمز."
   },
   "PREFERENCES": {

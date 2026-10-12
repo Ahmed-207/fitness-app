@@ -1,0 +1,70 @@
+<footer class="site-footer">
+  <app-services-ticker />
+
+  <div class="site-footer__body">
+    <div class="site-footer__inner">
+      <section class="site-footer__col site-footer__brand" aria-labelledby="footer-brand-title">
+        <h2 id="footer-brand-title" class="visually-hidden">{{ 'NAV.LOGO_ALT' | translate }}</h2>
+        <app-brand-logo
+          imgClass="site-footer__logo"
+          [decorative]="true"
+          [width]="87"
+          [height]="55"
+        />
+        <p class="site-footer__tagline">
+          <span>{{ 'FOOTER.BRAND_LINE_1' | translate }}</span>
+          <span>{{ 'FOOTER.BRAND_LINE_2' | translate }}</span>
+        </p>
+      </section>
+
+      <section class="site-footer__col" aria-labelledby="footer-contact-title">
+        <h3 id="footer-contact-title" class="site-footer__heading">{{ 'FOOTER.CONTACT_TITLE' | translate }}</h3>
+        <ul class="site-footer__list">
+          <li>
+            <a class="site-footer__contact-row" href="tel:+91123456789">
+              <span class="site-footer__icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path
+                    d="M5.5 4h3l1.2 3.2-1.6 1.1a12 12 0 0 0 5.7 5.7l1.1-1.6L18.8 14l3.2 1.2v3a1.5 1.5 0 0 1-1.6 1.5A15 15 0 0 1 4 6.1 1.5 1.5 0 0 1 5.5 4Z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span>{{ 'FOOTER.PHONE' | translate }}</span>
+            </a>
+          </li>
+          <li>
+            <a class="site-footer__contact-row" href="mailto:info@gmail.com">
+              <span class="site-footer__icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path
+                    d="M4 7.5h16v9H4v-9Z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path d="m5 8.5 7 5 7-5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span>{{ 'FOOTER.EMAIL' | translate }}</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="site-footer__col" aria-labelledby="footer-hours-title">
+        <h3 id="footer-hours-title" class="site-footer__heading">{{ 'FOOTER.HOURS_TITLE' | translate }}</h3>
+        <p class="site-footer__text">{{ 'FOOTER.HOURS_WEEKDAY' | translate }}</p>
+        <p class="site-footer__text">{{ 'FOOTER.HOURS_WEEKEND' | translate }}</p>
+      </section>
+
+      <section class="site-footer__col" aria-labelledby="footer-location-title">
+        <h3 id="footer-location-title" class="site-footer__heading">{{ 'FOOTER.LOCATION_TITLE' | translate }}</h3>
+        <p class="site-footer__text site-footer__text--address">
+          <span>{{ 'FOOTER.ADDRESS_LINE_1' | translate }}</span>
+          <span>{{ 'FOOTER.ADDRESS_LINE_2' | translate }}</span>
+        </p>
+      </section>
+    </div>
+  </div>
+</footer>

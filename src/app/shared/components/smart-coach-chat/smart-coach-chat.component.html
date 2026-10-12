@@ -1,0 +1,137 @@
+<div class="smart-coach" [class.smart-coach--open]="isOpen()">
+  @if (isOpen()) {
+    <button
+      type="button"
+      class="smart-coach__close-hint"
+      (click)="toggleOpen()"
+    >
+      {{ 'ASSISTANT.TAP_TO_CLOSE' | translate }}
+    </button>
+
+    <div
+      class="smart-coach__panel"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'ASSISTANT.PANEL_TITLE' | translate"
+    >
+      <div class="smart-coach__panel-bg" aria-hidden="true"></div>
+      <div class="smart-coach__panel-scrim" aria-hidden="true"></div>
+
+      <header class="smart-coach__header">
+        <h2 class="smart-coach__title">{{ 'ASSISTANT.PANEL_TITLE' | translate }}</h2>
+        <button
+          type="button"
+          class="smart-coach__menu-btn"
+          [attr.aria-expanded]="isHistoryOpen()"
+          [attr.aria-label]="'ASSISTANT.HISTORY_TITLE' | translate"
+          (click)="toggleHistory()"
+        >
+          <span class="smart-coach__menu-icon" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+      </header>
+
+      @if (isHistoryOpen()) {
+        <div
+          class="smart-coach__history-backdrop"
+          (click)="closeHistory()"
+          aria-hidden="true"
+        ></div>
+        <aside class="smart-coach__history" role="region" [attr.aria-label]="'ASSISTANT.HISTORY_TITLE' | translate">
+          <h3 class="smart-coach__history-title">{{ 'ASSISTANT.HISTORY_TITLE' | translate }}</h3>
+          <ul class="smart-coach__history-list">
+            @for (item of historyItems(); track $index) {
+              <li>
+                <button type="button" class="smart-coach__history-row">
+                  <span>{{ item | translate }}</span>
+                  <svg class="smart-coach__history-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </li>
+            }
+          </ul>
+        </aside>
+      }
+
+      <div class="smart-coach__messages" role="log" aria-live="polite">
+        @for (message of messages(); track message.id) {
+          <div
+            class="smart-coach__row"
+            [class.smart-coach__row--user]="message.role === 'user'"
+            [class.smart-coach__row--assistant]="message.role === 'assistant'"
+          >
+            @if (message.role === 'assistant') {
+              <img
+                class="smart-coach__avatar"
+                src="/assets/home/fitness-agent.png"
+                alt=""
+                width="40"
+                height="40"
+              />
+            }
+            <div
+              class="smart-coach__bubble"
+              [class.smart-coach__bubble--user]="message.role === 'user'"
+              [class.smart-coach__bubble--assistant]="message.role === 'assistant'"
+            >
+              @if (isTranslationKey(message.text)) {
+                {{ message.text | translate }}
+              } @else {
+                {{ message.text }}
+              }
+            </div>
+            @if (message.role === 'user') {
+              <span class="smart-coach__avatar smart-coach__avatar--user" aria-hidden="true">U</span>
+            }
+          </div>
+        }
+        <div #messagesEnd></div>
+      </div>
+
+      <label class="smart-coach__input-wrap">
+        <span class="smart-coach__input-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path
+              d="M4 20l4.5-1.5L19 8.5a2.1 2.1 0 0 0-3-3L5.5 15.5 4 20Z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="m13.5 6.5 4 4" stroke-linecap="round" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          class="smart-coach__input"
+          [placeholder]="'ASSISTANT.INPUT_PLACEHOLDER' | translate"
+          [ngModel]="draft()"
+          (ngModelChange)="draft.set($event)"
+          (keydown)="onDraftKeydown($event)"
+        />
+      </label>
+    </div>
+  }
+
+  <div class="smart-coach__launcher">
+    <button
+      type="button"
+      class="smart-coach__launcher-btn"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-label]="(isOpen() ? 'ASSISTANT.TAP_TO_CLOSE' : 'ASSISTANT.LABEL') | translate"
+      (click)="toggleOpen()"
+    >
+      <span class="smart-coach__launcher-glow" aria-hidden="true"></span>
+      <img
+        class="smart-coach__launcher-figure"
+        src="/assets/home/fitness-agent.png"
+        alt=""
+        width="202"
+        height="197"
+      />
+    </button>
+    @if (!isOpen()) {
+      <span class="smart-coach__launcher-label">{{ 'ASSISTANT.LABEL' | translate }}</span>
+    }
+  </div>
+</div>
