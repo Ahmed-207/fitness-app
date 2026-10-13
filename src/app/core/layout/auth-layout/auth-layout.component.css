@@ -60,16 +60,15 @@
 }
 
 .auth-layout__logo {
+  display: block;
   width: 38%;
   max-width: 15rem;
-  object-fit: contain;
 }
 
 .auth-layout__hero {
   width: 115%;
   max-width: 44rem;
   object-fit: contain;
-  transform: translateY(-18vh);
 }
 
 .auth-layout__main {
@@ -89,9 +88,9 @@
 }
 
 .auth-layout__logo-mobile {
+  display: block;
   width: 10rem;
   margin-bottom: 2rem;
-  object-fit: contain;
 }
 
 @media (min-width: 1024px) {

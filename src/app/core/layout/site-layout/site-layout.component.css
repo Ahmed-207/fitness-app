@@ -13,6 +13,9 @@
   overflow: hidden;
   background: var(--page-frame-base);
   pointer-events: none;
+  /* Keep the filtered photo on its own layer. Transform on the
+     filtered node itself makes Chrome flash that layer while scrolling. */
+  transform: translateZ(0);
 }
 
 .site-layout__frame::before {
@@ -21,5 +24,4 @@
   inset: -12%;
   background: var(--page-frame-image) center / cover no-repeat;
   filter: blur(var(--page-frame-blur));
-  transform: translateZ(0);
 }

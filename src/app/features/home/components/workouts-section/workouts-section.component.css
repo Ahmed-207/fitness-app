@@ -30,10 +30,21 @@
   inset-inline: 0;
   top: 3.5625rem;
   height: min(414px, 55%);
+  overflow: hidden;
   background: var(--workouts-header-overlay);
-  backdrop-filter: blur(var(--hero-overlay-blur));
-  -webkit-backdrop-filter: blur(var(--hero-overlay-blur));
   pointer-events: none;
+  isolation: isolate;
+}
+
+.workouts__header-overlay::before {
+  content: '';
+  position: absolute;
+  inset-inline: -12%;
+  top: calc(-3.5625rem - 12%);
+  height: 140%;
+  z-index: -1;
+  background: var(--workouts-section-image) center / cover no-repeat;
+  filter: blur(var(--hero-overlay-blur));
 }
 
 .workouts__inner {
@@ -256,9 +267,7 @@
   gap: 0.5rem;
   min-height: 6.25rem;
   padding: 1rem;
-  background: var(--workouts-card-panel);
-  backdrop-filter: blur(58.2px);
-  -webkit-backdrop-filter: blur(58.2px);
+  background: color-mix(in srgb, var(--workouts-card-panel), var(--workouts-section-base) 42%);
 }
 
 .workouts__card-title {

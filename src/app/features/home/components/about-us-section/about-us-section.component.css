@@ -8,9 +8,10 @@
 .about-us::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -12%;
   z-index: -2;
   background: var(--page-frame-image) center / cover no-repeat;
+  filter: blur(var(--section-about-overlay-blur));
   pointer-events: none;
 }
 
@@ -20,8 +21,6 @@
   inset: 0;
   z-index: -1;
   background: var(--section-about-overlay);
-  backdrop-filter: blur(var(--section-about-overlay-blur));
-  -webkit-backdrop-filter: blur(var(--section-about-overlay-blur));
   pointer-events: none;
 }
 
