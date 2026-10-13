@@ -6,6 +6,8 @@ import { AuthSessionService } from '../../../core/services/auth-session.service'
 import { LanguageService } from '../../../core/services/language.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { AuthService } from '../../../features/auth/services/auth.service';
+import { BrandLogoComponent } from '../brand-logo/brand-logo.component';
+import { SfArrowIconComponent } from '../sf-arrow-icon/sf-arrow-icon.component';
 
 interface NavigationItem {
   readonly label: string;
@@ -14,7 +16,7 @@ interface NavigationItem {
 
 @Component({
   selector: 'app-site-navbar',
-  imports: [RouterLink, RouterLinkActive, TranslatePipe],
+  imports: [RouterLink, RouterLinkActive, TranslatePipe, BrandLogoComponent, SfArrowIconComponent],
   templateUrl: './site-navbar.component.html',
   styleUrl: './site-navbar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

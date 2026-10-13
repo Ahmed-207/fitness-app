@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
 
 interface MealPlan {
   id: number;
@@ -9,7 +10,7 @@ interface MealPlan {
 
 @Component({
   selector: 'app-healthy-nutrition-section',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, SfArrowIconComponent],
   templateUrl: './healthy-nutrition-section.html'
 })
 

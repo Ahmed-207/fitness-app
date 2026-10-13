@@ -11,7 +11,7 @@ import { unauthorizedInterceptor } from './core/interceptors/unauthorized.interc
 import { LanguageService } from './core/services/language.service';
 import { ThemeService } from './core/services/theme.service';
 import { provideTranslateService } from '@ngx-translate/core';
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideBundledTranslations } from './core/i18n/bundled-translate.initializer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
         apiErrorInterceptor,
       ]),
     ),
+    provideBundledTranslations(),
     {
       provide: APP_INITIALIZER,
       multi: true,
@@ -39,10 +40,6 @@ export const appConfig: ApplicationConfig = {
     provideTranslateService({
       fallbackLang: 'en',
       lang: 'en',
-      loader: provideTranslateHttpLoader({
-        prefix: '/i18n/',
-        suffix: '.json',
-      }),
     }),
   ],
 };

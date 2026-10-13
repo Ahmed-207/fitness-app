@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
 
 interface GymFeature {
   readonly titleKey: string;
@@ -8,8 +9,9 @@ interface GymFeature {
 
 @Component({
   selector: 'app-about-us-section',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, SfArrowIconComponent],
   templateUrl: './about-us-section.component.html',
+  styleUrl: './about-us-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutUsSectionComponent {

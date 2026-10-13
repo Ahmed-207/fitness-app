@@ -10,10 +10,10 @@ import { TranslatePipe } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarqueeBannerComponent {
-  items = [
+  readonly items = [
+    'MARQUEE.LIVE_CLASSES',
     'MARQUEE.OUTDOOR_ONLINE',
     'MARQUEE.PERSONAL_TRAINING',
-    'MARQUEE.LIVE_CLASSES',
     'MARQUEE.PERSONAL_TRAINERS',
-  ];
+  ] as const;
 }
