@@ -1,43 +1,30 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  OnInit,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslatePipe } from '@ngx-translate/core';
-import { WorkoutsService } from '../../../auth/services/workouts-service';
-import { Exercise, MuscleGroup } from '../../../auth/models/workouts-models';
-import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
 
-const CATEGORY_KEYS = [
-  'FULL_BODY',
-  'CHEST',
-  'ARM',
-  'SHOULDER',
-  'BACK',
-  'LEGS',
-  'STOMACH',
-] as const;
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { WorkoutsService } from './../../../auth/services/workouts-service';
+import { MuscleGroup, Exercise } from './../../../../features/auth/models/workouts-models';
+import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
 
 @Component({
   selector: 'app-workouts-section',
-  imports: [TranslatePipe, SfArrowIconComponent],
+  standalone: true,
+  imports: [CommonModule, TranslatePipe, SfArrowIconComponent],
   templateUrl: './workouts-section.component.html',
   styleUrl: './workouts-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkoutsSectionComponent implements OnInit {
-  private readonly workoutsService = inject(WorkoutsService);
-  private readonly destroyRef = inject(DestroyRef);
+  private workoutsService = inject(WorkoutsService);
+  private destroyRef = inject(DestroyRef);
 
-  readonly categoryKeys = CATEGORY_KEYS;
-  readonly muscleGroups = signal<MuscleGroup[]>([]);
-  readonly displayedExercises = signal<Exercise[]>([]);
-  readonly selectedMuscleId = signal<string>('all');
+  muscleGroups = signal<MuscleGroup[]>([]);
+  allExercises = signal<any[]>([]);
+  displayedExercises = signal<any[]>([]);
+  selectedMuscleId = signal<string>('all');
+  isLoading = signal<boolean>(false);
+
   readonly slideIndex = signal(0);
   readonly visibleSlots = signal(3);
 
@@ -58,35 +45,98 @@ export class WorkoutsSectionComponent implements OnInit {
     return items.slice(start, start + slots);
   });
 
+  private fallbackImages = [
+    'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&auto=format&fit=crop'
+  ];
+
   ngOnInit(): void {
-    this.initViewportLayout();
-    this.loadInitialData();
-  }
-
-  private initViewportLayout(): void {
-    this.updateVisibleSlots();
-    this.registerResizeListener();
-  }
-
-  private registerResizeListener(): void {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    const onResize = () => this.updateVisibleSlots();
-    window.addEventListener('resize', onResize);
-    this.destroyRef.onDestroy(() => window.removeEventListener('resize', onResize));
-  }
-
-  private loadInitialData(): void {
     this.fetchMuscleGroups();
-    this.fetchExercises();
+    this.fetchAllExercises();
+  }
+
+  fetchMuscleGroups(): void {
+    this.workoutsService.getMuscleGroups().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (res) => {
+        if (res && res.message === 'success' && res.musclesGroup && res.musclesGroup.length > 0) {
+          this.muscleGroups.set(res.musclesGroup.slice(0, 6));
+        } else {
+          this.setDefaultMuscleGroups();
+        }
+      },
+      error: () => this.setDefaultMuscleGroups()
+    });
+  }
+
+  fetchAllExercises(): void {
+    this.isLoading.set(true);
+    this.workoutsService.getExercisesByMuscle().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (res) => {
+        if (res && res.message === 'success' && res.exercises && res.exercises.length > 0) {
+          const processed = res.exercises.map((item: any, index: number) => ({
+            ...item,
+            name: item.exercise || item.name || 'WORKOUT',
+            image: item.image || this.fallbackImages[index % this.fallbackImages.length]
+          }));
+          this.allExercises.set(processed);
+          this.displayedExercises.set(processed);
+          this.slideIndex.set(0);
+        } else {
+          this.setFallbackExercises();
+        }
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.setFallbackExercises();
+        this.isLoading.set(false);
+      }
+    });
   }
 
   selectCategory(id: string): void {
     this.selectedMuscleId.set(id);
     this.slideIndex.set(0);
-    this.fetchExercises(id === 'all' ? undefined : id);
+
+    if (id === 'all') {
+      this.displayedExercises.set(this.allExercises());
+      return;
+    }
+
+    const targetGroup = this.muscleGroups().find(g => g._id === id);
+    const searchName = (targetGroup ? targetGroup.name : id).toLowerCase();
+
+    const filtered = this.allExercises().filter(item => {
+      const itemGroup = (item.muscleGroup || item.target_muscle_group || item.body_region || '').toLowerCase();
+      return itemGroup.includes(searchName) || searchName.includes(itemGroup);
+    });
+
+    if (filtered.length > 0) {
+      this.displayedExercises.set(filtered);
+    } else {
+      this.isLoading.set(true);
+      this.workoutsService.getExercisesByMuscle(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        next: (res) => {
+          if (res && res.message === 'success' && res.exercises && res.exercises.length > 0) {
+            const processed = res.exercises.map((item: any, index: number) => ({
+              ...item,
+              name: item.exercise || item.name || 'WORKOUT',
+              image: item.image || this.fallbackImages[index % this.fallbackImages.length]
+            }));
+            this.displayedExercises.set(processed);
+          } else {
+            this.displayedExercises.set(this.allExercises().slice(0, 3));
+          }
+          this.isLoading.set(false);
+        },
+        error: () => {
+          this.displayedExercises.set(this.allExercises().slice(0, 3));
+          this.isLoading.set(false);
+        }
+      });
+    }
   }
 
   goToSlide(index: number): void {
@@ -94,76 +144,43 @@ export class WorkoutsSectionComponent implements OnInit {
     this.slideIndex.set(Math.min(Math.max(index, 0), max));
   }
 
-  private updateVisibleSlots(): void {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    const width = window.innerWidth;
-    if (width >= 1200) {
-      this.visibleSlots.set(3);
-    } else if (width >= 768) {
-      this.visibleSlots.set(2);
+  nextSlide(): void {
+    const next = this.slideIndex() + 1;
+    if (next < this.pageCount()) {
+      this.slideIndex.set(next);
     } else {
-      this.visibleSlots.set(1);
-    }
-    const max = this.pageCount() - 1;
-    if (this.slideIndex() > max) {
-      this.slideIndex.set(max);
+      this.slideIndex.set(0); 
     }
   }
 
-  private fetchMuscleGroups(): void {
-    this.workoutsService
-      .getMuscleGroups()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          if (res?.message === 'success' && res.musclesGroup?.length) {
-            this.muscleGroups.set(res.musclesGroup.slice(0, 6));
-          }
-        },
-        error: () => {
-          /* categories fall back to i18n keys */
-        },
-      });
+  prevSlide(): void {
+    const prev = this.slideIndex() - 1;
+    if (prev >= 0) {
+      this.slideIndex.set(prev);
+    } else {
+      this.slideIndex.set(this.pageCount() - 1); 
+    }
   }
 
-  private fetchExercises(muscleGroupId?: string): void {
-    this.workoutsService
-      .getExercisesByMuscle(muscleGroupId)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          if (res?.message === 'success' && res.exercises?.length) {
-            this.displayedExercises.set(res.exercises);
-          } else {
-            this.setFallbackExercises();
-          }
-        },
-        error: () => this.setFallbackExercises(),
-      });
+  private setDefaultMuscleGroups(): void {
+    this.muscleGroups.set([
+      { _id: 'chest', name: 'Chest' },
+      { _id: 'arm', name: 'Arm' },
+      { _id: 'shoulders', name: 'Shoulders' },
+      { _id: 'back', name: 'Back' },
+      { _id: 'legs', name: 'Leg' },
+      { _id: 'stomach', name: 'Stomach' }
+    ]);
   }
 
   private setFallbackExercises(): void {
-    this.displayedExercises.set([
-      {
-        _id: '1',
-        name: 'GROUP WORKOUT',
-        image:
-          'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop',
-      },
-      {
-        _id: '2',
-        name: 'PERSONAL TRAINING',
-        image:
-          'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop',
-      },
-      {
-        _id: '3',
-        name: 'MUSCLE BUILDING',
-        image:
-          'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop',
-      },
-    ]);
+    const fallbackData = [
+      { _id: '1', name: 'BENCH PRESS', image: this.fallbackImages[0] },
+      { _id: '2', name: 'BARBELL CURLS', image: this.fallbackImages[1] },
+      { _id: '3', name: 'SQUATS', image: this.fallbackImages[2] }
+    ];
+    this.allExercises.set(fallbackData);
+    this.displayedExercises.set(fallbackData);
+    this.slideIndex.set(0);
   }
 }
