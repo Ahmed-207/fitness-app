@@ -1,0 +1,16 @@
+<main class="detail-page">
+  <article class="detail-panel info-panel" aria-labelledby="info-title">
+    <a class="back-link" routerLink="/account">‹ {{ 'ACCOUNT.COMMON.BACK' | translate }}</a>
+    <p class="eyebrow">{{ 'ACCOUNT.INFO.EYEBROW' | translate }}</p>
+    <h1 id="info-title">{{ content.titleKey | translate }}</h1>
+    <p class="lead">{{ content.descriptionKey | translate }}</p>
+    <ul class="info-list">
+      @for (bullet of content.bulletKeys; track bullet) {
+        <li><span aria-hidden="true">✓</span>{{ bullet | translate }}</li>
+      }
+    </ul>
+    <a class="primary-button primary-button--link" routerLink="/account">{{
+      'ACCOUNT.COMMON.DONE' | translate
+    }}</a>
+  </article>
+</main>
