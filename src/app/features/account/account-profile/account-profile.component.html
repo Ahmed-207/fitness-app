@@ -1,0 +1,51 @@
+<main class="detail-page">
+  <section class="detail-panel" aria-labelledby="profile-title">
+    <a class="back-link" routerLink="/account">‹ {{ 'ACCOUNT.COMMON.BACK' | translate }}</a>
+    <p class="eyebrow">{{ 'ACCOUNT.PROFILE.EYEBROW' | translate }}</p>
+    <h1 id="profile-title">{{ 'ACCOUNT.PROFILE.TITLE' | translate }}</h1>
+    <p class="lead">{{ 'ACCOUNT.PROFILE.DESCRIPTION' | translate }}</p>
+
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <label id="goal">
+        <span>{{ 'ACCOUNT.SETTINGS.YOUR_GOAL' | translate }}</span>
+        <select formControlName="goal">
+          @for (goal of goals; track goal.value) {
+            <option [value]="goal.value">{{ goal.label | translate }}</option>
+          }
+        </select>
+      </label>
+
+      <label id="level">
+        <span>{{ 'ACCOUNT.SETTINGS.LEVEL' | translate }}</span>
+        <select formControlName="activityLevel">
+          @for (level of activityLevels; track level.value) {
+            <option [value]="level.value">{{ level.label | translate }}</option>
+          }
+        </select>
+      </label>
+
+      <label id="weight">
+        <span
+          >{{ 'ACCOUNT.SETTINGS.WEIGHT' | translate }} ({{ 'ACCOUNT.COMMON.KG' | translate }})</span
+        >
+        <input type="number" formControlName="weight" min="30" max="250" inputmode="decimal" />
+        @if (form.controls.weight.touched && form.controls.weight.invalid) {
+          <small class="field-error">{{ 'ACCOUNT.PROFILE.WEIGHT_ERROR' | translate }}</small>
+        }
+      </label>
+
+      @if (error()) {
+        <p class="status status--error" role="alert">{{ error() }}</p>
+      }
+      @if (saved()) {
+        <p class="status status--success" role="status">
+          {{ 'ACCOUNT.PROFILE.SAVED' | translate }}
+        </p>
+      }
+
+      <button class="primary-button" type="submit" [disabled]="form.invalid || isSaving()">
+        {{ (isSaving() ? 'ACCOUNT.PROFILE.SAVING' : 'ACCOUNT.PROFILE.SAVE') | translate }}
+      </button>
+    </form>
+  </section>
+</main>
