@@ -1,0 +1,114 @@
+<section class="healthy font-sans">
+  <div class="healthy__bg" aria-hidden="true"></div>
+
+  <div class="healthy__inner">
+    <!-- Watermark + Eyebrow -->
+    <header class="healthy__eyebrow">
+      <span class="healthy__watermark" aria-hidden="true">
+        {{ 'MEALS.WATERMARK' | translate }}
+      </span>
+
+      <div class="healthy__eyebrow-row">
+        <svg
+          class="healthy__dumbbell"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10M2 10v4M22 10v4" />
+        </svg>
+        <span class="healthy__eyebrow-label">{{ 'MEALS.EYEBROW' | translate }}</span>
+      </div>
+    </header>
+
+    <!-- Main Heading -->
+    <h1 class="healthy__title">
+      {{ 'MEALS.TITLE_LINE_1' | translate }}
+      <span class="healthy__title-accent">{{ 'MEALS.TITLE_ACCENT' | translate }}</span>
+      {{ 'MEALS.TITLE_LINE_2' | translate }}
+    </h1>
+
+    <!-- Meal time tabs -->
+    <div
+      class="healthy__tabs"
+      role="tablist"
+      [attr.aria-label]="'MEALS.CATEGORIES_ARIA' | translate"
+    >
+      @for (tab of mealTabs; track tab.id) {
+        <button
+          type="button"
+          role="tab"
+          class="healthy__tab"
+          [class.healthy__tab--active]="selectedTabId() === tab.id"
+          [attr.aria-selected]="selectedTabId() === tab.id"
+          (click)="selectTab(tab.id)"
+        >
+          {{ tab.labelKey | translate }}
+        </button>
+      }
+    </div>
+
+    <!-- Meal grid -->
+    @if (isLoading()) {
+      <p class="healthy__status">{{ 'MEALS.LOADING' | translate }}</p>
+    } @else if (loadFailed()) {
+      <p class="healthy__status">{{ 'MEALS.LOAD_ERROR' | translate }}</p>
+    } @else if (meals().length === 0) {
+      <p class="healthy__status">{{ 'MEALS.EMPTY' | translate }}</p>
+    } @else {
+      <div class="healthy__cards">
+        @for (meal of visibleMeals(); track meal.idMeal) {
+          <article class="healthy-card group">
+            <div class="healthy-card__media">
+              <img
+                [src]="meal.strMealThumb"
+                [alt]="meal.strMeal"
+                class="healthy-card__photo transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+
+            <footer class="healthy-card__panel">
+              <h2 class="healthy-card__title">{{ meal.strMeal }}</h2>
+
+              <div class="healthy-card__actions">
+                <a
+                  class="healthy-card__explore"
+                  [routerLink]="mealLink(meal)"
+                  [queryParams]="mealQueryParams()"
+                  [attr.aria-label]="('MEALS.EXPLORE' | translate) + ' — ' + meal.strMeal"
+                >
+                  <span>{{ 'MEALS.EXPLORE' | translate }}</span>
+                  <span class="healthy-card__explore-badge" aria-hidden="true">
+                    <app-sf-arrow-icon size="xs" />
+                  </span>
+                </a>
+              </div>
+            </footer>
+          </article>
+        }
+      </div>
+
+      <div
+        class="healthy__pagination"
+        role="tablist"
+        [attr.aria-label]="'MEALS.PAGINATION_ARIA' | translate"
+      >
+        @for (page of pageIndexes(); track page) {
+          <button
+            type="button"
+            role="tab"
+            class="healthy__dot"
+            [class.healthy__dot--active]="slideIndex() === page"
+            [attr.aria-selected]="slideIndex() === page"
+            [attr.aria-label]="'Page ' + (page + 1)"
+            (click)="goToSlide(page)"
+          ></button>
+        }
+      </div>
+    }
+  </div>
+</section>

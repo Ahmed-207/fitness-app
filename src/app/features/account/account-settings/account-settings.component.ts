@@ -1,7 +1,9 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  PLATFORM_ID,
   computed,
   inject,
   signal,
@@ -27,6 +29,7 @@ export class AccountSettingsComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly themeService = inject(ThemeService);
   private readonly languageService = inject(LanguageService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   readonly user = this.auth.user;
   readonly theme = this.themeService.theme;
@@ -58,6 +61,10 @@ export class AccountSettingsComponent {
   });
 
   constructor() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     this.auth
       .profileData()
       .pipe(

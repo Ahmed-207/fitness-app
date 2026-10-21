@@ -1,0 +1,100 @@
+.meal-detail__bg {
+  background: var(--workouts-page-gradient);
+}
+
+.meal-detail__watermark {
+  -webkit-text-stroke: 1px var(--section-wordmark);
+}
+
+.meal-detail__tab {
+  cursor: pointer;
+  border: 0;
+  border-radius: 9999px;
+  padding: 0.45rem 1.15rem;
+  font: 700 0.875rem/1.2 inherit;
+  color: var(--color-text-heading);
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.meal-detail__tab:hover {
+  color: var(--accent-strong);
+}
+
+.meal-detail__tab--active,
+.meal-detail__tab--active:hover {
+  color: #fff;
+  background: var(--accent-strong);
+}
+
+.meal-detail__sidebar {
+  background: var(--class-detail-sidebar-bg);
+}
+
+.meal-detail__sidebar-item {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  padding: 0.65rem 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--color-divider);
+  cursor: pointer;
+  background: transparent;
+  text-align: start;
+  transition: background 0.2s ease;
+}
+
+.meal-detail__sidebar-item:last-child {
+  border-bottom: 0;
+}
+
+.meal-detail__sidebar-item--active {
+  background: rgb(255 65 0 / 10%);
+  border-radius: 0.75rem;
+}
+
+.meal-detail__sidebar-item:hover {
+  background: rgb(255 65 0 / 6%);
+  border-radius: 0.75rem;
+}
+
+.meal-detail__hero-scrim {
+  background: linear-gradient(180deg, rgb(0 0 0 / 10%), rgb(18 18 18 / 82%) 55%, rgb(18 18 18 / 94%));
+}
+
+.meal-detail__macro-pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 4.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--accent-strong);
+  border-radius: 9999px;
+}
+
+.meal-detail__macro-value {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-strong);
+}
+
+.meal-detail__macro-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.meal-detail__ingredients {
+  display: grid;
+  gap: 0.55rem 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+.meal-detail__ingredient-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+}

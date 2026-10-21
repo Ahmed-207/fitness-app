@@ -1,5 +1,14 @@
-
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, DestroyRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  inject,
+  signal,
+  computed,
+  DestroyRef,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -18,6 +27,7 @@ import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-ico
 export class WorkoutsSectionComponent implements OnInit {
   private workoutsService = inject(WorkoutsService);
   private destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
 
   muscleGroups = signal<MuscleGroup[]>([]);
   allExercises = signal<any[]>([]);
@@ -54,6 +64,10 @@ export class WorkoutsSectionComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     this.fetchMuscleGroups();
     this.fetchAllExercises();
   }

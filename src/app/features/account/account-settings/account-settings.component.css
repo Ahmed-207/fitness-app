@@ -7,9 +7,10 @@
   position: relative;
   display: grid;
   min-height: 100svh;
+  margin-top: calc(-1 * var(--site-nav-height));
   place-items: start center;
   overflow: hidden;
-  padding: 1.5rem 1rem 3.5rem;
+  padding: calc(var(--site-nav-height) + 1.5rem) 1rem 3.5rem;
   color: var(--color-text);
   background: var(--page-frame-base);
   isolation: isolate;

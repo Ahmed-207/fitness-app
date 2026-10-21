@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  loadEnglishTranslations,
+  provideEnglishTranslations,
+} from '../../../../testing/english-translations';
 
 import { MarqueeBannerComponent } from './marquee-banner';
 
@@ -9,11 +13,13 @@ describe('MarqueeBannerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MarqueeBannerComponent],
+      providers: [...provideEnglishTranslations()],
     }).compileComponents();
 
+    loadEnglishTranslations();
     fixture = TestBed.createComponent(MarqueeBannerComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

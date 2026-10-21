@@ -1,7 +1,9 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  PLATFORM_ID,
   effect,
   inject,
   signal,
@@ -25,6 +27,7 @@ export class AccountProfileComponent {
   private readonly auth = inject(AuthService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
 
   readonly goals = GOAL_OPTIONS;
   readonly activityLevels = ACTIVITY_OPTIONS;
@@ -50,7 +53,7 @@ export class AccountProfileComponent {
       }
     });
 
-    if (!this.auth.user()) {
+    if (isPlatformBrowser(this.platformId) && !this.auth.user()) {
       this.auth
         .profileData()
         .pipe(

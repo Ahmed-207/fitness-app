@@ -75,6 +75,7 @@
         type="button"
         role="switch"
         [attr.aria-checked]="theme() === 'dark'"
+        [attr.aria-label]="'ACCOUNT.SETTINGS.TOGGLE_THEME' | translate"
         (click)="toggleTheme()"
       >
         <svg class="setting-icon" aria-hidden="true" viewBox="0 0 24 24">
