@@ -6,6 +6,7 @@ import {
   provideEnglishTranslations,
 } from '../../../../../testing/english-translations';
 import { WorkoutsService } from '../../../auth/services/workouts-service';
+import { ClassesService } from '../../../classes/services/classes.service';
 import { WorkoutsSectionComponent } from './workouts-section.component';
 
 describe('WorkoutsSectionComponent', () => {
@@ -23,6 +24,12 @@ describe('WorkoutsSectionComponent', () => {
           useValue: {
             getMuscleGroups: () => of({ message: 'success', musclesGroup: [] }),
             getExercisesByMuscle: () => of({ message: 'success', exercises: [] }),
+          },
+        },
+        {
+          provide: ClassesService,
+          useValue: {
+            getPrimeMoverImageMap: () => of(new Map<string, string>()),
           },
         },
       ],

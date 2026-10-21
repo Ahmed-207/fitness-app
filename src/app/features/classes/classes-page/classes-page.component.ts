@@ -22,21 +22,12 @@ import {
   RandomExercisesResponse,
 } from '../models/classes.models';
 import { ClassesService } from '../services/classes.service';
-import { exerciseVideoUrl } from '../utils/exercise-media';
+import { exerciseImageUrl, exerciseVideoUrl, PrimeMoverImageMap } from '../utils/exercise-media';
 
 const PAGE_LIMIT = 24;
 const SLIDE_SLOTS = 6;
 const REQUEST_TIMEOUT_MS = 15000;
 const DEFAULT_DIFFICULTY_NAME = 'Beginner';
-
-const FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&auto=format&fit=crop',
-];
 
 interface PlayingVideo {
   url: string;
@@ -68,6 +59,7 @@ export class ClassesPageComponent implements OnInit {
 
   /** Prime mover used for `GET /exercises/by-muscle-difficulty` when a muscle group tab is active. */
   private readonly activePrimeMoverId = signal<string | null>(null);
+  private readonly primeMoverImages = signal<PrimeMoverImageMap>(new Map());
 
   readonly hasMore = computed(() => this.currentPage() < this.totalPages());
 
@@ -98,6 +90,7 @@ export class ClassesPageComponent implements OnInit {
     this.catalogStarted = true;
     this.loadMuscleGroups();
     this.loadLevels();
+    this.loadPrimeMoverImages();
     this.loadMore();
   }
 
@@ -155,6 +148,20 @@ export class ClassesPageComponent implements OnInit {
       )
       .subscribe((response) => {
         this.muscleGroups.set(response.musclesGroup);
+      });
+  }
+
+  private loadPrimeMoverImages(): void {
+    this.classesService
+      .getPrimeMoverImageMap()
+      .pipe(
+        timeout(REQUEST_TIMEOUT_MS),
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((map) => {
+        this.primeMoverImages.set(map);
+        this.refreshExerciseCardImages();
       });
   }
 
@@ -245,7 +252,7 @@ export class ClassesPageComponent implements OnInit {
     this.currentPage.set(response.currentPage);
     this.totalPages.set(Math.max(1, response.totalPages));
     const mapped = response.exercises.map((exercise, index) =>
-      toExerciseCard(exercise, this.exercises().length + index),
+      toExerciseCard(exercise, this.exercises().length + index, this.primeMoverImages()),
     );
     if (replace) {
       this.exercises.set(mapped);
@@ -253,6 +260,19 @@ export class ClassesPageComponent implements OnInit {
       return;
     }
     this.exercises.update((cards) => [...cards, ...mapped]);
+  }
+
+  private refreshExerciseCardImages(): void {
+    const images = this.primeMoverImages();
+    if (images.size === 0 || this.exercises().length === 0) {
+      return;
+    }
+    this.exercises.update((cards) =>
+      cards.map((card, index) => ({
+        ...card,
+        image: exerciseImageUrl(card.exercise, images, index),
+      })),
+    );
   }
 
   private defaultDifficultyLevelId(): string | null {
@@ -272,12 +292,16 @@ function randomToExercisePage(random: RandomExercisesResponse): ExercisePageResp
   };
 }
 
-function toExerciseCard(exercise: Exercise, index: number): ExerciseCard {
+function toExerciseCard(
+  exercise: Exercise,
+  index: number,
+  primeMoverImages: PrimeMoverImageMap,
+): ExerciseCard {
   return {
     id: exercise._id,
     name: exercise.exercise,
     targetMuscleGroup: exercise.target_muscle_group ?? '',
-    image: FALLBACK_IMAGES[index % FALLBACK_IMAGES.length],
+    image: exerciseImageUrl(exercise, primeMoverImages, index),
     videoUrl: exerciseVideoUrl(exercise),
     exercise,
   };

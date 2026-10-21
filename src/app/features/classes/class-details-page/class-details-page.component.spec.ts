@@ -93,6 +93,7 @@ describe('ClassDetailsPageComponent', () => {
           useValue: {
             getMuscleGroups: () => of(MUSCLE_GROUPS),
             getLevels: () => of(LEVELS),
+            getPrimeMoverImageMap: () => of(new Map<string, string>()),
             getLevelsByPrimeMover: () =>
               of({
                 message: 'success',

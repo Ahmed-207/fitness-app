@@ -52,6 +52,35 @@ describe('ClassesService', () => {
     });
   });
 
+  it('builds a prime mover image index from muscle groups', () => {
+    service.getPrimeMoverImageMap().subscribe((map) => {
+      expect(map.get('rectus abdominis')).toBe('https://iili.io/33pYHNI.png');
+    });
+
+    const musclesReq = http.expectOne(`${environment.apiBaseUrl}/muscles`);
+    musclesReq.flush({
+      message: 'success',
+      musclesGroup: [{ _id: 'g1', name: 'Abdominals' }],
+    });
+
+    const primeReq = http.expectOne(
+      (r) =>
+        r.url === `${environment.apiBaseUrl}/musclesGroup/by-muscle-group` &&
+        r.params.get('muscleGroupId') === 'g1',
+    );
+    primeReq.flush({
+      message: 'success',
+      totalMuscles: 1,
+      muscles: [
+        {
+          _id: 'pm1',
+          name: 'Rectus Abdominis',
+          image: 'https://iili.io/33pYHNI.png',
+        },
+      ],
+    });
+  });
+
   it('loads difficulty levels for a prime mover muscle', () => {
     service.getLevelsByPrimeMover('pm1').subscribe((response) => {
       expect(response.difficulty_levels[0].id).toBe('l1');

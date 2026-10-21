@@ -23,7 +23,7 @@ import {
   PrimeMoverMuscle,
 } from '../models/classes.models';
 import { ClassesService } from '../services/classes.service';
-import { exerciseVideoUrl } from '../utils/exercise-media';
+import { exerciseImageUrl, exerciseVideoUrl, PrimeMoverImageMap } from '../utils/exercise-media';
 
 const REQUEST_TIMEOUT_MS = 15000;
 const SIDEBAR_LIMIT = 8;
@@ -31,15 +31,6 @@ const SIDEBAR_LIMIT = 8;
 export type DifficultyTab = 'Beginner' | 'Intermediate' | 'Advanced';
 
 const DIFFICULTY_ORDER: DifficultyTab[] = ['Beginner', 'Intermediate', 'Advanced'];
-
-const EXERCISE_IMAGES = [
-  'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1200&auto=format&fit=crop',
-];
 
 const RECOMMENDED_MEALS = [
   {
@@ -104,6 +95,7 @@ export class ClassDetailsPageComponent implements OnInit {
   readonly isLoading = signal(true);
   readonly categories = signal<MealCategory[]>([]);
   readonly playing = signal<PlayingVideo | null>(null);
+  private readonly primeMoverImages = signal<PrimeMoverImageMap>(new Map());
 
   readonly difficultyTabs = computed(() => {
     const names =
@@ -167,7 +159,7 @@ export class ClassDetailsPageComponent implements OnInit {
   readonly heroImage = computed(() => {
     const current = this.exercise();
     if (!current) {
-      return EXERCISE_IMAGES[0];
+      return '';
     }
     return this.imageFor(current);
   });
@@ -199,6 +191,18 @@ export class ClassDetailsPageComponent implements OnInit {
       });
 
     this.loadCategories();
+    this.loadPrimeMoverImages();
+  }
+
+  private loadPrimeMoverImages(): void {
+    this.classesService
+      .getPrimeMoverImageMap()
+      .pipe(
+        timeout(REQUEST_TIMEOUT_MS),
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((map) => this.primeMoverImages.set(map));
   }
 
   selectGroup(groupId: string): void {
@@ -217,18 +221,11 @@ export class ClassDetailsPageComponent implements OnInit {
   }
 
   imageFor(item: Exercise): string {
-    const primeMover = (item.prime_mover_muscle ?? '').trim().toLowerCase();
-    const muscleImage = this.primeMovers().find(
-      (muscle) => muscle.name.trim().toLowerCase() === primeMover,
-    )?.image;
-    if (muscleImage) {
-      return muscleImage;
-    }
     let hash = 0;
     for (const char of item._id) {
-      hash = (hash + char.charCodeAt(0)) % EXERCISE_IMAGES.length;
+      hash += char.charCodeAt(0);
     }
-    return EXERCISE_IMAGES[hash];
+    return exerciseImageUrl(item, this.primeMoverImages(), hash);
   }
 
   sidebarSubtitle(item: Exercise): string {

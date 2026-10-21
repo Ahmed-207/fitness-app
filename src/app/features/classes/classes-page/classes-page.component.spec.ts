@@ -59,6 +59,7 @@ describe('ClassesPageComponent', () => {
     getExercises: ReturnType<typeof vi.fn>;
     getPrimeMoversByMuscleGroup: ReturnType<typeof vi.fn>;
     getExercisesByMuscleAndDifficulty: ReturnType<typeof vi.fn>;
+    getPrimeMoverImageMap: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(async () => {
@@ -74,6 +75,7 @@ describe('ClassesPageComponent', () => {
         }),
       ),
       getExercisesByMuscleAndDifficulty: vi.fn(() => of(FILTERED_PAGE)),
+      getPrimeMoverImageMap: vi.fn(() => of(new Map<string, string>())),
     };
 
     await TestBed.configureTestingModule({
