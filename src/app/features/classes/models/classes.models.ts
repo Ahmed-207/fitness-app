@@ -105,7 +105,7 @@ export interface ExerciseCard {
   id: string;
   name: string;
   targetMuscleGroup: string;
-  image: string;
+  image: string | null;
   videoUrl: string | null;
   exercise: Exercise;
 }

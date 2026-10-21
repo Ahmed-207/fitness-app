@@ -251,8 +251,8 @@ export class ClassesPageComponent implements OnInit {
   private applyPage(response: ExercisePageResponse, replace: boolean): void {
     this.currentPage.set(response.currentPage);
     this.totalPages.set(Math.max(1, response.totalPages));
-    const mapped = response.exercises.map((exercise, index) =>
-      toExerciseCard(exercise, this.exercises().length + index, this.primeMoverImages()),
+    const mapped = response.exercises.map((exercise) =>
+      toExerciseCard(exercise, this.primeMoverImages()),
     );
     if (replace) {
       this.exercises.set(mapped);
@@ -270,7 +270,7 @@ export class ClassesPageComponent implements OnInit {
     this.exercises.update((cards) =>
       cards.map((card, index) => ({
         ...card,
-        image: exerciseImageUrl(card.exercise, images, index),
+        image: exerciseImageUrl(card.exercise, images),
       })),
     );
   }
@@ -292,16 +292,12 @@ function randomToExercisePage(random: RandomExercisesResponse): ExercisePageResp
   };
 }
 
-function toExerciseCard(
-  exercise: Exercise,
-  index: number,
-  primeMoverImages: PrimeMoverImageMap,
-): ExerciseCard {
+function toExerciseCard(exercise: Exercise, primeMoverImages: PrimeMoverImageMap): ExerciseCard {
   return {
     id: exercise._id,
     name: exercise.exercise,
     targetMuscleGroup: exercise.target_muscle_group ?? '',
-    image: exerciseImageUrl(exercise, primeMoverImages, index),
+    image: exerciseImageUrl(exercise, primeMoverImages),
     videoUrl: exerciseVideoUrl(exercise),
     exercise,
   };

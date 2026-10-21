@@ -260,6 +260,11 @@ body {
   transform: scale(1.05);
 }
 
+.sf-catalog-card__photo--anatomy {
+  object-fit: contain;
+  background: var(--workouts-media-placeholder);
+}
+
 .sf-catalog-card__play {
   position: absolute;
   top: 0.65rem;

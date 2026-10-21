@@ -73,12 +73,14 @@
         @for (card of visibleExercises(); track card.id) {
           <article class="sf-catalog-card">
             <div class="sf-catalog-card__media">
-              <img
-                [src]="card.image"
-                [alt]="card.name"
-                class="sf-catalog-card__photo"
-                loading="lazy"
-              />
+              @if (card.image) {
+                <img
+                  [src]="card.image"
+                  [alt]="card.name"
+                  class="sf-catalog-card__photo sf-catalog-card__photo--anatomy"
+                  loading="lazy"
+                />
+              }
 
               @if (card.videoUrl) {
                 <button

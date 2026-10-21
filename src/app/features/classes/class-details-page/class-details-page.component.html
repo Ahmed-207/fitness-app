@@ -120,11 +120,13 @@
         @if (exercise(); as current) {
           <!-- Featured Exercise Hero Card -->
           <article class="relative flex min-h-[24.5rem] items-end overflow-hidden rounded-[1.15rem] text-white">
-            <img
-              [src]="heroImage()"
-              [alt]="current.exercise"
-              class="absolute inset-0 size-full object-cover"
-            />
+            @if (heroImage(); as heroSrc) {
+              <img
+                [src]="heroSrc"
+                [alt]="current.exercise"
+                class="absolute inset-0 size-full object-contain bg-[var(--workouts-media-placeholder)]"
+              />
+            }
             <div class="class-detail__hero-scrim absolute inset-0" aria-hidden="true"></div>
 
             <div class="relative z-10 w-full px-7 pb-5 pt-8 text-center">

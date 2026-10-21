@@ -84,12 +84,14 @@
           @for (item of visibleExercises(); track item._id) {
             <article class="sf-catalog-card">
               <div class="sf-catalog-card__media">
-                <img
-                  [src]="item.image"
-                  [alt]="item.name"
-                  class="sf-catalog-card__photo"
-                  loading="lazy"
-                />
+                @if (item.image) {
+                  <img
+                    [src]="item.image"
+                    [alt]="item.name"
+                    class="sf-catalog-card__photo sf-catalog-card__photo--anatomy"
+                    loading="lazy"
+                  />
+                }
               </div>
 
               <footer class="sf-catalog-card__panel">

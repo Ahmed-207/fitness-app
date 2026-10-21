@@ -15,17 +15,13 @@ import { WorkoutsService } from './../../../auth/services/workouts-service';
 import { MuscleGroup } from './../../../../features/auth/models/workouts-models';
 import { Exercise } from '../../../classes/models/classes.models';
 import { ClassesService } from '../../../classes/services/classes.service';
-import {
-  EXERCISE_CARD_FALLBACK_IMAGES,
-  exerciseImageUrl,
-  PrimeMoverImageMap,
-} from '../../../classes/utils/exercise-media';
+import { exerciseImageUrl, PrimeMoverImageMap } from '../../../classes/utils/exercise-media';
 import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
 import { catchError, EMPTY } from 'rxjs';
 
 interface WorkoutCard extends Exercise {
   name: string;
-  image: string;
+  image: string | null;
 }
 
 @Component({
@@ -192,17 +188,8 @@ export class WorkoutsSectionComponent implements OnInit {
   }
 
   private setFallbackExercises(): void {
-    const titles = ['BENCH PRESS', 'BARBELL CURLS', 'SQUATS'];
-    const fallbackData: WorkoutCard[] = titles.map((title, index) => {
-      const exercise = { _id: String(index + 1), exercise: title, prime_mover_muscle: '' } as Exercise;
-      return {
-        ...exercise,
-        name: title,
-        image: EXERCISE_CARD_FALLBACK_IMAGES[index % EXERCISE_CARD_FALLBACK_IMAGES.length],
-      };
-    });
-    this.allExercises.set(fallbackData);
-    this.displayedExercises.set(fallbackData);
+    this.allExercises.set([]);
+    this.displayedExercises.set([]);
     this.slideIndex.set(0);
   }
 
@@ -211,7 +198,7 @@ export class WorkoutsSectionComponent implements OnInit {
     return exercises.map((item, index) => ({
       ...item,
       name: item.exercise || 'WORKOUT',
-      image: exerciseImageUrl(item, images, index),
+      image: exerciseImageUrl(item, images),
     }));
   }
 

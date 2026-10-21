@@ -159,7 +159,7 @@ export class ClassDetailsPageComponent implements OnInit {
   readonly heroImage = computed(() => {
     const current = this.exercise();
     if (!current) {
-      return '';
+      return null;
     }
     return this.imageFor(current);
   });
@@ -220,12 +220,8 @@ export class ClassDetailsPageComponent implements OnInit {
     this.exercise.set(item);
   }
 
-  imageFor(item: Exercise): string {
-    let hash = 0;
-    for (const char of item._id) {
-      hash += char.charCodeAt(0);
-    }
-    return exerciseImageUrl(item, this.primeMoverImages(), hash);
+  imageFor(item: Exercise): string | null {
+    return exerciseImageUrl(item, this.primeMoverImages());
   }
 
   sidebarSubtitle(item: Exercise): string {
