@@ -17,11 +17,3 @@
 .class-detail__features {
   background: var(--class-detail-features-bg);
 }
-
-.class-detail__meal {
-  background: var(--class-detail-meal-bg);
-}
-
-.class-detail__meal-panel {
-  background: var(--class-detail-meal-panel-bg);
-}

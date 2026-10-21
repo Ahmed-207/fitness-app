@@ -16,6 +16,11 @@ const MUSCLE_GROUPS = {
   ],
 };
 
+const LEVELS = {
+  message: 'success',
+  levels: [{ _id: 'l1', name: 'Beginner' }],
+};
+
 const EXERCISE_PAGE = {
   message: 'success',
   totalExercises: 2,
@@ -37,23 +42,46 @@ const EXERCISE_PAGE = {
   ],
 };
 
+const FILTERED_PAGE = {
+  message: 'success',
+  totalExercises: 1,
+  totalPages: 1,
+  currentPage: 1,
+  exercises: [EXERCISE_PAGE.exercises[0]],
+};
+
 describe('ClassesPageComponent', () => {
   let fixture: ComponentFixture<ClassesPageComponent>;
   let component: ClassesPageComponent;
+  let classesService: {
+    getMuscleGroups: ReturnType<typeof vi.fn>;
+    getLevels: ReturnType<typeof vi.fn>;
+    getExercises: ReturnType<typeof vi.fn>;
+    getPrimeMoversByMuscleGroup: ReturnType<typeof vi.fn>;
+    getExercisesByMuscleAndDifficulty: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
+    classesService = {
+      getMuscleGroups: vi.fn(() => of(MUSCLE_GROUPS)),
+      getLevels: vi.fn(() => of(LEVELS)),
+      getExercises: vi.fn(() => of(EXERCISE_PAGE)),
+      getPrimeMoversByMuscleGroup: vi.fn(() =>
+        of({
+          message: 'success',
+          totalMuscles: 1,
+          muscles: [{ _id: 'pm1', name: 'Pectoralis', image: null }],
+        }),
+      ),
+      getExercisesByMuscleAndDifficulty: vi.fn(() => of(FILTERED_PAGE)),
+    };
+
     await TestBed.configureTestingModule({
       imports: [ClassesPageComponent],
       providers: [
         provideRouter([]),
         ...provideEnglishTranslations(),
-        {
-          provide: ClassesService,
-          useValue: {
-            getMuscleGroups: () => of(MUSCLE_GROUPS),
-            getExercises: () => of(EXERCISE_PAGE),
-          },
-        },
+        { provide: ClassesService, useValue: classesService },
       ],
     }).compileComponents();
 
@@ -76,8 +104,11 @@ describe('ClassesPageComponent', () => {
     expect(component.hasMore()).toBe(false);
   });
 
-  it('filters exercises by the selected muscle group', () => {
+  it('loads exercises by muscle group via by-muscle-difficulty', () => {
     component.selectGroup('g1');
+    fixture.detectChanges();
+    expect(classesService.getPrimeMoversByMuscleGroup).toHaveBeenCalledWith('g1');
+    expect(classesService.getExercisesByMuscleAndDifficulty).toHaveBeenCalled();
     expect(component.visibleExercises().map((card) => card.name)).toEqual(['Bench Press']);
   });
 

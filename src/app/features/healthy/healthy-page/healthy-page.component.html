@@ -37,7 +37,7 @@
       role="tablist"
       [attr.aria-label]="'MEALS.CATEGORIES_ARIA' | translate"
     >
-      @for (tab of mealTabs; track tab.id) {
+      @for (tab of mealTabs(); track tab.id) {
         <button
           type="button"
           role="tab"
@@ -59,30 +59,30 @@
     } @else if (meals().length === 0) {
       <p class="healthy__status">{{ 'MEALS.EMPTY' | translate }}</p>
     } @else {
-      <div class="healthy__cards">
+      <div class="sf-catalog-grid">
         @for (meal of visibleMeals(); track meal.idMeal) {
-          <article class="healthy-card group">
-            <div class="healthy-card__media">
+          <article class="sf-catalog-card">
+            <div class="sf-catalog-card__media">
               <img
                 [src]="meal.strMealThumb"
                 [alt]="meal.strMeal"
-                class="healthy-card__photo transition-transform duration-500 group-hover:scale-105"
+                class="sf-catalog-card__photo"
                 loading="lazy"
               />
             </div>
 
-            <footer class="healthy-card__panel">
-              <h2 class="healthy-card__title">{{ meal.strMeal }}</h2>
+            <footer class="sf-catalog-card__panel">
+              <h2 class="sf-catalog-card__title">{{ meal.strMeal }}</h2>
 
-              <div class="healthy-card__actions">
+              <div class="sf-catalog-card__actions">
                 <a
-                  class="healthy-card__explore"
+                  class="sf-catalog-card__explore"
                   [routerLink]="mealLink(meal)"
                   [queryParams]="mealQueryParams()"
                   [attr.aria-label]="('MEALS.EXPLORE' | translate) + ' — ' + meal.strMeal"
                 >
                   <span>{{ 'MEALS.EXPLORE' | translate }}</span>
-                  <span class="healthy-card__explore-badge" aria-hidden="true">
+                  <span class="sf-catalog-card__explore-badge" aria-hidden="true">
                     <app-sf-arrow-icon size="xs" />
                   </span>
                 </a>

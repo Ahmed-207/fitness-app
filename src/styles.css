@@ -7,6 +7,8 @@
 /* Shared gym photo (Figma page-frame fill) */
 :root {
   --site-nav-height: 5rem;
+  --catalog-card-radius: 1.05rem;
+  --catalog-card-media-height: 13.75rem;
   --page-frame-image: url('/assets/about/gym-trainer.jpg');
   --page-frame-blur: 75.4px;
   --brand-orange: #ff4100;
@@ -92,6 +94,8 @@
     rgb(56 58 60 / 72%),
     rgb(38 39 40 / 88%)
   );
+  --catalog-card-shadow: 0 14px 34px rgb(0 0 0 / 28%);
+  --catalog-card-shadow-hover: 0 18px 40px rgb(0 0 0 / 34%);
   --workouts-promo-card-bg: rgb(28 25 23 / 90%);
   --workouts-category-idle-bg: rgb(255 255 255 / 10%);
   --workouts-carousel-control-bg: rgb(41 37 36 / 80%);
@@ -158,6 +162,8 @@
   --workouts-card-surface: rgb(255 255 255 / 92%);
   --workouts-card-panel: rgb(255 255 255 / 50%);
   --workouts-card-panel-bg: linear-gradient(90deg, rgb(235 235 238 / 92%), rgb(245 245 247 / 85%));
+  --catalog-card-shadow: 0 14px 34px rgb(36 36 36 / 12%);
+  --catalog-card-shadow-hover: 0 18px 40px rgb(36 36 36 / 18%);
   --workouts-promo-card-bg: rgb(255 255 255 / 90%);
   --workouts-category-idle-bg: rgb(0 0 0 / 10%);
   --workouts-carousel-control-bg: rgb(255 255 255 / 80%);
@@ -189,4 +195,147 @@ body {
 
 [dir='rtl'] .nav-auth-cta {
   font-size: 0.875rem;
+}
+
+/* —— Shared catalog cards (home workouts, /classes, /healthy, class detail promos) —— */
+.sf-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.sf-catalog-grid--carousel {
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .sf-catalog-grid--carousel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.35rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sf-catalog-grid--carousel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.sf-catalog-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--workouts-card-border);
+  border-radius: var(--catalog-card-radius);
+  background: var(--workouts-card-surface);
+  box-shadow: var(--catalog-card-shadow);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sf-catalog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--catalog-card-shadow-hover);
+}
+
+.sf-catalog-card__media {
+  position: relative;
+  height: var(--catalog-card-media-height);
+  overflow: hidden;
+  background: var(--workouts-media-placeholder);
+}
+
+.sf-catalog-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.sf-catalog-card:hover .sf-catalog-card__photo {
+  transform: scale(1.05);
+}
+
+.sf-catalog-card__play {
+  position: absolute;
+  top: 0.65rem;
+  inset-inline-start: 0.65rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.55rem;
+  border: 0;
+  border-radius: 9999px;
+  cursor: pointer;
+  font: 700 0.68rem/1 inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent-strong);
+  box-shadow: 0 8px 20px rgb(255 65 0 / 35%);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.sf-catalog-card__play:hover {
+  transform: scale(1.04);
+}
+
+.sf-catalog-card__play-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.sf-catalog-card__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 4.85rem;
+  padding: 0.85rem 1.05rem 0.95rem;
+  background: var(--workouts-card-panel-bg);
+  backdrop-filter: blur(8px);
+}
+
+.sf-catalog-card__title {
+  margin: 0;
+  font: 800 0.92rem/1.3 inherit;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sf-catalog-card__actions {
+  display: flex;
+  align-items: center;
+}
+
+.sf-catalog-card__explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font: 600 0.85rem/1.2 inherit;
+  color: var(--accent-strong);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.sf-catalog-card__explore:hover {
+  opacity: 0.88;
+}
+
+.sf-catalog-card__explore-badge {
+  display: grid;
+  width: 1.3rem;
+  height: 1.3rem;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--accent-strong);
 }

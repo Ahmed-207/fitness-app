@@ -23,6 +23,15 @@ describe('HealthyPageComponent', () => {
         {
           provide: MealsService,
           useValue: {
+            getCategories: () =>
+              of([
+                {
+                  idCategory: '1',
+                  strCategory: 'Beef',
+                  strCategoryThumb: 'beef.png',
+                  strCategoryDescription: '',
+                },
+              ]),
             getMealsByCategory: () => of(MEALS),
           },
         },

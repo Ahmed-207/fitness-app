@@ -18,6 +18,18 @@ export interface LevelsResponse {
   levels: Level[];
 }
 
+/** `GET /levels/difficulty-levels/by-prime-mover` uses `id`, not `_id`. */
+export interface DifficultyLevelRef {
+  id: string;
+  name: string;
+}
+
+export interface DifficultyLevelsByMuscleResponse {
+  message: string;
+  totalLevels: number;
+  difficulty_levels: DifficultyLevelRef[];
+}
+
 export interface PrimeMoverMuscle {
   _id: string;
   name: string;
@@ -27,6 +39,12 @@ export interface PrimeMoverMuscle {
 export interface MuscleGroupDetailResponse {
   message: string;
   muscleGroup: MuscleGroup;
+  muscles: PrimeMoverMuscle[];
+}
+
+export interface MusclesByGroupResponse {
+  message: string;
+  totalMuscles: number;
   muscles: PrimeMoverMuscle[];
 }
 

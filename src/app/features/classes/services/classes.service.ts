@@ -4,15 +4,18 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints';
 import {
+  DifficultyLevelsByMuscleResponse,
   Exercise,
   ExercisePageResponse,
   LevelsResponse,
   MuscleGroupDetailResponse,
   MuscleGroupsResponse,
+  MusclesByGroupResponse,
   RandomExercisesResponse,
 } from '../models/classes.models';
 
 const EXERCISE_SEARCH_PAGE_SIZE = 500;
+const DEFAULT_LIST_LIMIT = 10;
 
 @Injectable({ providedIn: 'root' })
 export class ClassesService {
@@ -28,19 +31,49 @@ export class ClassesService {
     return this.http.get<LevelsResponse>(API_ENDPOINTS.levels.all);
   }
 
+  getLevelsByPrimeMover(primeMoverMuscleId: string): Observable<DifficultyLevelsByMuscleResponse> {
+    const params = new HttpParams().set('primeMoverMuscleId', primeMoverMuscleId);
+    return this.http.get<DifficultyLevelsByMuscleResponse>(
+      API_ENDPOINTS.levels.byPrimeMoverMuscle,
+      { params },
+    );
+  }
+
   getMusclesByGroupId(groupId: string): Observable<MuscleGroupDetailResponse> {
     return this.http.get<MuscleGroupDetailResponse>(API_ENDPOINTS.muscles.byGroupId(groupId));
   }
 
-  getExercises(page = 1, limit = 9): Observable<ExercisePageResponse> {
+  /** Same prime movers as `getMusclesByGroupId`, with `totalMuscles` (Postman: by-muscle-group). */
+  getPrimeMoversByMuscleGroup(muscleGroupId: string): Observable<MusclesByGroupResponse> {
+    const params = new HttpParams().set('muscleGroupId', muscleGroupId);
+    return this.http.get<MusclesByGroupResponse>(API_ENDPOINTS.muscles.byMuscleGroup, { params });
+  }
+
+  getExercises(page = 1, limit = DEFAULT_LIST_LIMIT): Observable<ExercisePageResponse> {
     const params = new HttpParams().set('page', page).set('limit', limit);
     return this.http.get<ExercisePageResponse>(API_ENDPOINTS.exercises.all, { params });
+  }
+
+  getExercisesByMuscleAndDifficulty(
+    primeMoverMuscleId: string,
+    difficultyLevelId: string,
+    page = 1,
+    limit = DEFAULT_LIST_LIMIT,
+  ): Observable<ExercisePageResponse> {
+    const params = new HttpParams()
+      .set('primeMoverMuscleId', primeMoverMuscleId)
+      .set('difficultyLevelId', difficultyLevelId)
+      .set('page', page)
+      .set('limit', limit);
+    return this.http.get<ExercisePageResponse>(API_ENDPOINTS.exercises.byMuscleAndDifficulty, {
+      params,
+    });
   }
 
   getRandomExercises(
     targetMuscleGroupId: string,
     difficultyLevelId: string,
-    limit = 8,
+    limit = 5,
   ): Observable<RandomExercisesResponse> {
     const params = new HttpParams()
       .set('targetMuscleGroupId', targetMuscleGroupId)

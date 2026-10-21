@@ -13,9 +13,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, combineLatest, EMPTY, finalize, forkJoin, map, of, switchMap } from 'rxjs';
 import {
   DEFAULT_MEAL_TAB_ID,
-  MEAL_TABS,
+  MealTab,
   categoryForTabId,
   mealTabForCategory,
+  resolveFeaturedMealTabs,
 } from '../models/meal-tabs';
 import {
   MealDetail,
@@ -37,7 +38,7 @@ export class MealDetailPageComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly mealTabs = MEAL_TABS;
+  readonly mealTabs = signal<MealTab[]>([]);
   readonly selectedTabId = signal<string>(DEFAULT_MEAL_TAB_ID);
   readonly activeMealId = signal<string | null>(null);
   readonly sidebarMeals = signal<MealSummary[]>([]);
@@ -66,28 +67,35 @@ export class MealDetailPageComponent implements OnInit {
           mealId: params.get('mealId'),
           category: query.get('c'),
         })),
-        switchMap(({ mealId, category }) => {
-          this.selectedTabId.set(mealTabForCategory(category));
-          this.activeMealId.set(mealId);
-          this.loadFailed.set(false);
-          this.notFound.set(false);
+        switchMap(({ mealId, category }) =>
+          this.mealsService.getCategories().pipe(
+            catchError(() => of([])),
+            switchMap((categories) => {
+              const tabs = resolveFeaturedMealTabs(categories);
+              this.mealTabs.set(tabs);
+              this.selectedTabId.set(mealTabForCategory(category, tabs));
+              this.activeMealId.set(mealId);
+              this.loadFailed.set(false);
+              this.notFound.set(false);
 
-          if (!mealId) {
-            this.isLoading.set(false);
-            this.notFound.set(true);
-            return EMPTY;
-          }
+              if (!mealId) {
+                this.isLoading.set(false);
+                this.notFound.set(true);
+                return EMPTY;
+              }
 
-          const tabCategory = categoryForTabId(this.selectedTabId());
-          this.isLoading.set(true);
+              const tabCategory = categoryForTabId(this.selectedTabId(), tabs);
+              this.isLoading.set(true);
 
-          return forkJoin({
-            list: this.mealsService.getMealsByCategory(tabCategory).pipe(catchError(() => of(null))),
-            detail: this.mealsService.getMealDetails(mealId).pipe(catchError(() => of(null))),
-          }).pipe(
-            finalize(() => this.isLoading.set(false)),
-          );
-        }),
+              return forkJoin({
+                list: this.mealsService
+                  .getMealsByCategory(tabCategory)
+                  .pipe(catchError(() => of(null))),
+                detail: this.mealsService.getMealDetails(mealId).pipe(catchError(() => of(null))),
+              }).pipe(finalize(() => this.isLoading.set(false)));
+            }),
+          ),
+        ),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((result) => {
@@ -117,7 +125,7 @@ export class MealDetailPageComponent implements OnInit {
   }
 
   selectTab(tabId: string): void {
-    const tab = MEAL_TABS.find((item) => item.id === tabId);
+    const tab = this.mealTabs().find((item) => item.id === tabId);
     if (!tab) {
       return;
     }
@@ -127,7 +135,7 @@ export class MealDetailPageComponent implements OnInit {
 
   selectMeal(summary: MealSummary): void {
     void this.router.navigate(['/healthy', summary.idMeal], {
-      queryParams: { c: categoryForTabId(this.selectedTabId()) },
+      queryParams: { c: categoryForTabId(this.selectedTabId(), this.mealTabs()) },
     });
   }
 

@@ -10,13 +10,14 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, EMPTY, finalize } from 'rxjs';
+import { catchError, EMPTY, finalize, of } from 'rxjs';
 import { SfArrowIconComponent } from '../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
 import {
   DEFAULT_MEAL_TAB_ID,
-  MEAL_TABS,
+  MealTab,
   categoryForTabId,
   mealTabForCategory,
+  resolveFeaturedMealTabs,
 } from '../models/meal-tabs';
 import { MealSummary } from '../models/meals.models';
 import { MealsService } from '../services/meals.service';
@@ -36,14 +37,16 @@ export class HealthyPageComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly mealTabs = MEAL_TABS;
+  readonly mealTabs = signal<MealTab[]>([...resolveFeaturedMealTabs([])]);
   readonly selectedTabId = signal<string>(DEFAULT_MEAL_TAB_ID);
   readonly meals = signal<MealSummary[]>([]);
   readonly isLoading = signal(false);
   readonly loadFailed = signal(false);
   readonly slideIndex = signal(0);
 
-  readonly selectedCategory = computed(() => categoryForTabId(this.selectedTabId()));
+  readonly selectedCategory = computed(() =>
+    categoryForTabId(this.selectedTabId(), this.mealTabs()),
+  );
 
   readonly pageCount = computed(() => {
     const total = this.meals().length;
@@ -62,13 +65,23 @@ export class HealthyPageComponent implements OnInit {
 
   ngOnInit(): void {
     const fromQuery = this.route.snapshot.queryParamMap.get('c');
-    const tabId = mealTabForCategory(fromQuery);
-    this.selectedTabId.set(tabId);
-    this.loadMeals(categoryForTabId(tabId), false);
+    this.mealsService
+      .getCategories()
+      .pipe(
+        catchError(() => of([])),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((categories) => {
+        const tabs = resolveFeaturedMealTabs(categories);
+        this.mealTabs.set(tabs);
+        const tabId = mealTabForCategory(fromQuery, tabs);
+        this.selectedTabId.set(tabId);
+        this.loadMeals(categoryForTabId(tabId, tabs), false);
+      });
   }
 
   selectTab(tabId: string): void {
-    const tab = MEAL_TABS.find((item) => item.id === tabId);
+    const tab = this.mealTabs().find((item) => item.id === tabId);
     if (!tab) {
       return;
     }

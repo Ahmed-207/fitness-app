@@ -1,10 +1,8 @@
-import { isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
   OnInit,
-  PLATFORM_ID,
   computed,
   inject,
   signal,
@@ -17,7 +15,13 @@ import { SfArrowIconComponent } from '../../../shared/components/sf-arrow-icon/s
 import { VideoModalComponent } from '../../../shared/components/video-modal/video-modal.component';
 import { MealCategory } from '../../healthy/models/meals.models';
 import { MealsService } from '../../healthy/services/meals.service';
-import { Exercise, Level, MuscleGroup, PrimeMoverMuscle } from '../models/classes.models';
+import {
+  DifficultyLevelRef,
+  Exercise,
+  Level,
+  MuscleGroup,
+  PrimeMoverMuscle,
+} from '../models/classes.models';
 import { ClassesService } from '../services/classes.service';
 import { exerciseVideoUrl } from '../utils/exercise-media';
 
@@ -84,12 +88,13 @@ export class ClassDetailsPageComponent implements OnInit {
   private readonly classesService = inject(ClassesService);
   private readonly mealsService = inject(MealsService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly platformId = inject(PLATFORM_ID);
+  private detailStarted = false;
 
   readonly recommendedMeals = RECOMMENDED_MEALS;
 
   readonly muscleGroups = signal<MuscleGroup[]>([]);
   readonly levels = signal<Level[]>([]);
+  readonly levelsForPrimeMover = signal<DifficultyLevelRef[]>([]);
   readonly primeMovers = signal<PrimeMoverMuscle[]>([]);
   readonly selectedGroupId = signal<string>('all');
   readonly selectedDifficulty = signal<DifficultyTab>('Beginner');
@@ -101,7 +106,11 @@ export class ClassDetailsPageComponent implements OnInit {
   readonly playing = signal<PlayingVideo | null>(null);
 
   readonly difficultyTabs = computed(() => {
-    const available = new Set(this.levels().map((level) => level.name.trim()));
+    const names =
+      this.levelsForPrimeMover().length > 0
+        ? this.levelsForPrimeMover().map((level) => level.name.trim())
+        : this.levels().map((level) => level.name.trim());
+    const available = new Set(names);
     const tabs = DIFFICULTY_ORDER.filter((name) => available.has(name));
     return tabs.length > 0 ? tabs : DIFFICULTY_ORDER;
   });
@@ -164,9 +173,10 @@ export class ClassDetailsPageComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (this.detailStarted) {
       return;
     }
+    this.detailStarted = true;
 
     const exerciseId = this.route.snapshot.paramMap.get('exerciseId');
     const state = history.state as ExerciseState;
@@ -281,6 +291,7 @@ export class ClassDetailsPageComponent implements OnInit {
 
   private applySelectedExercise(target: Exercise): void {
     this.exercise.set(target);
+    this.syncLevelsForCurrentExercise();
     const targetGroup = (target.target_muscle_group ?? '').trim().toLowerCase();
     const matchedGroup = this.muscleGroups().find((group) => {
       const name = group.name.trim().toLowerCase();
@@ -307,7 +318,10 @@ export class ClassDetailsPageComponent implements OnInit {
         catchError(() => EMPTY),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((response) => this.primeMovers.set(response.muscles));
+      .subscribe((response) => {
+        this.primeMovers.set(response.muscles);
+        this.syncLevelsForCurrentExercise();
+      });
   }
 
   private loadSidebarExercises(preferredId?: string): void {
@@ -342,8 +356,36 @@ export class ClassDetailsPageComponent implements OnInit {
   }
 
   private levelIdFor(tab: DifficultyTab): string | null {
+    const scoped = this.levelsForPrimeMover().find((item) => item.name.trim() === tab);
+    if (scoped) {
+      return scoped.id;
+    }
     const level = this.levels().find((item) => item.name.trim() === tab);
     return level?._id ?? null;
+  }
+
+  private syncLevelsForCurrentExercise(): void {
+    const current = this.exercise();
+    if (!current) {
+      this.levelsForPrimeMover.set([]);
+      return;
+    }
+    const primeMoverName = (current.prime_mover_muscle ?? '').trim().toLowerCase();
+    const primeMover = this.primeMovers().find(
+      (muscle) => muscle.name.trim().toLowerCase() === primeMoverName,
+    );
+    if (!primeMover) {
+      this.levelsForPrimeMover.set([]);
+      return;
+    }
+    this.classesService
+      .getLevelsByPrimeMover(primeMover._id)
+      .pipe(
+        timeout(REQUEST_TIMEOUT_MS),
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((response) => this.levelsForPrimeMover.set(response.difficulty_levels));
   }
 
   private loadCategories(): void {

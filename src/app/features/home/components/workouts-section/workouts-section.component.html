@@ -80,32 +80,34 @@
           </svg>
         </button>
 
-        <div class="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-[22px] px-2">
+        <div class="sf-catalog-grid sf-catalog-grid--carousel w-full px-2">
           @for (item of visibleExercises(); track item._id) {
-            <article class="group overflow-hidden rounded-xl border border-[var(--workouts-card-border)] bg-[var(--workouts-promo-card-bg)] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              
-              <div class="h-[210px] overflow-hidden bg-[var(--workouts-media-placeholder)]">
+            <article class="sf-catalog-card">
+              <div class="sf-catalog-card__media">
                 <img
                   [src]="item.image"
                   [alt]="item.name"
-                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  class="sf-catalog-card__photo"
                   loading="lazy"
                 />
               </div>
 
-              <div class="min-h-[70px] bg-[var(--section-healthy)] px-3 py-3.5 transition-colors duration-300">
-                <h2 class="mb-3 text-sm font-extrabold tracking-[2px] text-[var(--color-text)] uppercase">
-                  {{ item.name }}
-                </h2>
+              <footer class="sf-catalog-card__panel">
+                <h2 class="sf-catalog-card__title">{{ item.name }}</h2>
 
-                <a class="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--accent-strong)] transition hover:opacity-80" href="/classes">
-                  <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
-                  <span class="flex h-[17px] w-[17px] items-center justify-center rounded-full bg-[var(--accent-strong)] text-white">
-                    <app-sf-arrow-icon size="xs" />
-                  </span>
-                </a>
-              </div>
-
+                <div class="sf-catalog-card__actions">
+                  <a
+                    class="sf-catalog-card__explore"
+                    routerLink="/classes"
+                    [attr.aria-label]="('WORKOUTS.EXPLORE' | translate) + ' — ' + item.name"
+                  >
+                    <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
+                    <span class="sf-catalog-card__explore-badge" aria-hidden="true">
+                      <app-sf-arrow-icon size="xs" />
+                    </span>
+                  </a>
+                </div>
+              </footer>
             </article>
           }
         </div>

@@ -9,7 +9,7 @@
       role="tablist"
       [attr.aria-label]="'MEALS.CATEGORIES_ARIA' | translate"
     >
-      @for (tab of mealTabs; track tab.id) {
+      @for (tab of mealTabs(); track tab.id) {
         <button
           type="button"
           role="tab"

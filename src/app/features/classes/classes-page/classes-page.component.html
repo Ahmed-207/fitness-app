@@ -69,25 +69,25 @@
     } @else if (visibleExercises().length === 0) {
       <p class="workouts__status">{{ 'CLASSES.EMPTY' | translate }}</p>
     } @else {
-      <div class="workouts__cards">
+      <div class="sf-catalog-grid">
         @for (card of visibleExercises(); track card.id) {
-          <article class="workouts__card group">
-            <div class="workouts__card-media">
+          <article class="sf-catalog-card">
+            <div class="sf-catalog-card__media">
               <img
                 [src]="card.image"
                 [alt]="card.name"
-                class="workouts__card-photo transition-transform duration-500 group-hover:scale-105"
+                class="sf-catalog-card__photo"
                 loading="lazy"
               />
 
               @if (card.videoUrl) {
                 <button
                   type="button"
-                  class="workouts__play"
+                  class="sf-catalog-card__play"
                   [attr.aria-label]="('CLASSES.PLAY_IT' | translate) + ' — ' + card.name"
                   (click)="play(card); $event.stopPropagation()"
                 >
-                  <svg class="workouts__play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <svg class="sf-catalog-card__play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M8 5.5v13l11-6.5-11-6.5Z" />
                   </svg>
                   <span>{{ 'CLASSES.PLAY_IT' | translate }}</span>
@@ -95,18 +95,18 @@
               }
             </div>
 
-            <footer class="workouts__card-panel">
-              <h2 class="workouts__card-title">{{ card.name }}</h2>
+            <footer class="sf-catalog-card__panel">
+              <h2 class="sf-catalog-card__title">{{ card.name }}</h2>
 
-              <div class="workouts__card-actions">
+              <div class="sf-catalog-card__actions">
                 <a
-                  class="workouts__explore"
+                  class="sf-catalog-card__explore"
                   [routerLink]="['/classes', card.id]"
                   [state]="{ exercise: card.exercise }"
                   [attr.aria-label]="('WORKOUTS.EXPLORE' | translate) + ' — ' + card.name"
                 >
                   <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
-                  <span class="workouts__explore-badge" aria-hidden="true">
+                  <span class="sf-catalog-card__explore-badge" aria-hidden="true">
                     <app-sf-arrow-icon size="xs" />
                   </span>
                 </a>

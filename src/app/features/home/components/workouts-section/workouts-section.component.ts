@@ -1,16 +1,15 @@
-import { isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   OnInit,
-  PLATFORM_ID,
+  computed,
   inject,
   signal,
-  computed,
-  DestroyRef,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WorkoutsService } from './../../../auth/services/workouts-service';
 import { MuscleGroup, Exercise } from './../../../../features/auth/models/workouts-models';
@@ -19,7 +18,7 @@ import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-ico
 @Component({
   selector: 'app-workouts-section',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, SfArrowIconComponent],
+  imports: [CommonModule, RouterLink, TranslatePipe, SfArrowIconComponent],
   templateUrl: './workouts-section.component.html',
   styleUrl: './workouts-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,7 +26,7 @@ import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-ico
 export class WorkoutsSectionComponent implements OnInit {
   private workoutsService = inject(WorkoutsService);
   private destroyRef = inject(DestroyRef);
-  private readonly platformId = inject(PLATFORM_ID);
+  private workoutsStarted = false;
 
   muscleGroups = signal<MuscleGroup[]>([]);
   allExercises = signal<any[]>([]);
@@ -64,10 +63,10 @@ export class WorkoutsSectionComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (this.workoutsStarted) {
       return;
     }
-
+    this.workoutsStarted = true;
     this.fetchMuscleGroups();
     this.fetchAllExercises();
   }

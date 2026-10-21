@@ -186,32 +186,34 @@
             {{ 'CLASS_DETAILS.RECOMMENDATION_TITLE' | translate }}
           </h2>
 
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="sf-catalog-grid sf-catalog-grid--carousel">
             @for (meal of recommendedMeals; track meal.id) {
-              <article class="class-detail__meal group overflow-hidden rounded-2xl border border-[var(--workouts-card-border)]">
-                <div class="h-48 overflow-hidden">
+              <article class="sf-catalog-card">
+                <div class="sf-catalog-card__media">
                   <img
                     [src]="meal.image"
                     [alt]="meal.titleKey | translate"
-                    class="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    class="sf-catalog-card__photo"
                     loading="lazy"
                   />
                 </div>
 
-                <footer class="class-detail__meal-panel flex flex-col gap-1.5 px-4 py-3 backdrop-blur-md">
-                  <h3 class="m-0 text-[0.85rem] font-extrabold uppercase tracking-[0.1em] text-[var(--color-text-heading)]">
+                <footer class="sf-catalog-card__panel">
+                  <h3 class="sf-catalog-card__title">
                     {{ meal.titleKey | translate }}
                   </h3>
-                  <a
-                    class="inline-flex items-center gap-2 text-[0.78rem] font-semibold text-[var(--accent-strong)] no-underline"
-                    routerLink="/healthy"
-                    [queryParams]="{ c: meal.category }"
-                  >
-                    <span>{{ 'HEALTHY.READ_MORE' | translate }}</span>
-                    <span class="grid size-5 place-items-center rounded-full bg-[var(--accent-strong)] text-white" aria-hidden="true">
-                      <app-sf-arrow-icon size="xs" />
-                    </span>
-                  </a>
+                  <div class="sf-catalog-card__actions">
+                    <a
+                      class="sf-catalog-card__explore"
+                      routerLink="/healthy"
+                      [queryParams]="{ c: meal.category }"
+                    >
+                      <span>{{ 'HEALTHY.READ_MORE' | translate }}</span>
+                      <span class="sf-catalog-card__explore-badge" aria-hidden="true">
+                        <app-sf-arrow-icon size="xs" />
+                      </span>
+                    </a>
+                  </div>
                 </footer>
               </article>
             }

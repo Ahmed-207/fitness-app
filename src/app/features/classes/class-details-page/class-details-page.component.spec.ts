@@ -93,6 +93,12 @@ describe('ClassDetailsPageComponent', () => {
           useValue: {
             getMuscleGroups: () => of(MUSCLE_GROUPS),
             getLevels: () => of(LEVELS),
+            getLevelsByPrimeMover: () =>
+              of({
+                message: 'success',
+                totalLevels: 1,
+                difficulty_levels: [{ id: 'l-beginner', name: 'Beginner' }],
+              }),
             getMusclesByGroupId: () =>
               of({
                 message: 'success',
