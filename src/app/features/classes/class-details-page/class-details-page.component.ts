@@ -20,6 +20,7 @@ import {
   Exercise,
   Level,
   MuscleGroup,
+  PlayingVideo,
   PrimeMoverMuscle,
 } from '../models/classes.models';
 import { ClassesService } from '../services/classes.service';
@@ -52,11 +53,6 @@ const RECOMMENDED_MEALS = [
     image: '/assets/healthy/Dinner.jpg',
   },
 ] as const;
-
-interface PlayingVideo {
-  url: string;
-  title: string;
-}
 
 interface ExerciseState {
   exercise?: Exercise;
@@ -170,6 +166,12 @@ export class ClassDetailsPageComponent implements OnInit {
     }
     this.detailStarted = true;
 
+    this.loadGroupsAndLevels();
+    this.loadCategories();
+    this.loadPrimeMoverImages();
+  }
+
+  private loadGroupsAndLevels(): void {
     const exerciseId = this.route.snapshot.paramMap.get('exerciseId');
     const state = history.state as ExerciseState;
 
@@ -189,9 +191,6 @@ export class ClassDetailsPageComponent implements OnInit {
         this.levels.set(levels.levels);
         this.bootstrapExercise(exerciseId, state?.exercise);
       });
-
-    this.loadCategories();
-    this.loadPrimeMoverImages();
   }
 
   private loadPrimeMoverImages(): void {

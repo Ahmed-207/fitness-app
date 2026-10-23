@@ -100,6 +100,11 @@ export interface ExercisePageResponse {
   exercises: Exercise[];
 }
 
+export interface PlayingVideo {
+  url: string;
+  title: string;
+}
+
 /** Card-friendly projection used by the classes UI. */
 export interface ExerciseCard {
   id: string;

@@ -19,6 +19,7 @@ import {
   ExercisePageResponse,
   Level,
   MuscleGroup,
+  PlayingVideo,
   RandomExercisesResponse,
 } from '../models/classes.models';
 import { ClassesService } from '../services/classes.service';
@@ -28,11 +29,6 @@ const PAGE_LIMIT = 24;
 const SLIDE_SLOTS = 6;
 const REQUEST_TIMEOUT_MS = 15000;
 const DEFAULT_DIFFICULTY_NAME = 'Beginner';
-
-interface PlayingVideo {
-  url: string;
-  title: string;
-}
 
 @Component({
   selector: 'app-classes-page',
