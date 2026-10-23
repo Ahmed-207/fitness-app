@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  margin-top: calc(-1 * var(--site-nav-height));
+}
+
+:host ::ng-deep .about-us {
+  padding-top: calc(var(--site-nav-height) + 4rem);
+}

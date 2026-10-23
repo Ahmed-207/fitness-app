@@ -1,5 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideTranslateService } from '@ngx-translate/core';
+import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
+import {
+  loadEnglishTranslations,
+  provideEnglishTranslations,
+} from '../../../../../testing/english-translations';
+import { WorkoutsService } from '../../../auth/services/workouts-service';
+import { ClassesService } from '../../../classes/services/classes.service';
 import { WorkoutsSectionComponent } from './workouts-section.component';
 
 describe('WorkoutsSectionComponent', () => {
@@ -9,12 +16,29 @@ describe('WorkoutsSectionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [WorkoutsSectionComponent],
-      providers: [provideTranslateService({ fallbackLang: 'en', lang: 'en' })],
+      providers: [
+        provideRouter([]),
+        ...provideEnglishTranslations(),
+        {
+          provide: WorkoutsService,
+          useValue: {
+            getMuscleGroups: () => of({ message: 'success', musclesGroup: [] }),
+            getExercisesByMuscle: () => of({ message: 'success', exercises: [] }),
+          },
+        },
+        {
+          provide: ClassesService,
+          useValue: {
+            getPrimeMoverImageMap: () => of(new Map<string, string>()),
+          },
+        },
+      ],
     }).compileComponents();
 
+    loadEnglishTranslations();
     fixture = TestBed.createComponent(WorkoutsSectionComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

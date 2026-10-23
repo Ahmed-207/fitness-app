@@ -17,6 +17,34 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/about-us/aboutus-page/aboutus-page').then((m) => m.AboutusPage),
       },
+      {
+        path: 'classes',
+        loadComponent: () =>
+          import('./features/classes/classes-page/classes-page.component').then(
+            (m) => m.ClassesPageComponent,
+          ),
+      },
+      {
+        path: 'classes/:exerciseId',
+        loadComponent: () =>
+          import('./features/classes/class-details-page/class-details-page.component').then(
+            (m) => m.ClassDetailsPageComponent,
+          ),
+      },
+      {
+        path: 'healthy/:mealId',
+        loadComponent: () =>
+          import('./features/healthy/meal-detail-page/meal-detail-page.component').then(
+            (m) => m.MealDetailPageComponent,
+          ),
+      },
+      {
+        path: 'healthy',
+        loadComponent: () =>
+          import('./features/healthy/healthy-page/healthy-page.component').then(
+            (m) => m.HealthyPageComponent,
+          ),
+      },
     ],
   },
   {

@@ -1,0 +1,232 @@
+<section
+  class="class-detail relative -mt-[var(--site-nav-height)] overflow-hidden bg-[var(--workouts-section-base)] px-5 pb-14 pt-[calc(var(--site-nav-height)+1rem)] font-sans text-[var(--color-text)] lg:px-12 lg:pb-16 lg:pt-[calc(var(--site-nav-height)+1.25rem)]"
+>
+  <div class="class-detail__bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-[76rem]">
+    <!-- Top Watermark + Category Tabs -->
+    <header class="relative mb-7 pt-6 text-center">
+      <span
+        class="class-detail__watermark pointer-events-none absolute inset-x-0 -top-1.5 text-[clamp(2.2rem,5.5vw,3.4rem)] font-extrabold uppercase leading-none tracking-[0.12em] text-transparent"
+        aria-hidden="true"
+      >
+        {{ 'WORKOUTS.WATERMARK' | translate }}
+      </span>
+
+      <div
+        class="relative flex flex-wrap justify-center gap-x-4 gap-y-2"
+        role="tablist"
+        [attr.aria-label]="'WORKOUTS.CATEGORIES_ARIA' | translate"
+      >
+        <button
+          type="button"
+          role="tab"
+          class="cursor-pointer rounded-full px-4 py-1.5 text-[0.85rem] font-bold leading-tight text-[var(--color-text-heading)] transition"
+          [class.!bg-[var(--accent-strong)]]="selectedGroupId() === 'all'"
+          [class.!text-white]="selectedGroupId() === 'all'"
+          [attr.aria-selected]="selectedGroupId() === 'all'"
+          (click)="selectGroup('all')"
+        >
+          {{ 'WORKOUTS.CATEGORIES.FULL_BODY' | translate }}
+        </button>
+
+        @for (group of muscleGroups(); track group._id) {
+          <button
+            type="button"
+            role="tab"
+            class="cursor-pointer rounded-full px-4 py-1.5 text-[0.85rem] font-bold leading-tight text-[var(--color-text-heading)] transition"
+            [class.!bg-[var(--accent-strong)]]="selectedGroupId() === group._id"
+            [class.!text-white]="selectedGroupId() === group._id"
+            [attr.aria-selected]="selectedGroupId() === group._id"
+            (click)="selectGroup(group._id)"
+          >
+            {{ group.name }}
+          </button>
+        }
+      </div>
+    </header>
+
+    @if (isLoading()) {
+      <p class="py-16 text-center text-sm font-semibold text-[var(--color-muted)]">
+        {{ 'CLASSES.LOADING' | translate }}
+      </p>
+    } @else if (notFound()) {
+      <p class="py-16 text-center text-sm font-semibold text-[var(--color-muted)]">
+        {{ 'CLASS_DETAILS.NOT_FOUND' | translate }}
+      </p>
+    } @else {
+    <!-- Two-Column Workspace -->
+    <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-[19.5rem_minmax(0,1fr)] lg:gap-7">
+      <!-- Left Sidebar: Difficulty + Exercise List -->
+      <aside class="class-detail__sidebar rounded-[1.15rem] border border-[var(--workouts-card-border)] p-4 backdrop-blur-md">
+        <div class="mb-3.5 flex items-center justify-between gap-1.5" role="tablist">
+          @for (level of difficultyTabs(); track level) {
+            <button
+              type="button"
+              role="tab"
+              class="cursor-pointer rounded-full px-3 py-1.5 text-[0.78rem] font-bold leading-tight text-[var(--color-text-heading)] transition"
+              [class.!bg-[var(--accent-strong)]]="selectedDifficulty() === level"
+              [class.!text-white]="selectedDifficulty() === level"
+              [attr.aria-selected]="selectedDifficulty() === level"
+              (click)="selectDifficulty(level)"
+            >
+              {{ level }}
+            </button>
+          }
+        </div>
+
+        <ul class="m-0 list-none p-0">
+          @for (item of sidebarExercises(); track item._id) {
+            <li
+              class="grid cursor-pointer grid-cols-[3.4rem_minmax(0,1fr)_auto] items-center gap-2.5 border-b border-[var(--color-divider)] px-1 py-2.5 last:border-b-0"
+              (click)="selectExercise(item)"
+            >
+              <img
+                [src]="imageFor(item)"
+                [alt]="item.exercise"
+                class="h-[3.6rem] w-[3.4rem] rounded-[0.65rem] object-cover"
+                loading="lazy"
+              />
+
+              <div class="min-w-0">
+                <h3 class="m-0 truncate text-[0.82rem] font-bold leading-tight text-[var(--color-text-heading)]">
+                  {{ item.exercise }}
+                </h3>
+                <p class="mt-0.5 text-[0.66rem] font-semibold leading-tight text-[var(--color-text-heading)]">
+                  {{ 'CLASS_DETAILS.SETS_REPS' | translate }}
+                </p>
+                <p class="mt-0.5 text-[0.62rem] font-medium leading-snug text-[var(--color-muted)]">
+                  {{ sidebarSubtitle(item) }}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                class="grid size-6 cursor-pointer place-items-center rounded-full bg-[var(--accent-strong)] text-[#181818]"
+                [attr.aria-label]="('CLASSES.PLAY_IT' | translate) + ' — ' + item.exercise"
+                (click)="playExercise(item, $event)"
+              >
+                <svg class="size-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+                </svg>
+              </button>
+            </li>
+          }
+        </ul>
+      </aside>
+
+      <!-- Right Main Content -->
+      <div class="flex min-w-0 flex-col gap-5">
+        @if (exercise(); as current) {
+          <!-- Featured Exercise Hero Card -->
+          <article class="relative flex min-h-[24.5rem] items-end overflow-hidden rounded-[1.15rem] text-white">
+            @if (heroImage(); as heroSrc) {
+              <img
+                [src]="heroSrc"
+                [alt]="current.exercise"
+                class="absolute inset-0 size-full object-contain bg-[var(--workouts-media-placeholder)]"
+              />
+            }
+            <div class="class-detail__hero-scrim absolute inset-0" aria-hidden="true"></div>
+
+            <div class="relative z-10 w-full px-7 pb-5 pt-8 text-center">
+              <button
+                type="button"
+                class="inline-grid size-[3.9rem] cursor-pointer place-items-center rounded-full bg-[rgb(255_65_0/32%)]"
+                [attr.aria-label]="('CLASSES.PLAY_IT' | translate) + ' — ' + current.exercise"
+                (click)="playExercise(current)"
+              >
+                <span class="grid size-11 place-items-center rounded-full bg-[var(--accent-strong)] text-white">
+                  <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+                  </svg>
+                </span>
+              </button>
+
+              <h1 class="mt-2 text-[clamp(1.65rem,3vw,2.3rem)] font-extrabold leading-tight text-white">
+                {{ heroTitle() }}
+              </h1>
+
+              <p class="mx-auto mt-2.5 max-w-[38rem] text-start text-[0.78rem] font-medium leading-relaxed text-white/80">
+                {{ heroDescription() }}
+              </p>
+
+              <div class="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-between">
+                <span class="rounded-full border border-white/45 px-3 py-1 text-[0.66rem] font-bold text-white">
+                  {{ current.difficulty_level }}
+                </span>
+                @if (current.primary_equipment) {
+                  <span class="rounded-full border border-white/45 px-3 py-1 text-[0.66rem] font-bold text-[var(--accent-strong)]">
+                    {{ current.primary_equipment }}
+                  </span>
+                }
+              </div>
+            </div>
+          </article>
+
+          <!-- Feature Bullets Row -->
+          <dl
+            class="class-detail__features m-0 grid gap-3 rounded-[0.85rem] px-3.5 py-3 sm:grid-cols-3"
+            [attr.aria-label]="'CLASS_DETAILS.FACTS_ARIA' | translate"
+          >
+            @for (fact of detailHighlights(); track fact.labelKey) {
+              <div class="min-w-0">
+                <dt class="text-[0.62rem] font-bold uppercase tracking-[0.1em] text-[var(--color-muted)]">
+                  {{ fact.labelKey | translate }}
+                </dt>
+                <dd class="mt-0.5 text-[0.78rem] font-bold text-[var(--color-text-heading)]">
+                  {{ fact.value }}
+                </dd>
+              </div>
+            }
+          </dl>
+        }
+
+        <!-- Recommendation For You -->
+        <section>
+          <h2 class="mb-3.5 mt-1 text-xl font-extrabold text-[var(--color-text-heading)]">
+            {{ 'CLASS_DETAILS.RECOMMENDATION_TITLE' | translate }}
+          </h2>
+
+          <div class="sf-catalog-grid sf-catalog-grid--carousel">
+            @for (meal of recommendedMeals; track meal.id) {
+              <article class="sf-catalog-card">
+                <div class="sf-catalog-card__media">
+                  <img
+                    [src]="meal.image"
+                    [alt]="meal.titleKey | translate"
+                    class="sf-catalog-card__photo"
+                    loading="lazy"
+                  />
+                </div>
+
+                <footer class="sf-catalog-card__panel">
+                  <h3 class="sf-catalog-card__title">
+                    {{ meal.titleKey | translate }}
+                  </h3>
+                  <div class="sf-catalog-card__actions">
+                    <a
+                      class="sf-catalog-card__explore"
+                      routerLink="/healthy"
+                      [queryParams]="{ c: meal.category }"
+                    >
+                      <span>{{ 'HEALTHY.READ_MORE' | translate }}</span>
+                      <span class="sf-catalog-card__explore-badge" aria-hidden="true">
+                        <app-sf-arrow-icon size="xs" />
+                      </span>
+                    </a>
+                  </div>
+                </footer>
+              </article>
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+@if (playing(); as video) {
+  <app-video-modal [videoUrl]="video.url" [title]="video.title" (closed)="closeVideo()" />
+}

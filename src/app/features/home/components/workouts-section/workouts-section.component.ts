@@ -1,27 +1,47 @@
-
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WorkoutsService } from './../../../auth/services/workouts-service';
-import { MuscleGroup, Exercise } from './../../../../features/auth/models/workouts-models';
+import { MuscleGroup } from './../../../../features/auth/models/workouts-models';
+import { Exercise } from '../../../classes/models/classes.models';
+import { ClassesService } from '../../../classes/services/classes.service';
+import { exerciseImageUrl, PrimeMoverImageMap } from '../../../classes/utils/exercise-media';
 import { SfArrowIconComponent } from '../../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
+import { catchError, EMPTY } from 'rxjs';
+
+interface WorkoutCard extends Exercise {
+  name: string;
+  image: string | null;
+}
 
 @Component({
   selector: 'app-workouts-section',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, SfArrowIconComponent],
+  imports: [CommonModule, RouterLink, TranslatePipe, SfArrowIconComponent],
   templateUrl: './workouts-section.component.html',
   styleUrl: './workouts-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkoutsSectionComponent implements OnInit {
   private workoutsService = inject(WorkoutsService);
+  private classesService = inject(ClassesService);
   private destroyRef = inject(DestroyRef);
+  private workoutsStarted = false;
+  private readonly primeMoverImages = signal<PrimeMoverImageMap>(new Map());
 
   muscleGroups = signal<MuscleGroup[]>([]);
-  allExercises = signal<any[]>([]);
-  displayedExercises = signal<any[]>([]);
+  allExercises = signal<WorkoutCard[]>([]);
+  displayedExercises = signal<WorkoutCard[]>([]);
   selectedMuscleId = signal<string>('all');
   isLoading = signal<boolean>(false);
 
@@ -45,15 +65,18 @@ export class WorkoutsSectionComponent implements OnInit {
     return items.slice(start, start + slots);
   });
 
-  private fallbackImages = [
-    'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&auto=format&fit=crop'
-  ];
-
   ngOnInit(): void {
+    if (this.workoutsStarted) {
+      return;
+    }
+    this.workoutsStarted = true;
+    this.classesService
+      .getPrimeMoverImageMap()
+      .pipe(catchError(() => EMPTY), takeUntilDestroyed(this.destroyRef))
+      .subscribe((map) => {
+        this.primeMoverImages.set(map);
+        this.refreshWorkoutImages();
+      });
     this.fetchMuscleGroups();
     this.fetchAllExercises();
   }
@@ -76,11 +99,7 @@ export class WorkoutsSectionComponent implements OnInit {
     this.workoutsService.getExercisesByMuscle().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (res) => {
         if (res && res.message === 'success' && res.exercises && res.exercises.length > 0) {
-          const processed = res.exercises.map((item: any, index: number) => ({
-            ...item,
-            name: item.exercise || item.name || 'WORKOUT',
-            image: item.image || this.fallbackImages[index % this.fallbackImages.length]
-          }));
+          const processed = this.toWorkoutCards(res.exercises as unknown as Exercise[]);
           this.allExercises.set(processed);
           this.displayedExercises.set(processed);
           this.slideIndex.set(0);
@@ -109,7 +128,7 @@ export class WorkoutsSectionComponent implements OnInit {
     const searchName = (targetGroup ? targetGroup.name : id).toLowerCase();
 
     const filtered = this.allExercises().filter(item => {
-      const itemGroup = (item.muscleGroup || item.target_muscle_group || item.body_region || '').toLowerCase();
+      const itemGroup = (item.target_muscle_group || item.body_region || '').toLowerCase();
       return itemGroup.includes(searchName) || searchName.includes(itemGroup);
     });
 
@@ -120,12 +139,7 @@ export class WorkoutsSectionComponent implements OnInit {
       this.workoutsService.getExercisesByMuscle(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (res) => {
           if (res && res.message === 'success' && res.exercises && res.exercises.length > 0) {
-            const processed = res.exercises.map((item: any, index: number) => ({
-              ...item,
-              name: item.exercise || item.name || 'WORKOUT',
-              image: item.image || this.fallbackImages[index % this.fallbackImages.length]
-            }));
-            this.displayedExercises.set(processed);
+            this.displayedExercises.set(this.toWorkoutCards(res.exercises as unknown as Exercise[]));
           } else {
             this.displayedExercises.set(this.allExercises().slice(0, 3));
           }
@@ -174,13 +188,25 @@ export class WorkoutsSectionComponent implements OnInit {
   }
 
   private setFallbackExercises(): void {
-    const fallbackData = [
-      { _id: '1', name: 'BENCH PRESS', image: this.fallbackImages[0] },
-      { _id: '2', name: 'BARBELL CURLS', image: this.fallbackImages[1] },
-      { _id: '3', name: 'SQUATS', image: this.fallbackImages[2] }
-    ];
-    this.allExercises.set(fallbackData);
-    this.displayedExercises.set(fallbackData);
+    this.allExercises.set([]);
+    this.displayedExercises.set([]);
     this.slideIndex.set(0);
+  }
+
+  private toWorkoutCards(exercises: Exercise[]): WorkoutCard[] {
+    const images = this.primeMoverImages();
+    return exercises.map((item, index) => ({
+      ...item,
+      name: item.exercise || 'WORKOUT',
+      image: exerciseImageUrl(item, images),
+    }));
+  }
+
+  private refreshWorkoutImages(): void {
+    if (this.allExercises().length === 0) {
+      return;
+    }
+    this.allExercises.update((items) => this.toWorkoutCards(items));
+    this.displayedExercises.update((items) => this.toWorkoutCards(items));
   }
 }

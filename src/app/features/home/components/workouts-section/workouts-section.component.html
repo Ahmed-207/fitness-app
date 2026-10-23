@@ -1,12 +1,14 @@
-<section class="relative isolate overflow-hidden bg-stone-800 bg-cover bg-center-bottom bg-no-repeat font-sans pb-10 sm:pb-14" 
-    style="background-image: url('/assets/bg-workouts.jpg');" >
+<section
+  class="relative isolate overflow-hidden bg-[var(--workouts-section-base)] bg-cover bg-center-bottom bg-no-repeat font-sans pb-10 sm:pb-14"
+  style="background-image: var(--workouts-section-image)"
+>
   
   <div class="absolute inset-x-0 top-10 -z-10 h-[292px] bg-[var(--section-healthy)]"></div>
 
   <header class="relative flex h-10 items-center justify-center">
     <span
       class="absolute top-3 left-1/2 -translate-x-1/2 whitespace-nowrap font-light opacity-25 text-2xl md:text-4xl tracking-widest text-transparent"
-      style="-webkit-text-stroke: 0.6px #ffffff;"
+      style="-webkit-text-stroke: 0.6px var(--section-wordmark);"
       aria-hidden="true"
     >
       {{ 'WORKOUTS.WATERMARK' | translate }}
@@ -36,8 +38,7 @@
         class="shrink-0 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 sm:text-sm"
         [class.bg-[var(--accent-strong)]]="selectedMuscleId() === 'all'"
         [class.text-white]="selectedMuscleId() === 'all'"
-        [class.bg-black/10]="selectedMuscleId() !== 'all'"
-        [class.dark:bg-white/10]="selectedMuscleId() !== 'all'"
+        [class.bg-[var(--workouts-category-idle-bg)]]="selectedMuscleId() !== 'all'"
         [class.text-[var(--color-text)]]="selectedMuscleId() !== 'all'"
         (click)="selectCategory('all')"
       >
@@ -51,8 +52,7 @@
           class="shrink-0 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 sm:text-sm"
           [class.bg-[var(--accent-strong)]]="selectedMuscleId() === group._id"
           [class.text-white]="selectedMuscleId() === group._id"
-          [class.bg-black/10]="selectedMuscleId() !== group._id"
-          [class.dark:bg-white/10]="selectedMuscleId() !== group._id"
+          [class.bg-[var(--workouts-category-idle-bg)]]="selectedMuscleId() !== group._id"
           [class.text-[var(--color-text)]]="selectedMuscleId() !== group._id"
           (click)="selectCategory(group._id)"
         >
@@ -72,7 +72,7 @@
         <button 
           type="button" 
           (click)="prevSlide()"
-          class="absolute -left-4 sm:-left-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 dark:bg-stone-800/80 text-[var(--color-text)] shadow-md backdrop-blur transition hover:bg-[var(--accent-strong)] hover:text-white"
+          class="absolute -left-4 sm:-left-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--workouts-carousel-control-bg)] text-[var(--color-text)] shadow-md backdrop-blur transition hover:bg-[var(--accent-strong)] hover:text-white"
           aria-label="Previous Slide"
         >
           <svg class="h-5 w-5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -80,32 +80,36 @@
           </svg>
         </button>
 
-        <div class="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-[22px] px-2">
+        <div class="sf-catalog-grid sf-catalog-grid--carousel w-full px-2">
           @for (item of visibleExercises(); track item._id) {
-            <article class="group overflow-hidden rounded-xl border border-white/30 bg-white/90 dark:bg-stone-900/90 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              
-              <div class="h-[210px] overflow-hidden bg-black/10">
-                <img
-                  [src]="item.image"
-                  [alt]="item.name"
-                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
+            <article class="sf-catalog-card">
+              <div class="sf-catalog-card__media">
+                @if (item.image) {
+                  <img
+                    [src]="item.image"
+                    [alt]="item.name"
+                    class="sf-catalog-card__photo sf-catalog-card__photo--anatomy"
+                    loading="lazy"
+                  />
+                }
               </div>
 
-              <div class="min-h-[70px] bg-[var(--section-healthy)] px-3 py-3.5 transition-colors duration-300">
-                <h2 class="mb-3 text-sm font-extrabold tracking-[2px] text-[var(--color-text)] uppercase">
-                  {{ item.name }}
-                </h2>
+              <footer class="sf-catalog-card__panel">
+                <h2 class="sf-catalog-card__title">{{ item.name }}</h2>
 
-                <a class="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--accent-strong)] transition hover:opacity-80" href="/classes">
-                  <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
-                  <span class="flex h-[17px] w-[17px] items-center justify-center rounded-full bg-[var(--accent-strong)] text-white">
-                    <app-sf-arrow-icon size="xs" />
-                  </span>
-                </a>
-              </div>
-
+                <div class="sf-catalog-card__actions">
+                  <a
+                    class="sf-catalog-card__explore"
+                    routerLink="/classes"
+                    [attr.aria-label]="('WORKOUTS.EXPLORE' | translate) + ' — ' + item.name"
+                  >
+                    <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
+                    <span class="sf-catalog-card__explore-badge" aria-hidden="true">
+                      <app-sf-arrow-icon size="xs" />
+                    </span>
+                  </a>
+                </div>
+              </footer>
             </article>
           }
         </div>
@@ -113,7 +117,7 @@
         <button 
           type="button" 
           (click)="nextSlide()"
-          class="absolute -right-4 sm:-right-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 dark:bg-stone-800/80 text-[var(--color-text)] shadow-md backdrop-blur transition hover:bg-[var(--accent-strong)] hover:text-white"
+          class="absolute -right-4 sm:-right-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--workouts-carousel-control-bg)] text-[var(--color-text)] shadow-md backdrop-blur transition hover:bg-[var(--accent-strong)] hover:text-white"
           aria-label="Next Slide"
         >
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -132,8 +136,7 @@
             [class.w-7]="slideIndex() === page"
             [class.w-2.5]="slideIndex() !== page"
             [class.bg-[var(--accent-strong)]]="slideIndex() === page"
-            [class.bg-black/30]="slideIndex() !== page"
-            [class.dark:bg-white/30]="slideIndex() !== page"
+            [class.bg-[var(--workouts-pagination-idle)]]="slideIndex() !== page"
             [attr.aria-selected]="slideIndex() === page"
             (click)="goToSlide(page)"
           ></button>

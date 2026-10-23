@@ -1,0 +1,19 @@
+.class-detail__bg {
+  background: var(--workouts-page-gradient);
+}
+
+.class-detail__watermark {
+  -webkit-text-stroke: 1px var(--section-wordmark);
+}
+
+.class-detail__sidebar {
+  background: var(--class-detail-sidebar-bg);
+}
+
+.class-detail__hero-scrim {
+  background: linear-gradient(180deg, rgb(0 0 0 / 15%), rgb(18 18 18 / 84%) 68%, rgb(18 18 18 / 95%));
+}
+
+.class-detail__features {
+  background: var(--class-detail-features-bg);
+}

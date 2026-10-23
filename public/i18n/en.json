@@ -172,7 +172,7 @@
       "LANGUAGE": "Select Language",
       "LANGUAGE_HINT": "Choose your app language",
       "APPEARANCE": "Appearance",
-      "MOOD": "Mood",
+      "MOOD": "Mode",
       "LIGHT_VALUE": "light",
       "DARK_VALUE": "dark",
       "DARK": "Dark mode",
@@ -387,5 +387,74 @@
       "LUNCH": "Lunch",
       "DINNER": "Dinner"
     }
+  },
+  "CLASSES": {
+    "HERO_TITLE_1": "Find a workout",
+    "HERO_TITLE_2": "that fits you",
+    "HERO_SUBTITLE": "Explore exercises for every muscle group, watch quick demos, and build the routine that matches your goal.",
+    "TABS_ARIA": "Filter workouts by muscle group",
+    "FULL_BODY": "Full Body",
+    "PLAY_IT": "Play it",
+    "EXPLORE": "Explore",
+    "EXPLORE_MORE": "Explore more",
+    "LOADING": "Loading exercises…",
+    "EMPTY": "No exercises found for this muscle group yet."
+  },
+  "CLASS_DETAILS": {
+    "BACK": "Back to classes",
+    "IN_DEPTH": "In-depth guide",
+    "NOT_FOUND": "Workout not found",
+    "FACTS_ARIA": "Exercise details",
+    "DIFFICULTY": "Difficulty",
+    "TARGET_MUSCLE": "Target muscle",
+    "PRIME_MOVER": "Prime mover",
+    "EQUIPMENT": "Equipment",
+    "POSTURE": "Posture",
+    "MECHANICS": "Mechanics",
+    "FORCE_TYPE": "Force type",
+    "BODY_REGION": "Body region",
+    "SETS_REPS": "3 Groups * 15 Times",
+    "SHORT_DESC": "Lorem Ipsum Dolor Sit Amet Consectetur. Tempus",
+    "HERO_DESCRIPTION": "Lorem Ipsum Dolor Sit Amet Consectetur. Tempus Volutpat Ut Nisi Morbi. Lorem Ipsum Dolor Sit Amet Consectetur. Tempus Volutpat Ut Nisi Morbi. Lorem Ipsum Dolor Sit Amet Consectetur. Tempus Volutpat Ut Nisi Morbi.",
+    "FEATURE_TEXT": "Expertly designed workout.",
+    "RECOMMENDATION_TITLE": "Recommendation For You"
+  },
+  "MEALS": {
+    "WATERMARK": "Healthy",
+    "EYEBROW": "Healthy Nutritions",
+    "TITLE_LINE_1": "Fuel your fitness journey with customized",
+    "TITLE_ACCENT": "meal plans",
+    "TITLE_LINE_2": "for you",
+    "TITLE_1": "Find a meal",
+    "TITLE_2": "that fuels you",
+    "HERO_TITLE_1": "Find a meal",
+    "HERO_TITLE_2": "that fuels you",
+    "SUBTITLE": "Discover healthy meals that support your training and recovery.",
+    "EXPLORE": "Explore",
+    "EXPLORE_MORE": "Explore more",
+    "TABS": {
+      "BREAKFAST": "Breakfast",
+      "LUNCH": "Lunch",
+      "DINNER": "Dinner"
+    },
+    "CATEGORIES_ARIA": "Meal categories",
+    "PAGINATION_ARIA": "Meal pages",
+    "LOADING": "Loading meals…",
+    "EMPTY": "No meals found in this category.",
+    "LOAD_ERROR": "Could not load meals. Check your connection and try again.",
+    "NOT_FOUND": "Meal not found.",
+    "SIDEBAR_HINT": "Select to view recipe details.",
+    "ENERGY": "Energy",
+    "PROTEIN": "Protein",
+    "CARBS": "Carbs",
+    "FAT": "Fat",
+    "MACROS_ARIA": "Nutrition information",
+    "MACROS_NOTE": "Macros are not provided by the meal API; values will appear when nutrition data is available.",
+    "INGREDIENTS": "Ingredients",
+    "INSTRUCTIONS": "Instructions",
+    "WATCH_RECIPE": "Watch recipe"
+  },
+  "VIDEO_MODAL": {
+    "CLOSE": "Close video"
   }
 }

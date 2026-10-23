@@ -1,0 +1,152 @@
+.healthy {
+  position: relative;
+  margin-top: calc(-1 * var(--site-nav-height));
+  overflow: hidden;
+  padding: calc(var(--site-nav-height) + 1.5rem) 1.25rem 3.25rem;
+  color: var(--color-text);
+  background: var(--workouts-section-base);
+}
+
+@media (min-width: 768px) {
+  .healthy {
+    padding: calc(var(--site-nav-height) + 1.75rem) 2.5rem 3.5rem;
+  }
+}
+
+.healthy__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--workouts-page-gradient);
+  pointer-events: none;
+}
+
+.healthy__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+  max-width: 74rem;
+  margin: 0 auto;
+}
+
+.healthy__eyebrow {
+  position: relative;
+  width: 100%;
+  min-height: 2.75rem;
+  padding-top: 0.75rem;
+  text-align: center;
+}
+
+.healthy__watermark {
+  position: absolute;
+  inset-inline: 0;
+  top: -0.35rem;
+  font-size: clamp(2.25rem, 6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--section-wordmark);
+  pointer-events: none;
+}
+
+.healthy__eyebrow-row {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent-strong);
+}
+
+.healthy__dumbbell {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.healthy__eyebrow-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.healthy__title {
+  margin: -0.35rem 0 0;
+  max-width: 42rem;
+  font-size: clamp(1.35rem, 3.2vw, 2.05rem);
+  font-weight: 800;
+  line-height: 1.28;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-text-heading);
+}
+
+.healthy__title-accent {
+  color: var(--accent-strong);
+}
+
+.healthy__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.15rem;
+}
+
+.healthy__tab {
+  padding: 0.45rem 1.15rem;
+  border: 0;
+  border-radius: 9999px;
+  font: 700 0.875rem/1.2 inherit;
+  color: var(--color-text-heading);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.healthy__tab:hover {
+  color: var(--accent-strong);
+}
+
+.healthy__tab--active,
+.healthy__tab--active:hover {
+  color: #fff;
+  background: var(--accent-strong);
+}
+
+.healthy__status {
+  padding: 3.5rem 0;
+  font: 600 0.9rem/1.4 inherit;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.healthy__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}
+
+.healthy__dot {
+  padding: 0.25rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.healthy__dot::after {
+  content: '';
+  display: block;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 9999px;
+  background: var(--workouts-pagination-inactive);
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.healthy__dot--active::after {
+  width: 1.45rem;
+  background: var(--accent-strong);
+}

@@ -1,0 +1,25 @@
+<div class="video-modal__backdrop" (click)="close()">
+  <div class="video-modal__panel" (click)="$event.stopPropagation()">
+    <header class="video-modal__header">
+      <h2 class="video-modal__title">{{ title() }}</h2>
+      <button
+        type="button"
+        class="video-modal__close"
+        [attr.aria-label]="'VIDEO_MODAL.CLOSE' | translate"
+        (click)="close()"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
+      </button>
+    </header>
+    <div class="video-modal__frame">
+      <iframe
+        [src]="embedUrl()"
+        [title]="title()"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</div>

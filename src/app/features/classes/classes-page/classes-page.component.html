@@ -1,0 +1,145 @@
+<section class="workouts font-sans">
+  <div class="workouts__bg" aria-hidden="true"></div>
+
+  <div class="workouts__inner">
+    <!-- Eyebrow + Watermark -->
+    <header class="workouts__eyebrow">
+      <span class="workouts__watermark" aria-hidden="true">
+        {{ 'WORKOUTS.WATERMARK' | translate }}
+      </span>
+
+      <div class="workouts__eyebrow-row">
+        <svg
+          class="workouts__dumbbell"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10M2 10v4M22 10v4" />
+        </svg>
+        <span class="workouts__fitness-class">{{ 'WORKOUTS.FITNESS_CLASS' | translate }}</span>
+      </div>
+    </header>
+
+    <!-- Main Heading -->
+    <h1 class="workouts__title">
+      {{ 'WORKOUTS.TITLE_LINE_1' | translate }}
+      <span class="workouts__title-accent">{{ 'WORKOUTS.TITLE_LINE_2' | translate }}</span>
+    </h1>
+
+    <!-- Category Pills -->
+    <div
+      class="workouts__categories"
+      role="tablist"
+      [attr.aria-label]="'WORKOUTS.CATEGORIES_ARIA' | translate"
+    >
+      <button
+        type="button"
+        role="tab"
+        class="workouts__category"
+        [class.workouts__category--active]="selectedGroupId() === 'all'"
+        [attr.aria-selected]="selectedGroupId() === 'all'"
+        (click)="selectGroup('all')"
+      >
+        {{ 'WORKOUTS.CATEGORIES.FULL_BODY' | translate }}
+      </button>
+
+      @for (group of muscleGroups(); track group._id) {
+        <button
+          type="button"
+          role="tab"
+          class="workouts__category"
+          [class.workouts__category--active]="selectedGroupId() === group._id"
+          [attr.aria-selected]="selectedGroupId() === group._id"
+          (click)="selectGroup(group._id)"
+        >
+          {{ group.name }}
+        </button>
+      }
+    </div>
+
+    <!-- Exercise Grid -->
+    @if (isLoading()) {
+      <p class="workouts__status">{{ 'CLASSES.LOADING' | translate }}</p>
+    } @else if (loadFailed()) {
+      <p class="workouts__status">{{ 'CLASSES.EMPTY' | translate }}</p>
+    } @else if (visibleExercises().length === 0) {
+      <p class="workouts__status">{{ 'CLASSES.EMPTY' | translate }}</p>
+    } @else {
+      <div class="sf-catalog-grid">
+        @for (card of visibleExercises(); track card.id) {
+          <article class="sf-catalog-card">
+            <div class="sf-catalog-card__media">
+              @if (card.image) {
+                <img
+                  [src]="card.image"
+                  [alt]="card.name"
+                  class="sf-catalog-card__photo sf-catalog-card__photo--anatomy"
+                  loading="lazy"
+                />
+              }
+
+              @if (card.videoUrl) {
+                <button
+                  type="button"
+                  class="sf-catalog-card__play"
+                  [attr.aria-label]="('CLASSES.PLAY_IT' | translate) + ' — ' + card.name"
+                  (click)="play(card); $event.stopPropagation()"
+                >
+                  <svg class="sf-catalog-card__play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+                  </svg>
+                  <span>{{ 'CLASSES.PLAY_IT' | translate }}</span>
+                </button>
+              }
+            </div>
+
+            <footer class="sf-catalog-card__panel">
+              <h2 class="sf-catalog-card__title">{{ card.name }}</h2>
+
+              <div class="sf-catalog-card__actions">
+                <a
+                  class="sf-catalog-card__explore"
+                  [routerLink]="['/classes', card.id]"
+                  [state]="{ exercise: card.exercise }"
+                  [attr.aria-label]="('WORKOUTS.EXPLORE' | translate) + ' — ' + card.name"
+                >
+                  <span>{{ 'WORKOUTS.EXPLORE' | translate }}</span>
+                  <span class="sf-catalog-card__explore-badge" aria-hidden="true">
+                    <app-sf-arrow-icon size="xs" />
+                  </span>
+                </a>
+              </div>
+            </footer>
+          </article>
+        }
+      </div>
+
+      <!-- Pagination Dots -->
+      <div
+        class="workouts__pagination"
+        role="tablist"
+        [attr.aria-label]="'WORKOUTS.PAGINATION_ARIA' | translate"
+      >
+        @for (page of pageIndexes(); track page) {
+          <button
+            type="button"
+            role="tab"
+            class="workouts__dot"
+            [class.workouts__dot--active]="slideIndex() === page"
+            [attr.aria-selected]="slideIndex() === page"
+            [attr.aria-label]="'Page ' + (page + 1)"
+            (click)="goToSlide(page)"
+          ></button>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+@if (playing(); as video) {
+  <app-video-modal [videoUrl]="video.url" [title]="video.title" (closed)="closeVideo()" />
+}
