@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, EMPTY, finalize, forkJoin, of, timeout } from 'rxjs';
 import { SfArrowIconComponent } from '../../../shared/components/sf-arrow-icon/sf-arrow-icon.component';
@@ -71,10 +71,15 @@ interface DetailHighlight {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClassDetailsPageComponent implements OnInit {
+  private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly classesService = inject(ClassesService);
   private readonly mealsService = inject(MealsService);
   private readonly destroyRef = inject(DestroyRef);
+  /** Read while this navigation is still current. It is null after NavigationEnd. */
+  private readonly passedExercise = (
+    this.router.currentNavigation()?.extras.state as ExerciseState | undefined
+  )?.exercise;
   private detailStarted = false;
 
   readonly recommendedMeals = RECOMMENDED_MEALS;
@@ -173,7 +178,7 @@ export class ClassDetailsPageComponent implements OnInit {
 
   private loadGroupsAndLevels(): void {
     const exerciseId = this.route.snapshot.paramMap.get('exerciseId');
-    const state = history.state as ExerciseState;
+    const passedExercise = this.passedExercise;
 
     forkJoin({
       groups: this.classesService.getMuscleGroups().pipe(
@@ -189,7 +194,7 @@ export class ClassDetailsPageComponent implements OnInit {
       .subscribe(({ groups, levels }) => {
         this.muscleGroups.set(groups.musclesGroup);
         this.levels.set(levels.levels);
-        this.bootstrapExercise(exerciseId, state?.exercise);
+        this.bootstrapExercise(exerciseId, passedExercise);
       });
   }
 
